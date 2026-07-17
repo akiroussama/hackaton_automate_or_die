@@ -1,5 +1,12 @@
 # Phase 2 plan — Claude adversarial review
 
+> **HISTORICAL SNAPSHOT — 17 July 2026, BEFORE the Phase 2 build.** This
+> review describes the repository as it stood before any commit existed
+> (8/8 tests, nothing published). It is preserved unchanged as a process
+> record. For the current state, see
+> [phase-2-delivery-checklist.md](phase-2-delivery-checklist.md) — all six
+> deliverables now exist, verified at 9/9.
+
 **Reviewed document:** `phase-2-master-execution-plan.md` (17 July 2026 draft)
 **Reviewer:** Claude (adversarial reviewer)
 **Verdict:** The plan is strong on completeness and consistency discipline, but it is
