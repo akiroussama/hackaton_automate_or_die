@@ -1,0 +1,62 @@
+
+> cabletwin@0.1.0 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: le dataset est explicitement synthétique et couvre 3 lignes / 10 commandes
+ok 1 - le dataset est explicitement synthétique et couvre 3 lignes / 10 commandes
+  ---
+  duration_ms: 2.2745
+  type: 'test'
+  ...
+# Subtest: l’incident identifie les commandes touchées sur la ligne 2
+ok 2 - l’incident identifie les commandes touchées sur la ligne 2
+  ---
+  duration_ms: 1.0893
+  type: 'test'
+  ...
+# Subtest: les trois stratégies produisent des plannings déterministes et réalisables
+ok 3 - les trois stratégies produisent des plannings déterministes et réalisables
+  ---
+  duration_ms: 19.4054
+  type: 'test'
+  ...
+# Subtest: les stratégies matérialisent trois arbitrages compréhensibles
+ok 4 - les stratégies matérialisent trois arbitrages compréhensibles
+  ---
+  duration_ms: 1.397
+  type: 'test'
+  ...
+# Subtest: l’oracle exhaustif certifie les trois politiques sur le scénario canonique
+ok 5 - l’oracle exhaustif certifie les trois politiques sur le scénario canonique
+  ---
+  duration_ms: 285.4339
+  type: 'test'
+  ...
+# Subtest: les métriques exposent retard, overtime, coût, mouvements et taux à l’heure
+ok 6 - les métriques exposent retard, overtime, coût, mouvements et taux à l’heure
+  ---
+  duration_ms: 0.7163
+  type: 'test'
+  ...
+# Subtest: l’approbation ajoute une décision auditable sans modifier le plan proposé
+ok 7 - l’approbation ajoute une décision auditable sans modifier le plan proposé
+  ---
+  duration_ms: 0.8459
+  type: 'test'
+  ...
+# Subtest: les heures de la démo sont lisibles
+ok 8 - les heures de la démo sont lisibles
+  ---
+  duration_ms: 0.4577
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 420.1931

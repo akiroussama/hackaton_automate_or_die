@@ -10,3 +10,8 @@ Thumbs.db
 # final package artifacts stay out of git
 packaging/*
 !packaging/.gitkeep
+
+# exploratory/incompatible material excluded from the jury-facing repo (kept locally)
+claude/
+docs/archive/
+docs/04-messages-et-questions.md
