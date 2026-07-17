@@ -110,6 +110,18 @@ iterations must respect the product freeze and the canonical-facts
 discipline; feature-level improvements target Phase 3 preparation unless the
 team explicitly agrees otherwise.
 
+**Ambition amendment (18 July 2026):** the target is TOP 1 by a wide margin.
+Functional is mandatory; excellent is the entry ticket; the deliverables must
+produce a WOW effect on the jury, the public, the speakers and AI experts.
+Interpretation for both agents: WOW is audience-specific — the exhaustive
+verifier and honest bounded claims for AI experts; completeness and
+3-command reproducibility for the jury; the Waze story, video production
+quality and the live 90-second demo for the public. Candidate levers to
+debate during iterations: GitHub Pages hosting of the frozen static build
+with a try-it-yourself QR code, a live exact-benchmark run during the pitch,
+video sound design. WOW is never bought with elimination risk, metric drift
+or invented claims.
+
 ## 5. Initial commit warning
 
 The workspace currently contains non-canonical or exploratory material that
