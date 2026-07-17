@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="CableTwin aide les usines de câbles à simuler un incident et à choisir la meilleure décision avant de modifier la production réelle."
+    />
+    <meta name="theme-color" content="#0b2926" />
+    <title>CableTwin — Voyez demain avant de décider aujourd'hui</title>
+    <link rel="stylesheet" href="/app/styles.css" />
+    <script type="module" src="/app/app.js"></script>
+  </head>
+  <body data-simulation-state="baseline">
+    <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="CableTwin, retour en haut de page">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+        <span class="brand-copy">
+          <strong>CableTwin</strong>
+          <small>par l'équipe SUPCOM</small>
+        </span>
+      </a>
+
+      <div class="topbar-actions">
+        <span class="demo-badge">
+          <span class="demo-dot" aria-hidden="true"></span>
+          Démo · données synthétiques
+        </span>
+        <button class="button button-ghost button-small" id="reset-button" type="button">
+          Recommencer
+        </button>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Le Waze de l'usine de câbles</p>
+          <h1 id="hero-title">Voyez demain avant de décider aujourd'hui.</h1>
+          <p class="hero-lead">
+            CableTwin crée une copie virtuelle simple de l'usine pour tester les conséquences
+            d'un imprévu — avant de toucher à la production réelle.
+          </p>
+          <div class="hero-actions">
+            <button class="button button-primary" id="simulate-button" type="button">
+              <span>Simuler l'arrêt de la ligne 2</span>
+              <span class="button-arrow" aria-hidden="true">→</span>
+            </button>
+            <a class="text-link" href="#how-it-works">Voir comment cela fonctionne</a>
+          </div>
+          <p class="microcopy">
+            Un horizon de 14 heures · 3 lignes · 10 commandes clients
+          </p>
+        </div>
+
+        <aside class="hero-story" aria-label="Le défi de production du jour">
+          <div class="story-topline">
+            <span class="story-kicker">Le défi du jour</span>
+            <span class="live-pill"><span aria-hidden="true"></span> Usine en marche</span>
+          </div>
+          <p class="story-quote">
+            « Nous devons livrer <strong>10 commandes demain matin</strong>. Que se passe-t-il si
+            une ligne s'arrête aujourd'hui ? »
+          </p>
+          <div class="promise-card">
+            <div>
+              <span class="promise-label">Promesse client</span>
+              <strong>10 / 10 commandes à l'heure</strong>
+            </div>
+            <span class="promise-status">Plan réalisable</span>
+          </div>
+          <div class="hero-orbit" aria-hidden="true">
+            <span class="orbit orbit-one"></span>
+            <span class="orbit orbit-two"></span>
+            <span class="orbit-core">CT</span>
+          </div>
+        </aside>
+      </section>
+
+      <nav class="journey" id="how-it-works" aria-label="Étapes de la démonstration">
+        <a class="journey-step is-active" href="#situation" data-journey-step="situation">
+          <span>01</span>
+          <span><strong>Comprendre</strong><small>La journée prévue</small></span>
+        </a>
+        <span class="journey-line" aria-hidden="true"></span>
+        <a class="journey-step" href="#incident" data-journey-step="incident">
+          <span>02</span>
+          <span><strong>Simuler</strong><small>L'imprévu</small></span>
+        </a>
+        <span class="journey-line" aria-hidden="true"></span>
+        <a class="journey-step" href="#strategies" data-journey-step="strategies">
+          <span>03</span>
+          <span><strong>Comparer</strong><small>Les options</small></span>
+        </a>
+        <span class="journey-line" aria-hidden="true"></span>
+        <a class="journey-step" href="#decision" data-journey-step="decision">
+          <span>04</span>
+          <span><strong>Décider</strong><small>En confiance</small></span>
+        </a>
+      </nav>
+
+      <section class="section-block" id="situation" aria-labelledby="situation-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">01 · Comprendre la situation</p>
+            <h2 id="situation-title">L'usine, en un coup d'œil</h2>
+          </div>
+          <p>
+            Trois lignes fabriquent les commandes de demain. Le planning est chargé, mais tout
+            est encore sous contrôle.
+          </p>
+        </div>
+
+        <div class="operations-grid">
+          <article class="panel factory-panel" aria-labelledby="factory-title">
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker">État en direct</p>
+                <h3 id="factory-title">Atelier de production</h3>
+              </div>
+              <time datetime="2026-07-17T10:00:00">Aujourd'hui · 10:00</time>
+            </div>
+
+            <div class="factory-lines" id="factory-lines" aria-live="polite">
+              <article class="factory-line" data-line="1" data-status="running">
+                <div class="line-identity">
+                  <span class="line-number">L1</span>
+                  <span><strong>Ligne 1</strong><small>Câble automobile</small></span>
+                </div>
+                <div class="line-flow" aria-hidden="true">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="line-output">
+                  <strong data-line-output>92%</strong>
+                  <small>charge</small>
+                </div>
+                <span class="status-chip status-running" data-line-status>En marche</span>
+              </article>
+
+              <article class="factory-line is-focus" data-line="2" data-status="running">
+                <div class="line-identity">
+                  <span class="line-number">L2</span>
+                  <span><strong>Ligne 2</strong><small>Ligne flexible</small></span>
+                </div>
+                <div class="line-flow" aria-hidden="true">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="line-output">
+                  <strong data-line-output>88%</strong>
+                  <small>charge</small>
+                </div>
+                <span class="status-chip status-running" data-line-status>En marche</span>
+              </article>
+
+              <article class="factory-line" data-line="3" data-status="running">
+                <div class="line-identity">
+                  <span class="line-number">L3</span>
+                  <span><strong>Ligne 3</strong><small>Câbles export</small></span>
+                </div>
+                <div class="line-flow" aria-hidden="true">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="line-output">
+                  <strong data-line-output>71%</strong>
+                  <small>charge</small>
+                </div>
+                <span class="status-chip status-running" data-line-status>En marche</span>
+              </article>
+            </div>
+          </article>
+
+          <aside class="kpi-panel" id="kpis" aria-label="Indicateurs clés" aria-live="polite">
+            <article class="kpi-card kpi-primary" data-kpi="on-time-orders">
+              <span class="kpi-label">Commandes à l'heure</span>
+              <strong data-kpi-value>10 / 10</strong>
+              <span class="kpi-change is-positive" data-kpi-change>Objectif tenu</span>
+            </article>
+            <article class="kpi-card" data-kpi="at-risk-orders">
+              <span class="kpi-label">Commandes menacées</span>
+              <strong data-kpi-value>0</strong>
+              <span class="kpi-change" data-kpi-change>Aucun risque</span>
+            </article>
+            <article class="kpi-card" data-kpi="estimated-delay">
+              <span class="kpi-label">Retard cumulé</span>
+              <strong data-kpi-value>0 h</strong>
+              <span class="kpi-change" data-kpi-change>Planning nominal</span>
+            </article>
+            <article class="kpi-card" data-kpi="extra-cost">
+              <span class="kpi-label">Surcoût estimé</span>
+              <strong data-kpi-value>0 DT</strong>
+              <span class="kpi-change" data-kpi-change>Budget préservé</span>
+            </article>
+          </aside>
+        </div>
+
+        <article class="panel schedule-panel" aria-labelledby="gantt-title">
+          <div class="panel-heading schedule-heading">
+            <div>
+              <p class="panel-kicker">Jumeau numérique</p>
+              <h3 id="gantt-title">La journée de production</h3>
+            </div>
+            <div class="schedule-legend" aria-label="Légende du planning">
+              <span><i class="legend-dot is-normal"></i> Planifié</span>
+              <span><i class="legend-dot is-priority"></i> Client prioritaire</span>
+              <span><i class="legend-dot is-risk"></i> À risque</span>
+            </div>
+          </div>
+
+          <div class="gantt-scroll" tabindex="0" aria-label="Planning horizontal, défilement possible">
+            <div class="gantt" id="gantt" data-schedule="baseline">
+              <p class="gantt-loading" role="status">Chargement du planning synthétique…</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="incident-strip" id="incident" aria-labelledby="incident-title" data-incident-state="ready">
+        <div class="incident-icon" aria-hidden="true">!</div>
+        <div class="incident-copy">
+          <p class="eyebrow">02 · Tester l'imprévu</p>
+          <h2 id="incident-title">Et si la ligne 2 s'arrêtait pendant 4 heures ?</h2>
+          <p>
+            CableTwin fait avancer le temps dans l'usine virtuelle pour révéler les commandes,
+            les clients et les coûts qui seraient touchés.
+          </p>
+        </div>
+        <button class="button button-light" type="button" data-simulate-trigger>
+          Lancer la simulation
+          <span aria-hidden="true">→</span>
+        </button>
+        <p class="incident-result" id="simulation-status" role="status" aria-live="polite">
+          Simulation prête
+        </p>
+      </section>
+
+      <section class="section-block strategies-section" id="strategies" aria-labelledby="strategies-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">03 · Comparer les options</p>
+            <h2 id="strategies-title">Trois chemins. Une décision éclairée.</h2>
+          </div>
+          <p>
+            Le moteur explore les possibilités et rend les compromis visibles. Le responsable
+            garde le dernier mot selon la priorité du jour.
+          </p>
+        </div>
+
+        <div class="locked-note" data-strategy-lock role="status">
+          <span aria-hidden="true">02</span>
+          Lancez la simulation pour comparer les solutions.
+        </div>
+
+        <div class="strategy-cards" id="strategy-cards" aria-label="Stratégies proposées" data-locked="true">
+          <article class="strategy-card" data-strategy-card="service">
+            <div class="strategy-topline">
+              <span class="strategy-icon" aria-hidden="true">01</span>
+              <span class="strategy-fit">Service client</span>
+            </div>
+            <h3>Protéger les livraisons</h3>
+            <p>Déplacer les commandes urgentes vers les lignes disponibles.</p>
+            <dl class="strategy-metrics">
+              <div><dt>Commandes à l'heure</dt><dd data-metric="on-time">—</dd></div>
+              <div><dt>Surcoût</dt><dd data-metric="cost">—</dd></div>
+              <div><dt>Changements</dt><dd data-metric="changes">—</dd></div>
+            </dl>
+            <button
+              class="strategy-select"
+              type="button"
+              data-strategy="service"
+              aria-pressed="false"
+              disabled
+            >
+              Choisir cette option
+            </button>
+          </article>
+
+          <article class="strategy-card is-recommended" data-strategy-card="cost">
+            <span class="recommended-ribbon">Recommandé par CableTwin</span>
+            <div class="strategy-topline">
+              <span class="strategy-icon" aria-hidden="true">02</span>
+              <span class="strategy-fit">Meilleur équilibre</span>
+            </div>
+            <h3>Équilibrer coût et délai</h3>
+            <p>Prioriser les clients critiques tout en limitant les heures supplémentaires.</p>
+            <dl class="strategy-metrics">
+              <div><dt>Commandes à l'heure</dt><dd data-metric="on-time">—</dd></div>
+              <div><dt>Surcoût</dt><dd data-metric="cost">—</dd></div>
+              <div><dt>Changements</dt><dd data-metric="changes">—</dd></div>
+            </dl>
+            <button
+              class="strategy-select"
+              type="button"
+              data-strategy="cost"
+              aria-pressed="false"
+              disabled
+            >
+              Choisir cette option
+            </button>
+          </article>
+
+          <article class="strategy-card" data-strategy-card="stability">
+            <div class="strategy-topline">
+              <span class="strategy-icon" aria-hidden="true">03</span>
+              <span class="strategy-fit">Stabilité atelier</span>
+            </div>
+            <h3>Changer le moins possible</h3>
+            <p>Préserver le planning des autres lignes et absorber le retard.</p>
+            <dl class="strategy-metrics">
+              <div><dt>Commandes à l'heure</dt><dd data-metric="on-time">—</dd></div>
+              <div><dt>Surcoût</dt><dd data-metric="cost">—</dd></div>
+              <div><dt>Changements</dt><dd data-metric="changes">—</dd></div>
+            </dl>
+            <button
+              class="strategy-select"
+              type="button"
+              data-strategy="stability"
+              aria-pressed="false"
+              disabled
+            >
+              Choisir cette option
+            </button>
+          </article>
+        </div>
+      </section>
+
+      <section class="decision-section" id="decision" aria-labelledby="decision-title">
+        <div class="decision-card">
+          <div class="decision-copy">
+            <p class="eyebrow">04 · Décider en confiance</p>
+            <h2 id="decision-title">L'humain décide. CableTwin montre les conséquences.</h2>
+            <p>
+              Sélectionnez une option pour obtenir un plan lisible, puis validez-la. Aucune
+              modification n'est envoyée à l'atelier sans accord du responsable.
+            </p>
+            <div class="selected-strategy" data-selected-strategy aria-live="polite">
+              <span>Option sélectionnée</span>
+              <strong>Aucune option pour le moment</strong>
+            </div>
+            <button class="button button-primary button-wide" id="approve-button" type="button" disabled>
+              Valider le nouveau plan
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <div class="audit-card">
+            <div class="audit-heading">
+              <div>
+                <span class="audit-label">Journal de décision</span>
+                <h3>Chaque choix reste explicable</h3>
+              </div>
+              <span class="trace-badge">Traçable</span>
+            </div>
+            <ol class="audit-log" id="audit-log" aria-live="polite" aria-label="Historique des décisions">
+              <li data-log-entry="baseline">
+                <time datetime="10:00">10:00</time>
+                <span><strong>Planning initial chargé</strong><small>10 commandes prévues à l'heure</small></span>
+              </li>
+              <li class="is-pending" data-log-entry="incident">
+                <span class="audit-time">—</span>
+                <span><strong>Incident simulé</strong><small>En attente de la simulation</small></span>
+              </li>
+              <li class="is-pending" data-log-entry="decision">
+                <span class="audit-time">—</span>
+                <span><strong>Décision responsable</strong><small>En attente de validation</small></span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust-section" aria-labelledby="trust-title">
+        <div>
+          <p class="eyebrow">Une innovation réaliste</p>
+          <h2 id="trust-title">Pensé pour commencer petit, puis grandir avec l'usine.</h2>
+        </div>
+        <div class="trust-points">
+          <article>
+            <span aria-hidden="true">1</span>
+            <strong>Sans perturber l'atelier</strong>
+            <p>Le premier pilote lit des exports simples et simule sans piloter les machines.</p>
+          </article>
+          <article>
+            <span aria-hidden="true">2</span>
+            <strong>Décisions explicables</strong>
+            <p>Chaque option indique les commandes, les coûts et les changements concernés.</p>
+          </article>
+          <article>
+            <span aria-hidden="true">3</span>
+            <strong>Responsable aux commandes</strong>
+            <p>Le moteur recommande. Le responsable production choisit et valide.</p>
+          </article>
+        </div>
+      </section>
+
+      <details class="assumptions-panel" id="assumptions-panel">
+        <summary>
+          <span>
+            <strong>Hypothèses transparentes de la démonstration</strong>
+            <small>Voir l'origine des chiffres et les limites du prototype</small>
+          </span>
+          <span class="summary-icon" aria-hidden="true">+</span>
+        </summary>
+        <div class="assumptions-content">
+          <p>
+            Cette démonstration utilise un jeu de données entièrement synthétique inspiré du
+            fonctionnement général d'une usine de câbles. Elle ne représente les données internes
+            d'aucune entreprise réelle.
+          </p>
+          <ul>
+            <li>3 lignes, 10 commandes et un horizon de planification de 14 heures.</li>
+            <li>Incident simulé : arrêt de la ligne 2 pendant 4 heures à partir de 10:00.</li>
+            <li>Coût de réaffectation : 75 DT par ordre déplacé.</li>
+            <li>Coûts synthétiques par minute : production 0,72–0,95 DT ; overtime 0,58–0,70 DT ; retard 2,10–6,00 DT selon l'ordre.</li>
+            <li>Ces coûts servent uniquement à comparer les scénarios de la démonstration.</li>
+            <li>Un pilote réel nécessiterait la validation des capacités, contraintes et coûts de l'usine.</li>
+          </ul>
+        </div>
+      </details>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <a class="brand brand-footer" href="#top">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="brand-copy"><strong>CableTwin</strong><small>Automate or Die · Industry 2026</small></span>
+        </a>
+        <p>Une vision SUPCOM pour une industrie tunisienne plus agile.</p>
+      </div>
+      <p class="footer-note">Prototype de démonstration · Toutes les données sont synthétiques</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "cabletwin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A lightweight operational digital twin for a simulated Tunisian cable factory.",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check app/app.js && node --test tests/*.test.mjs",
+    "benchmark:exact": "node scripts/run-exact-benchmark.mjs",
+    "build:phase1": "node scripts/build-phase1.mjs"
+  }
+}

@@ -1,0 +1,356 @@
+{
+  "avertissement": "Scenario synthetique S1. Resultats de simulation uniquement - aucune performance mesuree en usine reelle.",
+  "scenario": {
+    "t0": "06:00",
+    "fin_de_poste_min": 720,
+    "incident": {
+      "line": "L2",
+      "t_fail": 120,
+      "t_repair_done": 600,
+      "cause": "avarie moteur d'extrudeuse (synthetique)"
+    },
+    "lignes": {
+      "L1": {
+        "busy_until": 290,
+        "families": [
+          "F1"
+        ],
+        "label": "Extrusion BT - ligne 1"
+      },
+      "L2": {
+        "busy_until": 0,
+        "families": [
+          "F1",
+          "F2",
+          "F3"
+        ],
+        "label": "Extrusion BT - ligne 2 (polyvalente)"
+      },
+      "L3": {
+        "busy_until": 620,
+        "families": [
+          "F2"
+        ],
+        "label": "Extrusion MT - ligne 3"
+      }
+    },
+    "commandes_engagees": [
+      {
+        "id": "CMD-101",
+        "line": "L1",
+        "start": 0,
+        "end": 150,
+        "due": 210,
+        "desc": "Cable BT 5G6 - 6 km"
+      },
+      {
+        "id": "CMD-102",
+        "line": "L1",
+        "start": 150,
+        "end": 290,
+        "due": 350,
+        "desc": "Cable BT 3G1,5 - 8 km"
+      },
+      {
+        "id": "CMD-105",
+        "line": "L2",
+        "start": 0,
+        "end": 60,
+        "due": 120,
+        "desc": "Cable BT 2x0,75 - 3 km"
+      },
+      {
+        "id": "CMD-106",
+        "line": "L2",
+        "start": 60,
+        "end": 120,
+        "due": 180,
+        "desc": "Cable BT 3G2,5 - 4 km"
+      },
+      {
+        "id": "CMD-103",
+        "line": "L3",
+        "start": 0,
+        "end": 200,
+        "due": 260,
+        "desc": "Cable MT 5,5/10 kV - 5 km"
+      },
+      {
+        "id": "CMD-104",
+        "line": "L3",
+        "start": 200,
+        "end": 410,
+        "due": 470,
+        "desc": "Cable MT 8,7/15 kV - 6 km"
+      },
+      {
+        "id": "CMD-110",
+        "line": "L3",
+        "start": 410,
+        "end": 620,
+        "due": 680,
+        "desc": "Cable MT 12/20 kV - 7 km"
+      }
+    ],
+    "commandes_impactees": [
+      {
+        "id": "CMD-107",
+        "family": "F1",
+        "proc": {
+          "L1": 90,
+          "L2": 90
+        },
+        "due": 420,
+        "desc": "Cable BT 3x2,5 mm2 - 9 km - client OEM auto"
+      },
+      {
+        "id": "CMD-108",
+        "family": "F2",
+        "proc": {
+          "L2": 120,
+          "L3": 120
+        },
+        "due": 630,
+        "desc": "Cable MT 12/20 kV - 4 km - distributeur energie"
+      },
+      {
+        "id": "CMD-109",
+        "family": "F3",
+        "proc": {
+          "L2": 60
+        },
+        "due": 700,
+        "desc": "Cable instrumentation blinde - 2 km - integrateur industriel"
+      }
+    ],
+    "parametres": {
+      "reglage_transfert_min": 30,
+      "cout_transfert_u": 150,
+      "heures_sup_max_min": 180,
+      "cout_heure_sup_u_par_min": 2
+    }
+  },
+  "menace_a_l_incident": {
+    "commandes_menacees": 3,
+    "sur_total_commandes": 10,
+    "ids": [
+      "CMD-107",
+      "CMD-108",
+      "CMD-109"
+    ],
+    "retard_projete_sans_action_min": 620
+  },
+  "plans_faisables_evalues": 11,
+  "plan_nominal": {
+    "strategie": "Plan nominal avant incident",
+    "kpis": {
+      "retard_total_min": 0,
+      "commandes_en_retard": 0,
+      "commandes_a_l_heure": 3,
+      "a_l_heure_sur_total": "10/10",
+      "transferts_de_ligne": 0,
+      "heures_sup_min": 0,
+      "surcout_synthetique_u": 0
+    },
+    "ordonnancement": [
+      {
+        "commande": "CMD-107",
+        "ligne": "L2",
+        "debut_min": 120,
+        "fin_min": 210,
+        "echeance_min": 420,
+        "retard_min": 0,
+        "transferee": false
+      },
+      {
+        "commande": "CMD-108",
+        "ligne": "L2",
+        "debut_min": 210,
+        "fin_min": 330,
+        "echeance_min": 630,
+        "retard_min": 0,
+        "transferee": false
+      },
+      {
+        "commande": "CMD-109",
+        "ligne": "L2",
+        "debut_min": 330,
+        "fin_min": 390,
+        "echeance_min": 700,
+        "retard_min": 0,
+        "transferee": false
+      }
+    ]
+  },
+  "sans_action": {
+    "strategie": "Sans action (attendre la reparation, sequence initiale)",
+    "kpis": {
+      "retard_total_min": 620,
+      "commandes_en_retard": 3,
+      "commandes_a_l_heure": 0,
+      "a_l_heure_sur_total": "7/10",
+      "transferts_de_ligne": 0,
+      "heures_sup_min": 150,
+      "surcout_synthetique_u": 300
+    },
+    "ordonnancement": [
+      {
+        "commande": "CMD-107",
+        "debut_min": 600,
+        "echeance_min": 420,
+        "fin_min": 690,
+        "ligne": "L2",
+        "retard_min": 270,
+        "transferee": false
+      },
+      {
+        "commande": "CMD-108",
+        "debut_min": 690,
+        "echeance_min": 630,
+        "fin_min": 810,
+        "ligne": "L2",
+        "retard_min": 180,
+        "transferee": false
+      },
+      {
+        "commande": "CMD-109",
+        "debut_min": 810,
+        "echeance_min": 700,
+        "fin_min": 870,
+        "ligne": "L2",
+        "retard_min": 170,
+        "transferee": false
+      }
+    ]
+  },
+  "strategies": {
+    "vitesse": {
+      "strategie": "vitesse",
+      "kpis": {
+        "retard_total_min": 140,
+        "commandes_en_retard": 1,
+        "commandes_a_l_heure": 2,
+        "a_l_heure_sur_total": "9/10",
+        "transferts_de_ligne": 2,
+        "heures_sup_min": 50,
+        "surcout_synthetique_u": 400
+      },
+      "ordonnancement": [
+        {
+          "commande": "CMD-107",
+          "debut_min": 320,
+          "echeance_min": 420,
+          "fin_min": 410,
+          "ligne": "L1",
+          "retard_min": 0,
+          "transferee": true
+        },
+        {
+          "commande": "CMD-109",
+          "debut_min": 600,
+          "echeance_min": 700,
+          "fin_min": 660,
+          "ligne": "L2",
+          "retard_min": 0,
+          "transferee": false
+        },
+        {
+          "commande": "CMD-108",
+          "debut_min": 650,
+          "echeance_min": 630,
+          "fin_min": 770,
+          "ligne": "L3",
+          "retard_min": 140,
+          "transferee": true
+        }
+      ]
+    },
+    "equilibre": {
+      "strategie": "equilibre",
+      "kpis": {
+        "retard_total_min": 150,
+        "commandes_en_retard": 1,
+        "commandes_a_l_heure": 2,
+        "a_l_heure_sur_total": "9/10",
+        "transferts_de_ligne": 1,
+        "heures_sup_min": 60,
+        "surcout_synthetique_u": 270
+      },
+      "ordonnancement": [
+        {
+          "commande": "CMD-107",
+          "debut_min": 320,
+          "echeance_min": 420,
+          "fin_min": 410,
+          "ligne": "L1",
+          "retard_min": 0,
+          "transferee": true
+        },
+        {
+          "commande": "CMD-109",
+          "debut_min": 600,
+          "echeance_min": 700,
+          "fin_min": 660,
+          "ligne": "L2",
+          "retard_min": 0,
+          "transferee": false
+        },
+        {
+          "commande": "CMD-108",
+          "debut_min": 660,
+          "echeance_min": 630,
+          "fin_min": 780,
+          "ligne": "L2",
+          "retard_min": 150,
+          "transferee": false
+        }
+      ]
+    },
+    "zero_transfert": {
+      "strategie": "zero_transfert",
+      "kpis": {
+        "retard_total_min": 560,
+        "commandes_en_retard": 3,
+        "commandes_a_l_heure": 0,
+        "a_l_heure_sur_total": "7/10",
+        "transferts_de_ligne": 0,
+        "heures_sup_min": 150,
+        "surcout_synthetique_u": 300
+      },
+      "ordonnancement": [
+        {
+          "commande": "CMD-107",
+          "debut_min": 600,
+          "echeance_min": 420,
+          "fin_min": 690,
+          "ligne": "L2",
+          "retard_min": 270,
+          "transferee": false
+        },
+        {
+          "commande": "CMD-109",
+          "debut_min": 690,
+          "echeance_min": 700,
+          "fin_min": 750,
+          "ligne": "L2",
+          "retard_min": 50,
+          "transferee": false
+        },
+        {
+          "commande": "CMD-108",
+          "debut_min": 750,
+          "echeance_min": 630,
+          "fin_min": 870,
+          "ligne": "L2",
+          "retard_min": 240,
+          "transferee": false
+        }
+      ]
+    }
+  },
+  "reduction_retard_vs_sans_action_pct": {
+    "vitesse": 77.4,
+    "equilibre": 75.8,
+    "zero_transfert": 9.7
+  }
+}
