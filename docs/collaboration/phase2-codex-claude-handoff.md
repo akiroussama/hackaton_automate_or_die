@@ -72,10 +72,10 @@ resolved before the document is reused.
 
 ## 4. First lock
 
-**Current owner:** Claude Code  
-**Status:** ACTIVE - Codex must stop  
-**Task:** finish the repository block currently visible in the Git index,
-verify it, commit/push if appropriate, then hand off explicitly.
+**Current owner:** Codex  
+**Status:** ACTIVE - narrative block; Claude Code must stop  
+**Task:** draft jury-facing narrative content into the data-room skeletons,
+deck outline and video script listed in the 2026-07-17 22:50 handoff entry.
 
 Codex will not draft, edit, stage, commit, run narrative subtasks or modify
 data-room, deck, brand, packaging or repository files until Claude records a
@@ -344,6 +344,90 @@ Next permitted action:
 
 - Codex: draft data-room content into the 8 skeleton files and deck/video
   narrative; do not touch .gitignore, git state, brand/, packaging/
+
+### 2026-07-17 22:50 - Claude Code -> Codex
+
+Task:
+Prototype freeze block: full verification, blocking-defect fix, evidence
+capture, standalone archive. Repository block is now closed and committed.
+
+Files changed:
+
+- `engine/twin-engine.js`, `app/app.js`: **blocking defect fixed.** The app
+  crashed at module init in ANY browser (`Error: OF-106: chevauchement avec
+  l'arrêt de L2`) because `validateSchedule` enforced the incident window
+  against the pre-incident baseline schedule. Root cause: engine hardened at
+  16:25 after the app was last browser-verified at 12:34; tests only validate
+  recovery plans, so 8/8 stayed green while the app was down.
+  `validateSchedule`/`calculateMetrics` now take `{ enforceIncidentWindow }`
+  (default `true` — benchmark and all recovery paths byte-identical); only
+  the baseline call opts out. Freeze-doctrine compliant (blocking defect).
+- `tests/twin-engine.test.mjs`: 9th regression test added.
+  **CANONICAL DRIFT ALERT: "8/8 automated checks" is now "9/9" everywhere.**
+  Codex must sweep every document for the 8/8 claim during the narrative pass.
+- `CLAUDE.md`, `AGENTS.md` committed unchanged.
+
+Files generated:
+
+- `scripts/capture-screens.mjs`: dependency-free CDP driver (headless
+  Edge/Chrome, Node >= 22) replaying the full journey; reusable for re-capture
+  after any visual change.
+- `docs/data-room/evidence/screenshots/`: 10 PNGs (nominal, incident KPIs,
+  three strategy cards, Service preview Gantt, decision preview, approved
+  audit, full-page nominal and resolved, reset) at 1920x1080.
+- `docs/data-room/evidence/screenshots/ui-metrics.json`: UI-extracted values;
+  all match canonical (620 min = "10 h 20 min", Service 8/10 +838 DT 3 moves,
+  Cost 8/10 +799 DT 2 moves, Stability 7/10 +2 729 DT 0 moves, approval at
+  10:07, reset verified to 10/10). `externalNetworkRequests: []` — offline
+  proof.
+- `packaging/CableTwin_SUPCOM_Prototype.zip` (44 KB, gitignored; app, engine,
+  tests, scripts, package.json, LICENSE, README).
+
+Commit:
+
+- `7344a66` audit exclusions; `9d496f9` fix + test + evidence (pushed with
+  this handoff commit)
+
+Commands run:
+
+- `npm run check` -> 9/9 pass; `npm run benchmark:exact` -> unchanged
+  (17,856 / 10,440; 140/170/620; verified=true unique=true for all three)
+- `node scripts/capture-screens.mjs` -> full journey replayed headless,
+  0 external requests
+
+Verification result:
+
+- prototype launches, full incident-to-approval-to-reset journey works in a
+  real Chromium browser; screenshots visually inspected
+
+Canonical metrics checked:
+
+- yes, three ways: tests, exact benchmark, and live UI extraction
+
+Known limitations:
+
+- DT figures in the UI are deltas vs the nominal plan (+838/+799/+2 729),
+  while the benchmark reports absolute costs (1 971/1 931/3 862); both are
+  consistent but narrative must not mix the two representations
+- repository visibility still unverified from an unauthenticated session
+
+Open risks:
+
+- every "8/8" claim in legacy docs is now stale (see drift alert)
+- deck/video must use post-fix screenshots only (all current evidence is
+  post-fix)
+
+Next owner:
+
+- Codex
+
+Next permitted action:
+
+- narrative drafting ONLY in: `docs/data-room/0[1-8]-*.md`, `deck/outline.md`
+  (content below the table), `video/script.md` (wording only, structure
+  frozen), plus the 8/8 -> 9/9 sweep list as a report. Do not touch: engine/,
+  app/, tests/, scripts/, .gitignore, git state, brand/, packaging/,
+  docs/data-room/INDEX.md structure, evidence files.
 
 ## 10. Final-tag gate
 
