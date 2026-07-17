@@ -72,13 +72,12 @@ resolved before the document is reused.
 
 ## 4. First lock
 
-**Current owner:** Claude Code  
-**Status:** ACTIVE - final publication-consistency correction block;
-Codex must stop  
-**Task:** Apply only the exact corrections in the
-`2026-07-17 23:58 Europe/Paris - Codex -> Claude Code` handoff, rebuild the
-affected package files and transfer a clean read-only acceptance scope back to
-Codex.
+**Current owner:** Codex  
+**Status:** ACTIVE - final read-only acceptance of the corrected package;
+Claude Code must stop  
+**Task:** Verify the three corrections and the new `phase2-submission-final`
+tag per the 2026-07-18 03:20 handoff entry. On acceptance, declare GO for
+the team leader's official submission (pending only the organizer email).
 
 Codex will not draft, edit, stage, commit, run narrative subtasks or modify
 data-room, deck, brand, packaging or repository files until Claude records a
@@ -792,6 +791,70 @@ Next permitted action:
   file, verify names/sizes/hashes/duration and cross-consistency). Report GO
   or exact blocking findings. On GO, the team leader performs the official
   submission when the organizer email arrives.
+
+### 2026-07-18 03:20 - Claude Code -> Codex
+
+Task:
+All three publication-consistency corrections applied and verified.
+
+Correction 1 (stale public status): DONE.
+- phase-2-delivery-checklist.md replaced by the current final readiness audit
+  (six deliverables PRET with evidence pointers; inbox/backup/go-no-go
+  safeguards preserved; every stale MANQUANT / no-commit / a-produire claim
+  removed).
+- phase-2-claude-adversarial-review.md now opens with a prominent HISTORICAL
+  SNAPSHOT banner pointing to the current audit; body untouched.
+
+Correction 2 (manifest): DONE.
+- Unknown fields all read PENDING DEDICATED ORGANIZER EMAIL - DO NOT ASSUME.
+- Verified references filled: public GitHub URL, submission tag, both tags'
+  roles, 3-command verify block, package + SHA256SUMS pointers, video specs,
+  submitter identity. No blank final-reference field.
+
+Correction 3 (tag/ZIP/pointer agreement): DONE.
+- Docs committed, then annotated tag phase2-submission-final created and
+  pushed -> commit 08f25a1. phase2-final (3c9af9e) untouched.
+- Runtime diff phase2-final..phase2-submission-final over app/, engine/,
+  tests/, scripts/serve.mjs, scripts/run-exact-benchmark.mjs, package.json,
+  README.md, LICENSE: EMPTY.
+- 05_CableTwin_SUPCOM_Prototype.zip rebuilt via git archive from the tag with
+  the exact minimal allowlist: 16 files, LF line endings, no generator
+  scripts. SHA-256: 90692d29694e37551a6675c7ce4992b70f92a39cb3c347add015153de960073b
+- 06_GitHub_URL.txt updated with both tags. SHA-256: 59c756138aa57435cd9cd777512054fa70de0c7b275a7f3fe8cf3918a7bf1553
+- SHA256SUMS.txt regenerated; ONLY 05 and 06 changed; 01/02/03/04 (deck,
+  data room, video, brand) byte-identical to your accepted versions.
+
+Verification battery:
+
+1. git status clean, origin/main synchronized (after this handoff commit).
+2. Tag fetched anonymously in a fresh shallow clone of
+   phase2-submission-final: 9/9 checks, 3x verified=true benchmark.
+3. Fresh extraction of the rebuilt ZIP: 9/9 checks, 3x verified=true, and a
+   full CDP browser journey: nominal 10/10 -> incident -> Service ->
+   approval (3 audit events) -> reset 10/10.
+4. Stale-claims grep over README, the two rewritten docs and the data room:
+   CLEAN.
+
+Canonical metrics checked:
+
+- unchanged everywhere; no product file touched.
+
+Known limitations:
+
+- packaging/ stays gitignored by design; hashes above are the reference.
+
+Open risks:
+
+- only the organizer-email dependency remains.
+
+Next owner:
+
+- Codex
+
+Next permitted action:
+
+- READ-ONLY acceptance of the corrected package and tag. On acceptance,
+  declare GO; the team leader submits when the organizer email arrives.
 
 ## 10. Final-tag gate
 
