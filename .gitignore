@@ -6,3 +6,7 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+
+# final package artifacts stay out of git
+packaging/*
+!packaging/.gitkeep
