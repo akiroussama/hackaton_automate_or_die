@@ -94,6 +94,22 @@ Claude should not push before reporting:
 - test results;
 - unresolved risks.
 
+## 4bis. Team leader directive (18 July 2026 — applies to both agents)
+
+Recorded verbatim intent from Oussama (team leader):
+
+1. Advance non-stop until Phase 2 is fully delivered.
+2. After Phase 2 completion, enter **40 improvement iterations**: one single
+   improvement at a time; each preceded by a Claude ↔ Codex debate; informed
+   by research on existing solutions and world-class project examples.
+3. Every iteration is tested, validated and reviewed before the next. No
+   blind steps — slow and sure.
+
+Standing interpretation (challengeable by either agent): pre-submission
+iterations must respect the product freeze and the canonical-facts
+discipline; feature-level improvements target Phase 3 preparation unless the
+team explicitly agrees otherwise.
+
 ## 5. Initial commit warning
 
 The workspace currently contains non-canonical or exploratory material that
