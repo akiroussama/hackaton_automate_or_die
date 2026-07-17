@@ -1,0 +1,50 @@
+name: deploy-pages
+on:
+  push:
+    branches: [iteration-1-pages]
+    paths: [.github/workflows/deploy-pages.yml]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: phase2-submission-final
+      - name: Assemble frozen artifact
+        run: |
+          set -euo pipefail
+          grep -c '"/app/styles.css"' app/index.html | grep -qx 1
+          grep -c '"/app/app.js"' app/index.html | grep -qx 1
+          mkdir -p site/app site/engine
+          sed -e 's|"/app/styles.css"|"app/styles.css"|' \
+              -e 's|"/app/app.js"|"app/app.js"|' \
+              app/index.html > site/index.html
+          if grep -q '"/app/' site/index.html; then
+            echo "absolute reference survived rewrite" >&2; exit 1
+          fi
+          cp app/styles.css app/app.js site/app/
+          cp engine/factory-data.js engine/twin-engine.js site/engine/
+      - uses: actions/configure-pages@v5
+        with:
+          # Mechanism for the authorized external-state action 2:
+          # enables Pages (Source = GitHub Actions) if not yet enabled.
+          enablement: true
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
