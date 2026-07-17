@@ -31,7 +31,7 @@ Tous les rôles reviennent à la même personne. L’ordre ci-dessus est donc s�
 - Tests : `tests/twin-engine.test.mjs`.
 - Lancement et parcours : `README.md`.
 - Rapport de validation : `docs/cabletwin/07-validation-technique.md`.
-- Contrôle du 17 juillet : `npm run check` réussit, **8 tests sur 8** ; `npm run benchmark:exact` confirme les trois optima du scénario canonique parmi **10 440** plannings faisables.
+- Contrôle du 17 juillet : `npm run check` réussit, **9 tests sur 9** ; `npm run benchmark:exact` confirme les trois optima du scénario canonique parmi **10 440** plannings faisables.
 
 ### Critères de fini avant soumission
 

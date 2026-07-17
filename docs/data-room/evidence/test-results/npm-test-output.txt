@@ -1,62 +1,68 @@
 
-> cabletwin@0.1.0 test
-> node --test tests/*.test.mjs
+> cabletwin@0.1.0 check
+> node --check app/app.js && node --test tests/*.test.mjs
 
 TAP version 13
 # Subtest: le dataset est explicitement synthétique et couvre 3 lignes / 10 commandes
 ok 1 - le dataset est explicitement synthétique et couvre 3 lignes / 10 commandes
   ---
-  duration_ms: 2.2745
+  duration_ms: 2.6671
   type: 'test'
   ...
 # Subtest: l’incident identifie les commandes touchées sur la ligne 2
 ok 2 - l’incident identifie les commandes touchées sur la ligne 2
   ---
-  duration_ms: 1.0893
+  duration_ms: 1.5347
   type: 'test'
   ...
 # Subtest: les trois stratégies produisent des plannings déterministes et réalisables
 ok 3 - les trois stratégies produisent des plannings déterministes et réalisables
   ---
-  duration_ms: 19.4054
+  duration_ms: 22.6916
   type: 'test'
   ...
 # Subtest: les stratégies matérialisent trois arbitrages compréhensibles
 ok 4 - les stratégies matérialisent trois arbitrages compréhensibles
   ---
-  duration_ms: 1.397
+  duration_ms: 1.392
   type: 'test'
   ...
 # Subtest: l’oracle exhaustif certifie les trois politiques sur le scénario canonique
 ok 5 - l’oracle exhaustif certifie les trois politiques sur le scénario canonique
   ---
-  duration_ms: 285.4339
+  duration_ms: 333.8276
   type: 'test'
   ...
 # Subtest: les métriques exposent retard, overtime, coût, mouvements et taux à l’heure
 ok 6 - les métriques exposent retard, overtime, coût, mouvements et taux à l’heure
   ---
-  duration_ms: 0.7163
+  duration_ms: 0.4318
   type: 'test'
   ...
 # Subtest: l’approbation ajoute une décision auditable sans modifier le plan proposé
 ok 7 - l’approbation ajoute une décision auditable sans modifier le plan proposé
   ---
-  duration_ms: 0.8459
+  duration_ms: 0.7485
   type: 'test'
   ...
 # Subtest: les heures de la démo sont lisibles
 ok 8 - les heures de la démo sont lisibles
   ---
-  duration_ms: 0.4577
+  duration_ms: 0.2079
   type: 'test'
   ...
-1..8
-# tests 8
+# Subtest: les métriques du plan nominal se calculent avant l'incident
+ok 9 - les métriques du plan nominal se calculent avant l'incident
+  ---
+  duration_ms: 0.8635
+  type: 'test'
+  ...
+1..9
+# tests 9
 # suites 0
-# pass 8
+# pass 9
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 420.1931
+# duration_ms 506.6699

@@ -1,9 +1,174 @@
 # 04 — Data model, constraints and assumptions
 
-> Skeleton — to be completed before the T-6h content freeze. Source: engine/factory-data.js.
+## Data classification
 
-## Data dictionary (lines, orders, fields)
-## The synthetic scenario (3 lines, 10 orders, Line 2 stops at 10:00 for 4h)
-## Cost coefficients and their status (illustrative synthetic comparison model)
-## Missing industrial constraints
-## Proposed pilot data contract
+> **SYNTHETIC DEMONSTRATION DATA.** Every company, customer, order, quantity,
+> duration, cost coefficient and operational result in the Phase 2 build is
+> fictional.
+
+The canonical source is
+[`engine/factory-data.js`](../../engine/factory-data.js). Keeping the dataset in
+one executable module prevents presentation values from drifting away from the
+prototype.
+
+## Data dictionary
+
+### Production line
+
+| Field | Type / unit | Purpose |
+| --- | --- | --- |
+| `id`, `name` | text | Stable identity and user-facing label |
+| `normalEndMinute` | minutes from 08:00 | End of the normal shift |
+| `productionCostDtPerMinute` | synthetic DT/min | Illustrative production comparison coefficient |
+| `overtimePremiumDtPerMinute` | synthetic DT/min | Illustrative overtime comparison coefficient |
+
+### Production order
+
+| Field | Type / unit | Purpose |
+| --- | --- | --- |
+| `id`, `customer`, `product` | text | Order identity and readable context |
+| `quantityKm` | kilometres | Shift-end throughput calculation |
+| `priority` | integer | Relative service importance |
+| `dueMinute` | minutes from 08:00 | Delivery completion target in the scenario |
+| `delayCostDtPerMinute` | synthetic DT/min | Illustrative lateness comparison coefficient |
+| `eligibleLineIds` | line IDs | Product-to-line compatibility |
+| `durationByLine` | minutes by eligible line | Line-dependent production duration |
+
+### Schedule entry
+
+| Field | Type / unit | Purpose |
+| --- | --- | --- |
+| `orderId`, `lineId` | IDs | Assignment decision |
+| `startMinute`, `endMinute` | minutes from 08:00 | Planned production interval |
+| `state` | text | Completed or planned after the incident |
+| `movedFromLineId` | line ID or null | Trace of a reassignment |
+
+### Incident, clock and settings
+
+| Object | Fields used |
+| --- | --- |
+| Incident | line, type, start, end, detection time and synthetic reason |
+| Clock | day start, normal shift end, planning horizon and fixed generation time |
+| Settings | synthetic cost of one line reassignment |
+
+## Fixed scenario
+
+| Fact | Canonical value |
+| --- | --- |
+| Factory | Fictional Tunisian cable factory |
+| Day start | 08:00 |
+| Normal shift end | 18:00 |
+| Planning horizon | 22:00 |
+| Production lines | 3 |
+| Orders | 10 |
+| Total ordered quantity | 241 km |
+| Nominal schedule | 10/10 orders on time |
+| Incident | Line 2 unavailable from 10:00 to 14:00 |
+| Directly interrupted orders | OF-106 and OF-107 |
+| Downstream exposed order | OF-108 |
+| Orders replanned by the engine | 7; 3 completed orders stay fixed |
+
+Time is stored as minutes from the 08:00 day start. This makes every duration,
+overlap and due-time calculation deterministic while the interface displays
+human-readable clock times.
+
+## Encoded hard constraints
+
+A recovery schedule is valid only if:
+
+- it contains all 10 orders exactly once;
+- each order uses an eligible line;
+- its duration matches the chosen line;
+- start is before end and both remain non-negative;
+- no two orders overlap on one line;
+- no order overlaps the Line 2 stop;
+- no order finishes after the 22:00 planning horizon.
+
+Orders completed by 10:00 remain fixed during recovery construction. The nominal
+pre-incident schedule is validated without applying the future incident window;
+all recovery schedules enforce it.
+
+## KPI and cost assumptions
+
+The total illustrative comparison cost is:
+
+```text
+Σ (duration × line production coefficient)
++ Σ (delay × order delay coefficient)
++ Σ (overtime × line overtime coefficient)
++ (number of line moves × 75 DT)
+```
+
+The coefficients make alternatives comparable inside one synthetic experiment.
+They are **not quotations, accounting values, penalties from a customer,
+factory savings or commercial ROI**.
+
+Two representations appear in the product evidence:
+
+- the benchmark reports absolute synthetic total cost:
+  Service 1,971.15 DT; Cost 1,931.45 DT; Stability 3,862.20 DT;
+- the UI cards report rounded incremental cost versus the nominal 1,132.80 DT
+  plan: Service +838 DT; Cost +799 DT; Stability +2,729 DT.
+
+Both are mathematically consistent, but they must never be mixed without the
+reference point.
+
+## Model assumptions
+
+The MVP assumes:
+
+- each order occupies one continuous production slot;
+- eligible lines can substitute for each other at the encoded durations;
+- order quantity is completed at the end of the slot;
+- the incident end is known and deterministic;
+- no voluntary idle time improves the declared bounded-demo objectives;
+- no new order, material shortage or second failure arrives during planning;
+- line and order data are internally consistent.
+
+These assumptions make the demonstration inspectable. They are not assertions
+about a real cable plant.
+
+## Industrial constraints not yet modelled
+
+A real pilot must determine whether to add:
+
+- multi-stage routing and precedence between conductor preparation, insulation,
+  assembly, sheathing, testing and winding;
+- sequence-dependent changeovers, cleaning and setup crews;
+- tooling, reels, dies, labour qualifications and shared resources;
+- material, work-in-progress and packaging availability;
+- minimum batch sizes, split lots and campaign constraints;
+- quality holds, maintenance windows and energy limits;
+- uncertainty ranges for processing and repair duration;
+- multiple shifts, days, sites and transport commitments.
+
+No route should be labelled feasible in a pilot until the production planner has
+validated the relevant rule set.
+
+## Proposed read-only pilot data contract
+
+The minimum contract can be supplied as CSV exports, database views or an API,
+but the first integration remains read-only.
+
+| Dataset | Minimum fields | Validation owner |
+| --- | --- | --- |
+| Lines and calendars | ID, availability, shift windows, compatible families | Production planner |
+| Orders | ID, family, quantity, due time, priority/status | Planning / customer service |
+| Line eligibility | Product family, eligible line and effective date | Industrial engineering |
+| Durations | Order or family, line, expected duration and unit | Methods / planner |
+| Active schedule | Order, line, planned start and end | Planning system owner |
+| Incident | Resource, observed start, expected duration or range | Workshop / maintenance |
+| Actual decision | Chosen assignment, decision time and reason | Production manager |
+| Actual outcome | Completion time, overtime, moves and exceptions | Pilot analyst |
+
+### Validation gates before replay
+
+1. Schema and units are agreed.
+2. Missing, duplicated and impossible records are reported.
+3. Compatibility and calendar rules are signed off by the planner.
+4. Historical outcomes are kept separate from recommendations.
+5. Every replay uses a versioned snapshot and constraint set.
+6. Data is minimized and customer names can be pseudonymized.
+
+The pilot evidence pack must preserve the lineage from source snapshot to
+recommendation, approval and KPI result.

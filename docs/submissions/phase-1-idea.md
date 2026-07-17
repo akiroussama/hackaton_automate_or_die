@@ -98,7 +98,7 @@ The evidence pack will compare time-to-plan, cumulative delay, shift-end through
 ### What is already achievable
 
 - A complete offline prototype already demonstrates the incident, three strategies, KPI comparison, schedule preview, human approval, decision record and reset.
-- The fixed scenario contains 3 lines, 10 orders and one 4-hour stoppage, with 8/8 automated checks and an independent validation of the displayed plans.
+- The fixed scenario contains 3 lines, 10 orders and one 4-hour stoppage, with 8/8 automated checks and an independent validation of the displayed plans. *(Phase 1 snapshot — the Phase 2 frozen build passes 9/9; see the technical data room.)*
 - The scope is deliberately narrow: one operational decision in one workshop, without machine control or production-system write access.
 
 ### Resources and realistic 48/72-hour plan

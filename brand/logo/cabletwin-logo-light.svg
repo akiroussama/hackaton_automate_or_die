@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 300" width="1180" height="300" role="img" aria-label="CableTwin logo for light backgrounds">
+  <!-- Wordmark for LIGHT backgrounds (dark text). -->
+  <g>
+    <rect x="20" y="30" width="240" height="240" rx="48" fill="#092925"/>
+    <path d="M60 92 H220" stroke="#0F766E" stroke-width="17" stroke-linecap="round"/>
+    <path d="M60 150 H118" stroke="#0F766E" stroke-width="17" stroke-linecap="round"/>
+    <path d="M163 150 H220" stroke="#0F766E" stroke-width="17" stroke-linecap="round" opacity="0.35"/>
+    <circle cx="140" cy="150" r="13" fill="none" stroke="#E9763B" stroke-width="8"/>
+    <path d="M60 208 H220" stroke="#0F766E" stroke-width="17" stroke-linecap="round"/>
+    <path d="M90 150 C114 150 111 92 138 92 H166 C192 92 190 150 214 150"
+          fill="none" stroke="#C9F36B" stroke-width="11" stroke-linecap="round"/>
+    <circle cx="218" cy="150" r="8.5" fill="#C9F36B"/>
+  </g>
+  <text x="300" y="188" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="132" font-weight="700" fill="#092925">Cable<tspan fill="#0F766E">Twin</tspan></text>
+  <text x="304" y="248" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="40" font-weight="400" letter-spacing="2" fill="#53645F">The Waze of the cable factory</text>
+</svg>

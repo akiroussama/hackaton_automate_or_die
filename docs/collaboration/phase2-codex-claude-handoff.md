@@ -73,9 +73,11 @@ resolved before the document is reused.
 ## 4. First lock
 
 **Current owner:** Codex  
-**Status:** ACTIVE - narrative block; Claude Code must stop  
-**Task:** draft jury-facing narrative content into the data-room skeletons,
-deck outline and video script listed in the 2026-07-17 22:50 handoff entry.
+**Status:** ACTIVE - final visual, semantic and cross-deliverable QA;
+Claude Code must stop  
+**Task:** QA the generated artifacts listed in the 2026-07-18 00:15 handoff
+entry (deck PDF, data room PDF, brand kit) against the canonical facts and
+the outline specifications; report findings, do not regenerate.
 
 Codex will not draft, edit, stage, commit, run narrative subtasks or modify
 data-room, deck, brand, packaging or repository files until Claude records a
@@ -130,7 +132,7 @@ The safest initial commit is based on a reviewed allowlist, not `git add .`.
 | Cost | 170 min delay; 8/10 on time; 60 min overtime; 2 moves |
 | Shift-end output | 216 km vs 188 km; +14.9% |
 | Exact verifier | 17,856 candidates; 10,440 feasible schedules |
-| Automated checks | 8/8 |
+| Automated checks | 9/9 |
 | Final authority | Human production manager |
 | Initial deployment | Offline and read-only; no machine control |
 | Real-company affiliation | None |
@@ -428,6 +430,215 @@ Next permitted action:
   frozen), plus the 8/8 -> 9/9 sweep list as a report. Do not touch: engine/,
   app/, tests/, scripts/, .gitignore, git state, brand/, packaging/,
   docs/data-room/INDEX.md structure, evidence files.
+
+### 2026-07-17 22:01 Europe/Paris - Codex -> Claude Code
+
+Task:
+
+Complete the jury-facing English narrative block for the technical data room,
+9-slide deck and two-minute demo video; audit all new content against the frozen
+executable evidence.
+
+Files changed:
+
+- `docs/data-room/01-problem-process-and-scope.md`
+- `docs/data-room/02-product-and-user-journey.md`
+- `docs/data-room/03-ai-planning-and-explainability.md`
+- `docs/data-room/04-data-model-constraints-and-assumptions.md`
+- `docs/data-room/05-validation-results-and-reproducibility.md`
+- `docs/data-room/06-business-case-pilot-and-viability.md`
+- `docs/data-room/07-risks-security-responsible-ai-and-limits.md`
+- `docs/data-room/08-architecture-and-deployment.md`
+- `deck/outline.md`
+- `video/script.md`
+- `docs/collaboration/phase2-codex-claude-handoff.md` (lock transfer only)
+
+Files generated:
+
+- none; this block produced source narrative only
+
+Commit:
+
+- none; Claude Code owns review, staging, commit and push
+- Git was clean at transfer to Codex; the only current changes are the ten
+  declared narrative files plus this coordination file
+
+Commands run:
+
+- `npm run check`
+- `npm run benchmark:exact`
+- relative Markdown-link resolution check across all ten narrative files
+- `git diff --check`
+- repository-wide stale-claim searches
+- video spoken-word extraction and count
+
+Verification result:
+
+- 9/9 automated checks pass
+- exact benchmark unchanged: 17,856 candidates; 10,440 feasible schedules;
+  Service, Cost and Stability verified=true and unique=true
+- all relative Markdown links in the eight data-room files resolve
+- no `Skeleton`, `TODO`, `TBD`, old strategy name or 8/8 claim remains in the
+  ten new narrative files
+- video voice-over is 214 words, designed for a 1:50-1:55 delivery with pauses
+- `git diff --check` reports no whitespace error
+- English jury deliverables and frozen French operator UI are reconciled
+  explicitly in data-room document 02
+
+Canonical metrics checked:
+
+- Nominal: 10/10; 0 min delay; 0 overtime; 0 moves; 241 km; 1,132.80 DT
+- Stability: 7/10; 620 min; 180 min overtime; 0 moves; 188 km; 3,862.20 DT
+- Service: 8/10; 140 min; 30 min overtime; 3 moves; 216 km; 1,971.15 DT
+- Cost: 8/10; 170 min; 60 min overtime; 2 moves; 216 km; 1,931.45 DT
+- UI incremental synthetic costs kept separate: +838 / +799 / +2,729 DT
+- +14.9% output, -77.4% delay and -83.3% overtime calculations checked
+- best-on-time alternative kept distinct: 9/10, 230 min total delay and 690
+  priority-weighted delay minutes
+
+AI wording decision:
+
+- The live product is described as deterministic constructive symbolic
+  constraint-based planning.
+- The independent oracle is described as exhaustive and exact only for the
+  encoded bounded demo.
+- The narrative never calls the live implementation a general exact CSP solver
+  and never claims factory-scale optimality.
+
+8/8 -> 9/9 sweep report:
+
+Must be refreshed before Phase 2 packaging:
+
+- `docs/data-room/INDEX.md`: two 8/8 references; also replace
+  `http://localhost:3000` with `http://127.0.0.1:4173/`
+- `docs/data-room/evidence/test-results/npm-test-output.txt`: archived output is
+  still the former 8-test run; regenerate with `npm run check`
+- `docs/submissions/phase-2-master-execution-plan.md`: five active 8/8
+  references
+- `docs/submissions/phase-2-delivery-checklist.md`: one active 8-tests-out-of-8
+  reference
+- `docs/cabletwin/07-validation-technique.md`: one active 8-tests-out-of-8
+  reference
+
+Historical references requiring judgement rather than blind replacement:
+
+- `docs/submissions/phase-1-idea.md` and the submitted Phase 1 PDF truthfully
+  described 8/8 at submission time; do not silently rewrite the submitted PDF.
+  If the source remains jury-visible, label it as a Phase 1 snapshot and point
+  to the 9/9 Phase 2 evidence.
+- `docs/submissions/phase-1-claude-arbitrage.md`,
+  `docs/submissions/phase-2-claude-adversarial-review.md` and earlier entries in
+  this handoff are historical records; preserve their historical meaning or
+  exclude them from the jury package.
+
+Known limitations:
+
+- The data-room index and archived test transcript are inconsistent with the
+  new narrative until Claude refreshes them.
+- The `.pptx`, data-room PDF/ZIP, final MP4/SRT and final package have not yet
+  been generated from these sources.
+- The French UI remains intentionally frozen; English slides and narration must
+  explain it.
+- The video script uses on-screen instructions, but the final captions still
+  need to be exported as SRT and checked against the recorded timing.
+
+Open risks:
+
+- GitHub visibility from an unauthenticated session remains unverified.
+- Dedicated Phase 2 submission deadline, size limits and upload rules remain
+  subject to the organizer's email.
+- Any visual condensation during PPTX generation must preserve the
+  audience-facing copy hierarchy and synthetic-data labels.
+
+Next owner:
+
+- Claude Code
+
+Next permitted action:
+
+1. Review the ten declared narrative files against code and evidence.
+2. Refresh the active 8/8 evidence and Phase 2 references listed above.
+3. Generate and visually verify the data-room output and final `.pptx` from the
+   approved narrative; build MP4/SRT when the final tagged build is ready.
+4. Commit and push the accepted block.
+5. Transfer the lock back to Codex only for the final visual, semantic and
+   cross-deliverable QA, with exact output paths and permitted actions.
+
+### 2026-07-18 00:15 - Claude Code -> Codex
+
+Task:
+Narrative validation, 9/9 refresh, and generation of the jury-facing
+artifacts: brand kit, deck (.pptx + PDF), data room (PDF + ZIP).
+
+Narrative validation result:
+
+- ACCEPTED. Every new numeric claim in the ten Codex files was verified
+  against the engine: nominal 10/10, 0 min, 0 OT, 0 moves, 241 km,
+  1,132.80 DT; Service/Cost/Stability exact; UI deltas +838/+799/+2,729 =
+  absolute − nominal to the cent; priority-weighted delays 360 (Service) and
+  690 (9/10 alternative) confirmed by direct engine computation;
+  −77.4%, −83.3%, +14.9% arithmetic checked.
+
+Files changed:
+
+- 9/9 sweep DONE: `docs/data-room/INDEX.md` (also `npm test`->`npm run check`,
+  localhost:3000 -> 127.0.0.1:4173), master plan (5 refs), delivery checklist,
+  `docs/cabletwin/07-validation-technique.md`; Phase 1 idea got a labelled
+  snapshot note instead of a rewrite, per your recommendation.
+- `docs/data-room/evidence/test-results/npm-test-output.txt` regenerated (9 tests).
+- `brand/README.md` finalized.
+
+Files generated:
+
+- Brand kit: `brand/logo/` 4 SVWG + 3 PNG (mark, light, dark wordmarks),
+  `brand/social/cabletwin-demo-thumbnail.png` (1280x720),
+  `brand/CableTwin_Brand_Guide.pdf` (1 page). Mark concept: three cable
+  lines, line 2 stopped (orange), mint recovery route bypassing the stop.
+- Deck: `output/deck/CableTwin_SUPCOM_Final.pptx` (9 slides, 604 KB, Arial
+  only, speaker notes embedded) + `CableTwin_SUPCOM_Final.pdf` fallback
+  (302 KB). Every slide exported to PNG and visually inspected; fixed three
+  title overflows and two screenshot crop defects before final export.
+- Data room: `output/dataroom/CableTwin_SUPCOM_Technical_Data_Room.pdf`
+  (31 pages, 83 KB, cover + INDEX + 8 documents, tables and code blocks
+  rendered) + `.zip` (2.5 MB: sources + evidence + PDF, gitignored).
+  `output/CableTwin_SUPCOM_Brand_Kit.zip` (380 KB, gitignored).
+- Generators (reproducible): `scripts/build_deck.py`,
+  `scripts/build_dataroom_pdf.py`, `scripts/build_brand_guide.py`,
+  `scripts/render-brand.mjs`.
+
+Commands run:
+
+- `npm run check` -> 9/9 after all edits; deck slides exported via PowerPoint
+  COM for QA; PDF page counts verified via pypdf.
+
+Canonical metrics checked:
+
+- yes — three ways (tests, benchmark, direct engine computation) before
+  accepting the narrative; deck and data room render those same values.
+
+Known limitations:
+
+- Deck slide 5 screenshot band is a browser-viewport crop; if Codex judges it
+  suboptimal, propose exact crop coordinates rather than editing.
+- Data room PDF uses Helvetica (reportlab default portable font).
+- MP4/SRT not yet produced (waits for the final tag per protocol).
+- GitHub visibility from an unauthenticated session still unverified.
+
+Open risks:
+
+- none new; final-tag gate items remain as listed in section 10.
+
+Next owner:
+
+- Codex
+
+Next permitted action:
+
+- READ-ONLY QA of: `output/deck/CableTwin_SUPCOM_Final.pdf`,
+  `output/dataroom/CableTwin_SUPCOM_Technical_Data_Room.pdf`, `brand/`,
+  plus cross-deliverable canonical-facts audit. Deliver a findings list in
+  this file (new handoff entry). Do not edit any artifact or source; Claude
+  applies fixes and regenerates deterministically.
 
 ## 10. Final-tag gate
 

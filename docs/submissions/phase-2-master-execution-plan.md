@@ -84,7 +84,7 @@ Technical baseline already verified:
 - 4-hour simulated stoppage on Line 2;
 - Service, Cost and Stability strategies;
 - incident-to-approval end-to-end journey;
-- 8/8 automated tests passing;
+- 9/9 automated tests passing;
 - independent exhaustive verifier passing;
 - 17,856 assignment-and-sequence candidates evaluated;
 - 10,440 feasible schedules;
@@ -225,7 +225,7 @@ Actions:
 - scan for secrets, personal files and generated temporary artifacts;
 - validate `.gitignore`;
 - make the README autonomous;
-- reconcile stale documentation with the exact verifier and 8/8 tests;
+- reconcile stale documentation with the exact verifier and 9/9 tests;
 - decide the license explicitly; do not choose one silently;
 - create a clean initial commit;
 - push to the configured GitHub remote;
@@ -429,7 +429,7 @@ P2 work starts only when all P0 and P1 conditions are green.
 | Shift-end output | 216 km for Service/Cost vs 188 km for Stability |
 | Throughput difference | +14.9% |
 | Exact benchmark | 17,856 candidates; 10,440 feasible schedules |
-| Automated checks | 8/8 passing |
+| Automated checks | 9/9 passing |
 | Decision authority | Human production manager |
 | Deployment boundary | Offline/read-only first; no machine control |
 | Company affiliation | None |
@@ -494,7 +494,7 @@ docs/data-room/
 
 #### Validation
 
-- 8/8 tests;
+- 9/9 tests;
 - exact benchmark results;
 - metric formulas;
 - deterministic reset;
@@ -669,7 +669,7 @@ The prototype is ready only if:
 - the audit event is visible;
 - reset restores the exact initial state;
 - synthetic-data labels are visible;
-- 8/8 automated tests pass;
+- 9/9 automated tests pass;
 - the exact benchmark passes;
 - the 90-second demo is repeatable three times in a row;
 - a standalone ZIP and fallback video exist.

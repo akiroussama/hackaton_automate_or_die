@@ -15,3 +15,7 @@ packaging/*
 claude/
 docs/archive/
 docs/04-messages-et-questions.md
+
+# regenerable packaged archives stay out of git
+output/**/*.zip
+output/*.zip

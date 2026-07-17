@@ -12,7 +12,7 @@ Commande :
 npm run check
 ```
 
-Résultat : **8 tests réussis sur 8**, aucune erreur de syntaxe.
+Résultat : **9 tests réussis sur 9**, aucune erreur de syntaxe.
 
 Les tests couvrent :
 

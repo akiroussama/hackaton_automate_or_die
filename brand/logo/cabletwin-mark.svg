@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="CableTwin mark">
+  <!-- Three cable lines; line 2 is interrupted and a mint recovery route bypasses the stop. -->
+  <rect x="0" y="0" width="512" height="512" rx="96" fill="#092925"/>
+  <!-- Line 1: running -->
+  <path d="M84 164 H428" stroke="#0F766E" stroke-width="34" stroke-linecap="round"/>
+  <!-- Line 2: stopped segment -->
+  <path d="M84 256 H208" stroke="#0F766E" stroke-width="34" stroke-linecap="round"/>
+  <path d="M304 256 H428" stroke="#0F766E" stroke-width="34" stroke-linecap="round" opacity="0.35"/>
+  <!-- Stop marker on line 2 -->
+  <circle cx="256" cy="256" r="26" fill="none" stroke="#E9763B" stroke-width="16"/>
+  <!-- Line 3: running -->
+  <path d="M84 348 H428" stroke="#0F766E" stroke-width="34" stroke-linecap="round"/>
+  <!-- Recovery route: leaves line 2 before the stop, rides line 1, returns after -->
+  <path d="M148 256 C196 256 190 164 244 164 H300 C352 164 348 256 396 256"
+        fill="none" stroke="#C9F36B" stroke-width="22" stroke-linecap="round"/>
+  <!-- Route endpoint -->
+  <circle cx="404" cy="256" r="17" fill="#C9F36B"/>
+</svg>
