@@ -73,11 +73,11 @@ resolved before the document is reused.
 ## 4. First lock
 
 **Current owner:** Codex  
-**Status:** ACTIVE - final acceptance pass on the regenerated artifacts;
+**Status:** ACTIVE - final six-deliverable completeness check;
 Claude Code must stop  
-**Task:** Accept or reject the regenerated deck, data room and brand guide
-listed in the 2026-07-18 00:55 handoff entry. On acceptance, hand back to
-Claude for clean-clone verification and the final tag.
+**Task:** Verify the packaged deliverables in `packaging/` (open every file,
+check names, durations, hashes and cross-consistency) against section 20's
+go/no-go list. Report GO or the exact blocking findings.
 
 Codex will not draft, edit, stage, commit, run narrative subtasks or modify
 data-room, deck, brand, packaging or repository files until Claude records a
@@ -731,6 +731,67 @@ Next permitted action:
   acceptance, set owner to Claude Code with scope: clean-clone verification,
   final tag, then MP4/SRT recording from the tag.
 
+### 2026-07-18 02:05 - Claude Code -> Codex
+
+Task:
+Final-tag and video block executed end to end.
+
+Verification results:
+
+- **Clean clone PASSED**: fresh `git clone` from GitHub into an isolated
+  directory -> `npm run check` 9/9, `npm run benchmark:exact` canonical.
+- **Repository visibility CLOSED**: anonymous GitHub API call returns 200,
+  `"private": false, "visibility": "public"` — verified without credentials.
+- **Final tag created and pushed**: `phase2-final` -> commit `3c9af9e`.
+
+Files generated:
+
+- `output/video/CableTwin_SUPCOM_Demo_2min.mp4` — 1:57.90, 1920x1080 H.264 +
+  AAC, 8.8 MB, produced from the tagged build via a reproducible pipeline:
+  `scripts/record-video.mjs` (CDP screencast of the scripted journey with
+  title/end cards `video/titlecard.html`, `video/endcard.html`) +
+  `scripts/build_video.py` (edge-tts en-US-AndrewNeural narration from the
+  exact bold script lines, VFR assembly, loudness-normalized mix).
+- `output/video/CableTwin_SUPCOM_Demo_2min.srt` — captions generated from the
+  same narration sentences.
+- `packaging/`: complete numbered package (deck pptx+pdf, data room pdf+zip,
+  video mp4+srt, brand kit zip, prototype zip rebuilt from the tagged tree,
+  GitHub URL + tag file, SHA256SUMS.txt).
+- QA frames extracted at t=18/50/97s and visually inspected: nominal state,
+  three strategy cards with canonical metrics, approved audit at 10:07.
+
+Canonical metrics checked:
+
+- narration and captions use only canonical values (620/140, 216 vs 188,
+  180->30, 9/9, 17,856); on-screen values come from the live tagged build.
+
+Known limitations:
+
+- Video duration is 1:57.90 — inside the official 2:00 hard limit but above
+  our internal 1:50-1:55 target; shrinking would require faster narration
+  rates. Flag if you judge the margin insufficient.
+- One fix during the block: screencast frame timestamps used the CDP clock
+  and drifted ~6% vs wall clock, producing a first cut at 2:05; switched to
+  arrival-clock timestamps and added a duration guard in the builder.
+- The narration voice is neural TTS (clearly articulated English). If the
+  team prefers Oussama's own voice, the pipeline can remux his recording
+  over the same visual track without re-recording.
+
+Open risks:
+
+- none new. All six deliverables now exist in packaged form.
+
+Next owner:
+
+- Codex
+
+Next permitted action:
+
+- READ-ONLY completeness check of `packaging/` against section 20 (open every
+  file, verify names/sizes/hashes/duration and cross-consistency). Report GO
+  or exact blocking findings. On GO, the team leader performs the official
+  submission when the organizer email arrives.
+
 ## 10. Final-tag gate
 
 Claude may create the final Phase 2 tag only after:
@@ -839,3 +900,74 @@ Next permitted action:
 5. Transfer the lock to Codex with the exact regenerated paths, commit SHA and
    permitted final read-only QA actions. Do not create the final tag or record
    the MP4 until Codex accepts the regenerated outputs.
+
+### 2026-07-18 01:15 - Codex -> Claude Code
+
+Task:
+
+Final read-only acceptance pass on the regenerated deck, technical data room
+and brand kit produced from artifact commit `cde19d2`. The current branch tip
+is `3c9af9e`; the two later commits only record the team leader's 40-iteration
+and TOP-1/WOW directives in this protocol.
+
+QA verdict:
+
+- ACCEPTED FOR THE FINAL-TAG GATE.
+- Codex changed no artifact, source, generator or canonical fact during this
+  acceptance pass.
+
+Acceptance evidence:
+
+- Technical data room: all 29 pages rendered and inspected individually at
+  full size; cover spacing, tables, formulas, connectors, footers and section
+  transitions pass. No empty page.
+- Full-text probes are clean for literal `**`, U+007F, sigma, less-than-or-equal,
+  not-equal, Unicode arrows, Markdown autolinks and replacement characters.
+  The normalized document contains 54 visible ASCII `->` connectors.
+- Brand guide: the title/subtitle collision is fixed; the one-page guide,
+  primary logo, compact mark, palette and usage rules pass visual QA.
+- Deck: all 9 slides rendered and inspected individually. Slide 5 now shows
+  the complete revised Gantt with time scale, three lines, jobs and the
+  hatched Line-2 stop. Slides 1-9 have no verified clipping or overlap.
+- Slide 8 was independently checked via direct PowerPoint PNG export, PDF glyph
+  coordinates and pixel bounds: `Start` is intact at the intended 0.7-inch
+  margin. An apparent missing `S` in one UI preview was a viewer artifact, not
+  a deck defect.
+- PPTX structure: 9 slide XML parts, 9 notes-slide parts, and Arial is the only
+  typeface used in slide/note content.
+- `npm run check`: 9/9 pass.
+- `npm run benchmark:exact`: 17,856 candidates, 10,440 feasible schedules;
+  Service 140 min/8-of-10/3 moves/1,971.15 DT; Cost
+  170 min/8-of-10/2 moves/1,931.45 DT; Stability
+  620 min/7-of-10/0 moves/3,862.20 DT; 9-of-10 counter-example at 230 minutes.
+- The data-room ZIP contains the byte-identical accepted data-room PDF. The
+  brand-kit ZIP contains the byte-identical accepted brand-guide PDF.
+- `slides_test.py` could not execute because its bundled runtime looked for
+  `@oai/artifact-tool` under a nonexistent workspace-relative cache path. This
+  is a QA-tool environment defect, not a deck failure; it was compensated by
+  PowerPoint-native export, full-size PDF rendering, PPTX XML inspection and
+  explicit coordinate/pixel checks.
+
+Team-leader directive:
+
+- The non-stop Phase 2 instruction and the subsequent 40 one-change-at-a-time,
+  researched, debated, tested and cross-reviewed improvement iterations are
+  already recorded in section 4bis and pushed in commits `ce2f6ba` and
+  `3c9af9e`. Oussama does not need to relay this instruction again.
+
+Next owner:
+
+- Claude Code
+
+Next permitted action:
+
+1. Verify a clean clone of `main` at the current pushed tip and rerun the
+   documented three-command path plus all checks.
+2. Resolve the remaining repository-visibility/final-gate checks.
+3. Create and push the final Phase 2 tag only from the accepted clean state.
+4. Record/export the two-minute MP4 and SRT from that exact tag; verify the
+   complete file end to end.
+5. Regenerate final archives, hashes and the submission manifest without
+   changing canonical facts or the accepted deck/data-room/brand content.
+6. Transfer the lock to Codex with the tag, commit SHA, exact six deliverable
+   paths, checksums, video duration and permitted final read-only QA scope.

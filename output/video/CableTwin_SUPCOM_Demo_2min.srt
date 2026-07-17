@@ -1,0 +1,79 @@
+﻿1
+00:00:00,800 --> 00:00:02,382
+A production line stops.
+
+2
+00:00:02,382 --> 00:00:06,204
+In seconds, a plan that looked perfect becomes impossible.
+
+3
+00:00:06,204 --> 00:00:09,368
+CableTwin helps the manager see before deciding.
+
+4
+00:00:10,500 --> 00:00:17,822
+This is a fully synthetic Tunisian cable-factory scenario: three lines, ten orders, all planned on time.
+
+5
+00:00:17,822 --> 00:00:22,116
+The prototype runs locally, offline, without a cloud service.
+
+6
+00:00:25,500 --> 00:00:28,332
+At 10:00, Line 2 stops for four hours.
+
+7
+00:00:28,332 --> 00:00:37,572
+Without rescheduling, three orders are exposed, only seven stay on time, and projected cumulative delay reaches 620 minutes.
+
+8
+00:00:40,500 --> 00:00:42,878
+CableTwin does not hide one answer.
+
+9
+00:00:42,878 --> 00:00:48,787
+Its symbolic, constraint-based planner builds three feasible routes from the same data.
+
+10
+00:00:48,787 --> 00:00:51,844
+Service protects priority-weighted deadlines;
+
+11
+00:00:51,844 --> 00:00:55,105
+Cost minimizes the illustrative comparison cost;
+
+12
+00:00:55,105 --> 00:00:57,550
+Stability avoids line reassignments.
+
+13
+00:00:57,550 --> 00:01:03,732
+Every route respects eligibility, duration, downtime, non-overlap and the planning horizon.
+
+14
+00:01:05,500 --> 00:01:11,919
+Before acting, the manager previews the revised Gantt and compares consequences.
+
+15
+00:01:11,919 --> 00:01:23,313
+Service cuts projected delay from 620 to 140 minutes, reduces overtime from 180 to 30 minutes, and reaches 216 kilometres by 18:00 versus 188.
+
+16
+00:01:23,313 --> 00:01:29,572
+Cost uses two line changes instead of three and has the lowest synthetic cost.
+
+17
+00:01:30,500 --> 00:01:32,292
+Nothing is sent to a machine.
+
+18
+00:01:32,292 --> 00:01:40,508
+The production manager selects a route, approves it, and CableTwin records who decided, when, and which metrics supported the choice.
+
+19
+00:01:45,300 --> 00:01:53,401
+This working prototype is verified by nine tests and an independent exhaustive check of 17,856 candidate schedules.
+
+20
+00:01:53,401 --> 00:01:57,276
+Next: a read-only shadow pilot on historical incidents.
