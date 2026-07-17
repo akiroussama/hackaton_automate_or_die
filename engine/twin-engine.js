@@ -193,8 +193,11 @@ function overtimeForEntry(entry, line) {
   return Math.max(0, entry.endMinute - Math.max(entry.startMinute, line.normalEndMinute));
 }
 
-/** Validate a complete schedule against every hard constraint encoded by the demo. */
-export function validateSchedule(scenario, schedule) {
+/** Validate a complete schedule against every hard constraint encoded by the demo.
+ * `enforceIncidentWindow: false` validates a pre-incident schedule, where orders
+ * may legitimately occupy the future stoppage window. */
+export function validateSchedule(scenario, schedule, options = {}) {
+  const { enforceIncidentWindow = true } = options;
   validateScenario(scenario);
   if (!Array.isArray(schedule)) throw new Error("Planning à valider manquant.");
 
@@ -228,6 +231,7 @@ export function validateSchedule(scenario, schedule) {
       throw new Error(`${entry.orderId}: fin au-delà de l’horizon de planification.`);
     }
     if (
+      enforceIncidentWindow &&
       entry.lineId === scenario.incident.lineId &&
       intervalsOverlap(entry, scenario.incident)
     ) {
@@ -250,8 +254,8 @@ export function validateSchedule(scenario, schedule) {
 }
 
 /** Calculate comparable industrial and financial indicators for any complete schedule. */
-export function calculateMetrics(scenario, schedule) {
-  validateSchedule(scenario, schedule);
+export function calculateMetrics(scenario, schedule, options = {}) {
+  validateSchedule(scenario, schedule, options);
 
   const orders = indexById(scenario.orders, "Commandes");
   const lines = indexById(scenario.lines, "Lignes");

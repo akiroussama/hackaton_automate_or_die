@@ -191,3 +191,15 @@ test("les heures de la démo sont lisibles", () => {
   assert.equal(formatClockMinute(120), "10:00");
   assert.equal(formatClockMinute(360), "14:00");
 });
+
+test("les métriques du plan nominal se calculent avant l'incident", () => {
+  const scenario = createFactoryScenario();
+  const metrics = calculateMetrics(scenario, scenario.initialSchedule, {
+    enforceIncidentWindow: false,
+  });
+  assert.equal(metrics.totalDelayMinutes, 0);
+  assert.equal(metrics.lateOrders, 0);
+  assert.equal(metrics.movements, 0);
+  // La fenêtre d'arrêt reste bloquante par défaut pour les plans de reprise.
+  assert.throws(() => calculateMetrics(scenario, scenario.initialSchedule));
+});

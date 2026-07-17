@@ -1,0 +1,53 @@
+{
+  "capturedAt": "2026-07-17T19:48:24.470Z",
+  "appUrl": "http://127.0.0.1:4173/",
+  "viewport": "1920x1080",
+  "afterIncident": {
+    "kpi": {
+      "on-time-orders": {
+        "value": "7 / 10",
+        "change": "Sans adaptation"
+      },
+      "at-risk-orders": {
+        "value": "3",
+        "change": "3 ordres exposés"
+      },
+      "estimated-delay": {
+        "value": "10 h 20 min",
+        "change": "Conséquence simulée"
+      },
+      "extra-cost": {
+        "value": "+ 2 729 DT",
+        "change": "Estimation comparative"
+      }
+    },
+    "strategies": {
+      "service": {
+        "on-time": "8 / 10",
+        "cost": "+ 838 DT",
+        "changes": "3"
+      },
+      "cost": {
+        "on-time": "8 / 10",
+        "cost": "+ 799 DT",
+        "changes": "2"
+      },
+      "stability": {
+        "on-time": "7 / 10",
+        "cost": "+ 2 729 DT",
+        "changes": "0"
+      }
+    },
+    "status": "3 commandes exposées · 3 options calculées"
+  },
+  "afterApproval": {
+    "audit": [
+      "10:00 Planning initial chargé10 commandes prévues à l'heure",
+      "10:00 Incident simulé3 commandes exposées par un arrêt de 4 h",
+      "10:07 Option « Priorité service » validéeResponsable production · 8/10 commandes à l'heure"
+    ],
+    "status": "Décision validée à 10:07 · journal d'audit mis à jour",
+    "selected": "Option sélectionnée Priorité service · 8/10 à l'heure · + 838 DT · 3 changement(s)"
+  },
+  "externalNetworkRequests": []
+}

@@ -12,7 +12,9 @@ import {
 } from "../engine/twin-engine.js";
 
 const scenario = createFactoryScenario();
-const initialMetrics = calculateMetrics(scenario, scenario.initialSchedule);
+const initialMetrics = calculateMetrics(scenario, scenario.initialSchedule, {
+  enforceIncidentWindow: false,
+});
 const incidentImpact = analyzeIncident(scenario);
 const orderById = new Map(scenario.orders.map((order) => [order.id, order]));
 
