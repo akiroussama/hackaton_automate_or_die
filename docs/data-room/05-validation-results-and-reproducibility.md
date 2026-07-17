@@ -110,11 +110,11 @@ For each order `i`, with completion time `C_i` and due time `D_i`:
 
 ```text
 order delay_i       = max(0, C_i - D_i)
-total delay         = Σ order delay_i
-on-time orders      = count(C_i ≤ D_i)
+total delay         = sum(order delay_i)
+on-time orders      = count(C_i <= D_i)
 overtime per slot   = max(0, end - max(start, normal shift end))
-line moves          = count(recovery line ≠ nominal line)
-shift-end output    = Σ quantity for orders completed by 18:00
+line moves          = count(recovery line != nominal line)
+shift-end output    = sum(quantity for orders completed by 18:00)
 ```
 
 The illustrative total cost is:
@@ -168,7 +168,7 @@ npm run benchmark:exact
 npm run dev
 ```
 
-Open <http://127.0.0.1:4173/> and follow:
+Open http://127.0.0.1:4173/ and follow:
 
 1. verify the nominal 10/10 state;
 2. click the Line 2 incident trigger;

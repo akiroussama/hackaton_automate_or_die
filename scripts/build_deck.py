@@ -268,10 +268,14 @@ for val, lab in mets:
     text(s, mx, Inches(1.75), Inches(3.0), Inches(0.5), [[(val, 21, MINT, True)]])
     text(s, mx, Inches(2.2), Inches(3.0), Inches(0.5), [[(lab, 12, MIST, False)]])
     mx = Emu(int(mx) + int(Inches(3.05)))
-p = pic(s, SHOTS / "05-preview-service-gantt.png", Inches(0.7), Inches(2.95),
+# Revised Service Gantt: crop of the full resolved page showing the time
+# scale, all three lines, every job and the Line-2 stop window (Codex QA spec).
+p = pic(s, SHOTS / "08-full-resolved.png", Inches(0.7), Inches(2.95),
         w=Inches(8.3), h=Inches(2.96))
-p.crop_top = 0.305
-p.crop_bottom = 0.06
+p.crop_left = 0.177083
+p.crop_right = 0.177083
+p.crop_top = 0.369741
+p.crop_bottom = 0.538653
 rows = [("Stability", "620 min · 188 km · 0 moves"),
         ("Service", "140 min · 216 km · 3 moves"),
         ("Cost", "170 min · 216 km · 2 moves")]

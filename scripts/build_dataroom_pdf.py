@@ -61,7 +61,20 @@ S = {
 }
 
 
+ASCII_MAP = {
+    "→": "->", "↓": "v", "▼": "v", "│": "|", "─": "-", "►": ">",
+    "├": "+", "└": "+", "Σ": "sum", "≤": "<=", "≠": "!=",
+}
+
+
+def normalize(text: str) -> str:
+    for src, dst in ASCII_MAP.items():
+        text = text.replace(src, dst)
+    return text
+
+
 def esc(text: str) -> str:
+    text = normalize(text)
     text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
     text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1", text)  # links -> label
     text = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", text)
@@ -100,51 +113,78 @@ def flush_table(story, rows):
 
 def render_markdown(story, text: str):
     lines = text.splitlines()
-    i, table, code, code_buf = 0, [], False, []
-    while i < len(lines):
-        line = lines[i]
+    table, code, code_buf = [], False, []
+    para = None  # (kind, text) with kind in body/li/quote
+
+    def flush_para():
+        nonlocal para
+        if not para:
+            return
+        kind, buf = para
+        para = None
+        if kind == "quote":
+            story.append(Paragraph(esc(buf), S["quote"]))
+        elif kind == "li":
+            story.append(Paragraph(esc(buf), S["li"], bulletText="-"))
+        else:
+            story.append(Paragraph(esc(buf), S["body"]))
+
+    for line in lines:
         if line.strip().startswith("```"):
+            flush_para()
             if code:
-                story.append(Preformatted("\n".join(code_buf), S["code"]))
+                story.append(Preformatted(normalize("\n".join(code_buf)), S["code"]))
                 code_buf = []
             code = not code
-            i += 1
             continue
         if code:
             code_buf.append(line)
-            i += 1
             continue
         if line.strip().startswith("|"):
+            flush_para()
             cells = [c.strip() for c in line.strip().strip("|").split("|")]
             if not all(re.fullmatch(r":?-{3,}:?", c) for c in cells):
                 table.append(cells)
-            i += 1
             continue
         flush_table(story, table)
         table = []
         stripped = line.strip()
         if not stripped:
-            pass
+            flush_para()
         elif stripped.startswith("#### "):
+            flush_para()
             story.append(Paragraph(esc(stripped[5:]), S["h4"]))
         elif stripped.startswith("### "):
+            flush_para()
             story.append(Paragraph(esc(stripped[4:]), S["h3"]))
         elif stripped.startswith("## "):
+            flush_para()
             story.append(Paragraph(esc(stripped[3:]), S["h2"]))
         elif stripped.startswith("# "):
+            flush_para()
             story.append(Paragraph(esc(stripped[2:]), S["h1"]))
             story.append(HRFlowable(width="100%", thickness=1.4, color=MINT,
                                     spaceAfter=6))
         elif stripped.startswith(">"):
-            story.append(Paragraph(esc(stripped.lstrip("> ")), S["quote"]))
+            content = stripped.lstrip("> ")
+            if para and para[0] == "quote":
+                para = ("quote", f"{para[1]} {content}")
+            else:
+                flush_para()
+                para = ("quote", content)
         elif re.match(r"^\d+\.\s", stripped):
-            story.append(Paragraph(esc(re.sub(r"^\d+\.\s", "", stripped)),
-                                   S["li"], bulletText="•"))
+            flush_para()
+            para = ("li", re.sub(r"^\d+\.\s", "", stripped))
         elif stripped.startswith(("- ", "* ")):
-            story.append(Paragraph(esc(stripped[2:]), S["li"], bulletText="•"))
+            flush_para()
+            para = ("li", stripped[2:])
         else:
-            story.append(Paragraph(esc(stripped), S["body"]))
-        i += 1
+            # continuation of the open paragraph or list item, or a new body line
+            if para:
+                para = (para[0], f"{para[1]} {stripped}")
+            else:
+                para = ("body", stripped)
+    flush_para()
     flush_table(story, table)
 
 
@@ -165,10 +205,10 @@ def cover(story):
     story.append(Spacer(1, 40 * mm))
     story.append(Paragraph("CableTwin",
                  ParagraphStyle("c1", fontName="Helvetica-Bold", fontSize=38,
-                                textColor=DEEP, spaceAfter=8)))
+                                leading=46, textColor=DEEP, spaceAfter=8)))
     story.append(Paragraph("Technical Data Room — Phase 2 · The Build",
                  ParagraphStyle("c2", fontName="Helvetica", fontSize=16,
-                                textColor=TEAL, spaceAfter=20)))
+                                leading=20, textColor=TEAL, spaceAfter=20)))
     story.append(HRFlowable(width="60%", thickness=2, color=MINT, hAlign="LEFT",
                             spaceAfter=20))
     for line in ["Automate or Die 2026 · Industry · Production Planning & Supply Chain Optimization",

@@ -29,8 +29,8 @@ ORANGE = colors.HexColor("#E9763B")
 INK = colors.HexColor("#10221F")
 SOFT = colors.HexColor("#53645F")
 
-h1 = ParagraphStyle("h1", fontName="Helvetica-Bold", fontSize=24, textColor=DEEP,
-                    spaceAfter=2)
+h1 = ParagraphStyle("h1", fontName="Helvetica-Bold", fontSize=24, leading=30,
+                    textColor=DEEP, spaceAfter=2)
 h2 = ParagraphStyle("h2", fontName="Helvetica-Bold", fontSize=12, textColor=TEAL,
                     spaceBefore=10, spaceAfter=4)
 body = ParagraphStyle("body", fontName="Helvetica", fontSize=9.5, leading=13,
@@ -103,7 +103,7 @@ rules = [
 ]
 for r in rules:
     story.append(Paragraph(r, ParagraphStyle("li", parent=body, leftIndent=5 * mm,
-                                             bulletIndent=1 * mm), bulletText="•"))
+                                             bulletIndent=1 * mm), bulletText="-"))
 
 story.append(Paragraph("Applications", h2))
 story.append(Paragraph(

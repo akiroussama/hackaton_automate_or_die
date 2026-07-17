@@ -168,7 +168,7 @@ npm run benchmark:exact
 npm run dev
 ```
 
-Then open <http://127.0.0.1:4173/>.
+Then open http://127.0.0.1:4173/.
 
 The current evidence set contains the post-fix browser journey at 1920×1080,
 machine-readable UI values and an offline-network trace under

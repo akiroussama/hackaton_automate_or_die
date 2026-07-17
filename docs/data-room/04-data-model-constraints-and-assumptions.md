@@ -93,10 +93,10 @@ all recovery schedules enforce it.
 The total illustrative comparison cost is:
 
 ```text
-Σ (duration × line production coefficient)
-+ Σ (delay × order delay coefficient)
-+ Σ (overtime × line overtime coefficient)
-+ (number of line moves × 75 DT)
+sum (duration x line production coefficient)
++ sum (delay x order delay coefficient)
++ sum (overtime x line overtime coefficient)
++ (number of line moves x 75 DT)
 ```
 
 The coefficients make alternatives comparable inside one synthetic experiment.

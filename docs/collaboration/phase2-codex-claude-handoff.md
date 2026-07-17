@@ -73,11 +73,11 @@ resolved before the document is reused.
 ## 4. First lock
 
 **Current owner:** Codex  
-**Status:** ACTIVE - final visual, semantic and cross-deliverable QA;
+**Status:** ACTIVE - final acceptance pass on the regenerated artifacts;
 Claude Code must stop  
-**Task:** QA the generated artifacts listed in the 2026-07-18 00:15 handoff
-entry (deck PDF, data room PDF, brand kit) against the canonical facts and
-the outline specifications; report findings, do not regenerate.
+**Task:** Accept or reject the regenerated deck, data room and brand guide
+listed in the 2026-07-18 00:55 handoff entry. On acceptance, hand back to
+Claude for clean-clone verification and the final tag.
 
 Codex will not draft, edit, stage, commit, run narrative subtasks or modify
 data-room, deck, brand, packaging or repository files until Claude records a
@@ -640,6 +640,69 @@ Next permitted action:
   this file (new handoff entry). Do not edit any artifact or source; Claude
   applies fixes and regenerates deterministically.
 
+### 2026-07-18 00:55 - Claude Code -> Codex
+
+Task:
+Applied every P1/P2 correction from the 00:30 QA, plus the optional P3.
+
+Files changed:
+
+- `scripts/build_dataroom_pdf.py`: cover leadings (c1=46, c2=20); ASCII
+  normalization helper applied in esc() and Preformatted (arrows, box
+  drawing, Σ/≤/≠ as defense-in-depth); the line-by-line parser was replaced
+  by a paragraph accumulator that merges wrapped body/list/quote lines, which
+  fixes bold-across-lines structurally (your option B); bullets now ASCII "-".
+- `scripts/build_brand_guide.py`: h1 leading=30; ASCII bullets.
+- `scripts/build_deck.py`: slide 5 now uses `08-full-resolved.png` with your
+  exact crop values (left/right 0.177083, top 0.369741, bottom 0.538653).
+- Sources normalized per your spec: formulas in
+  `04-data-model...md` (sum/x) and `05-validation...md` (sum, <=, !=);
+  autolink brackets removed in 05:171 and 08:171.
+
+Files generated (all regenerated):
+
+- `output/deck/CableTwin_SUPCOM_Final.pptx` + `.pdf`
+- `output/dataroom/CableTwin_SUPCOM_Technical_Data_Room.pdf` (now 29 pages —
+  paragraph merging compacted two pages) + `.zip`
+- `brand/CableTwin_Brand_Guide.pdf`, `output/CableTwin_SUPCOM_Brand_Kit.zip`
+
+Commit:
+
+- follows this entry (single correction commit, pushed)
+
+Commands run / verification:
+
+- pypdf probes on the full data-room text: `**` CLEAN, U+007F CLEAN,
+  Σ/≤/≠/→ CLEAN, `<http` CLEAN, 54 ASCII `->` connectors present; cover
+  lines extract separately (no collision); brand guide U+007F CLEAN.
+- Slide 5 re-exported to PNG and visually inspected: time scale, three
+  lines, all jobs and the hatched Line-2 stop window are visible; your crop
+  spec was exact.
+- `npm run check`: 9/9.
+
+Canonical metrics checked:
+
+- unchanged; no numeric content was touched beyond glyph normalization.
+
+Known limitations:
+
+- Data-room PDF is 29 pages (was 31); page references in your 00:30 entry
+  shift accordingly — it is a historical record, left untouched.
+
+Open risks:
+
+- none new.
+
+Next owner:
+
+- Codex
+
+Next permitted action:
+
+- READ-ONLY acceptance pass on the three regenerated artifacts. On
+  acceptance, set owner to Claude Code with scope: clean-clone verification,
+  final tag, then MP4/SRT recording from the tag.
+
 ## 10. Final-tag gate
 
 Claude may create the final Phase 2 tag only after:
@@ -653,3 +716,98 @@ Claude may create the final Phase 2 tag only after:
 - the user approves any material licensing or repository-visibility decision.
 
 The demo video is recorded from this final tag.
+
+### 2026-07-18 00:30 - Codex -> Claude Code
+
+Task:
+
+Final read-only visual, semantic and cross-deliverable QA of the generated deck
+PDF, technical-data-room PDF and brand kit at `dc95cb6`.
+
+QA verdict:
+
+- NOT READY FOR THE FINAL TAG. The narrative and canonical metrics pass, but
+  the two PDF packages contain visible rendering defects that must be corrected.
+- Codex changed no artifact, source or generator during this pass.
+
+Required P1 corrections:
+
+1. **Technical-data-room cover collision.**
+   `output/dataroom/CableTwin_SUPCOM_Technical_Data_Room.pdf`, page 1:
+   `CableTwin` visibly overlaps `Technical Data Room · Phase 2 · The Build`.
+   Root cause: `scripts/build_dataroom_pdf.py` styles `c1` and `c2` use large
+   font sizes with ReportLab's 12-point default leading. Set `c1` leading to
+   46 and `c2` leading to 20; keep the existing spacing.
+2. **Brand-guide cover collision.**
+   `brand/CableTwin_Brand_Guide.pdf`, page 1: `CableTwin brand guide` visibly
+   overlaps its subtitle. In `scripts/build_brand_guide.py`, set the `h1`
+   leading to 30.
+3. **Literal Markdown appears in the data-room PDF.**
+   Pages 3, 4 and 14 visibly contain `**`. The affected source spans are:
+   `docs/data-room/01-problem-process-and-scope.md:9-10,15-16,72-74` and
+   `docs/data-room/04-data-model-constraints-and-assumptions.md:103-104`.
+   Reflow each affected bold span onto one physical Markdown line, or make the
+   inline parser handle emphasis across wrapped lines.
+4. **Mathematical meaning is lost in the data-room PDF.**
+   Page 14 loses three sigma symbols. Page 18 loses two sigma symbols and
+   renders `<=`/not-equal semantics as incorrect glyphs. Normalize the affected
+   formulas in
+   `docs/data-room/04-data-model-constraints-and-assumptions.md:96-98` and
+   `docs/data-room/05-validation-results-and-reproducibility.md:113-117`:
+   `Σ` -> `sum`, `≤` -> `<=`, `≠` -> `!=`.
+5. **Flow connectors disappear in the data-room PDF.**
+   All right arrows disappear on pages 2, 3, 7, 9, 18, 22 and 28; the box
+   drawing/down arrows also disappear on pages 28-30. Page 9's objective order
+   and pages 28-30's architectures are consequently ambiguous. Add one
+   deterministic ASCII-normalization helper in
+   `scripts/build_dataroom_pdf.py`, applied both inside `esc()` and before each
+   `Preformatted`: `→` -> `->`, `↓`/`▼` -> `v`, `│` -> `|`, `─` -> `-`,
+   `►` -> `>`, and `├`/`└` -> `+`.
+
+Required P2 polish:
+
+1. **Slide 5 screenshot does not show the claimed revised Gantt bars.**
+   Replace `05-preview-service-gantt.png` in the slide frame with the existing
+   `docs/data-room/evidence/screenshots/08-full-resolved.png` and crop the
+   1920x4825 source to pixel box `(340, 1784, 1580, 2226)`. For the unchanged
+   8.3 x 2.96-inch frame, the corresponding python-pptx crop values are:
+   `left=0.177083`, `right=0.177083`, `top=0.369741`,
+   `bottom=0.538653`. This shows the time scale, all three lines, all jobs and
+   the Line-2 stop window without changing any canonical metric.
+2. Remove visible Markdown-autolink brackets around
+   `http://127.0.0.1:4173/` on data-room pages 18 and 31. The sources are
+   `05-validation-results-and-reproducibility.md:171` and
+   `08-architecture-and-deployment.md:171`.
+
+Optional P3 accessibility correction:
+
+- Visible bullets are correct, but PDF extraction maps them to U+007F because
+  ReportLab uses an unembedded Symbol font. If it is safe, use ASCII `-` as
+  `bulletText`; do not delay the P1/P2 corrections for this.
+
+Items explicitly accepted:
+
+- Deck slides 1-4 and 6-9 are visually clean; slide 8 is not clipped and needs
+  no title edit.
+- Deck structure passes: 9 slides, 9 embedded speaker-note parts, Arial only,
+  no empty page.
+- Data-room structure passes: 31 non-empty pages, readable tables and no
+  clipping outside the cover collision described above.
+- Logo SVG/PNG assets, compact mark and 1280x720 thumbnail pass visual QA.
+- Cross-deliverable facts pass: CableTwin, SUPCOM, Oussama Akir, Industry
+  Theme 3, synthetic-data disclosure, Service/Cost/Stability, 9/9 checks and
+  the frozen scenario metrics remain consistent.
+
+Next owner:
+
+- Claude Code
+
+Next permitted action:
+
+1. Apply only the P1/P2 corrections above; P3 is optional.
+2. Regenerate the deck PDF/PPTX, data-room PDF/ZIP and brand guide/brand ZIP.
+3. Render and inspect every affected page and slide; rerun `npm run check`.
+4. Commit and push the accepted correction block.
+5. Transfer the lock to Codex with the exact regenerated paths, commit SHA and
+   permitted final read-only QA actions. Do not create the final tag or record
+   the MP4 until Codex accepts the regenerated outputs.
