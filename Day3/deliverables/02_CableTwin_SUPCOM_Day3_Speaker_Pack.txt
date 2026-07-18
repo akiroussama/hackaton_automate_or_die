@@ -1,0 +1,152 @@
+CABLETWIN — DAY 3 SPEAKER PACK
+==============================
+
+Industry track — Room 206 — 14:00
+4-minute pitch | 4-minute Q&A | 30-second demo maximum
+
+CORE LINE
+---------
+One disruption. Three verified recovery routes. One accountable human decision.
+
+
+4-MINUTE SCRIPT
+===============
+
+SLIDE 1 — TITLE / HOOK
+At 10:00, one production line stops. A schedule that was valid one minute ago is now impossible. CableTwin shows three verified recovery routes before production changes, while the production manager keeps the final decision.
+
+SLIDE 2 — PROBLEM / TUNISIAN ANCHOR
+Tunisia's cable, wire and harness segment counts 115 firms of ten employees or more; 107 are fully exporting, supporting 72,281 jobs. In this fully synthetic scenario, Line 2 stops for four hours, exposing three orders. Without adaptation, projected delay reaches 620 minutes. The process risk is real; plant frequency and loss are pilot questions, not claims.
+
+SLIDE 3 — VALUE PROPOSITION / TECHNICAL LOGIC
+CableTwin builds Service, Cost and Stability routes with a deterministic, non-learning planner. A separate local model only ranks those existing routes. A separate bounded verifier cross-checks the encoded scenario. The manager previews the trade-offs, approves or rejects, and leaves an audit trace. The innovation is this evidence architecture, not the phrase digital twin.
+
+SLIDE 4 — LIVE DEMO, MAXIMUM 30 SECONDS
+Line 2 stops. Three orders are exposed; delay rises to ten hours twenty. The local model suggests Cost, but cannot change a schedule. I choose Service to protect priority deliveries: projected delay falls to two hours twenty. I approve. The decision is audited at 10:07, and nothing is sent to a machine.
+
+SLIDE 5 — BUSINESS MODEL
+The user is the production planner; the buyer is the plant or operations director. We start with a design partner, then a paid read-only shadow pilot. Configuration, integration and a per-site subscription follow only after measured value. Price and ROI remain hypotheses.
+
+SLIDE 6 — GO-TO-MARKET
+The pilot lasts four to six weeks. We map constraints, replay five to ten historical incidents at the same information cutoff, then compare CableTwin's options with actual decisions in shadow mode. Agreed KPIs decide: go, revise, or stop. This is how integration is earned.
+
+SLIDE 7 — COMPETITION
+This is not a no-competitor story. Siemens and DELMIA prove the category. They are broader and more mature. CableTwin lowers the first step: one disruption, transparent alternatives, a limited data contract and no write access. If an existing APS already solves it, CableTwin integrates — or steps aside.
+
+SLIDE 8 — TEAM
+I built the full loop as a solo participant: workflow, planner, learned advisor, verifier, interface, public deployment and evidence. That proves execution, not solo scale. The next team extension is one real plant design partner and its production planner.
+
+SLIDE 9 — KEY FIGURES
+Today: zero signed pilots, zero revenue, zero ROI claims. Synthetic evidence is not customer evidence. What is proved is a public product, nine of nine planner checks, five of five ML checks, and bounded verification. Commercial numbers must be earned.
+
+SLIDE 10 — STATUS / ASK
+CableTwin is built and public. Next is one read-only Tunisian shadow pilot. If agreed KPIs pass, we integrate and scale. My ask: select CableTwin for the Grand Finale, and connect one cable or electrical plant design partner who will challenge the constraints with real history.
+
+
+30-SECOND DEMO RUNBOOK
+======================
+
+Before entering the room
+- Open the deck locally and the PDF fallback.
+- Open https://hackaton-automate-or-die.vercel.app/#twin and refresh to the baseline state.
+- Keep the browser in full screen with notifications disabled.
+- Keep the approved-state screenshot on Slide 4 as the zero-click fallback.
+- Do not troubleshoot live for more than two seconds.
+
+Click-and-say sequence
+00:00 — Click “Simuler l'arrêt de la ligne 2”.
+Say: “Line 2 stops. Three orders are exposed; delay rises to ten hours twenty.”
+
+00:07 — Let the calculation complete.
+Say: “The local model suggests Cost, but it cannot change a schedule.”
+
+00:13 — Select “Service”.
+Say: “I choose Service to protect priority deliveries: projected delay falls to two hours twenty.”
+
+00:21 — Click “Valider ce plan”.
+Say: “The decision is audited at 10:07, and nothing is sent to a machine.”
+
+00:28 — Return immediately to Slide 4 or advance to Slide 5.
+
+Fallback sentence
+“The live connection is unavailable, so I will use the verified approved-state capture: the same four steps end with the Service route audited at 10:07 and no machine command.”
+
+
+Q&A BATTLECARD
+===============
+
+1. WHAT EXACTLY IS THE AI?
+The planner is deterministic and non-learning. The separate local ML recommender classifies which of the three already-built routes best matches a policy preference. It was trained on 687 incidents generated by the twin and reached 93.6% on a held-out synthetic grid. That is prototype validation, not factory accuracy.
+
+2. WHAT HAPPENS WHEN THE ML IS WRONG?
+Nothing changes automatically. The planner's three routes remain available, the manager sees the KPIs, may override the suggestion, and must approve the final choice. The decision is auditable. In a pilot, the model would be retrained locally on the site's validated incident history.
+
+3. WHY CALL IT A DIGITAL TWIN IF THE DATA IS SYNTHETIC?
+The prototype mirrors an executable workshop state, constraints and what-if outcomes, but its current telemetry is simulated. I describe it as a functional decision-twin demonstration, not as a connected factory deployment. The pilot's first job is to validate the real data contract and state model.
+
+4. HOW DO YOU KNOW THE ROUTES ARE FEASIBLE?
+The core planner passes nine of nine automated checks. An algorithmically separate bounded exhaustive search evaluates 17,856 candidate assignments and sequences, finds 10,440 feasible complete schedules, and confirms three unique policy optima. It deliberately shares the canonical validation and KPI definitions to prevent metric drift. This is strong evidence for the encoded scenario, not a proof for every factory.
+
+5. WHY NOT USE SIEMENS, DELMIA OR AN EXISTING APS?
+They are broader, mature products and validate the category. CableTwin does not claim feature superiority. It targets a lower-risk entry point: one disruption workflow, a small data contract, transparent alternatives and read-only shadow mode. If an existing APS already performs the workflow well, CableTwin should integrate — or step aside.
+
+6. WHAT IS INNOVATIVE?
+Not the phrase “digital twin”. The differentiator is the evidence architecture: deterministic route construction, a separate learned advisor that cannot edit schedules, an algorithmically separate bounded verifier, explicit trade-offs, and accountable human approval.
+
+7. WHAT DATA DO YOU NEED FROM A FACTORY?
+Initially: orders and priorities, operations and durations, eligible lines, shift and downtime calendars, changeover or transfer rules, resource constraints, and historical incident decisions. The first design-partner workshop validates each field and constraint before shadow evaluation.
+
+8. WHAT IS THE BUSINESS MODEL?
+The current hypothesis is a paid read-only pilot, then configuration and integration, followed by a per-site subscription if measured value is demonstrated. Pricing, conversion and ROI are intentionally not presented as facts before customer evidence.
+
+9. HOW WILL YOU MEASURE PILOT VALUE?
+Agree the KPI definitions with the plant before replay: decision-assessment time, delay against the same information cutoff, constraint violations, planner usability and traceability. The result is go, revise or stop. No baseline means no ROI claim.
+
+10. HOW DO YOU MANAGE CYBERSECURITY AND OPERATIONAL RISK?
+The first deployment is local, offline-capable, read-only and has no machine-control interface. The manager remains the authority. Write-back or automation is outside the pilot and would require a separate safety, security and governance gate.
+
+11. CAN THIS SCALE BEYOND ONE FACTORY?
+The reusable part is the decision workflow and planning engine. The site-specific part is the validated constraint model, data adapters and incident history. Scale comes through configuration and integrations, not by pretending one synthetic model fits every plant.
+
+12. ARE YOU TOO SMALL AS A SOLO FOUNDER?
+The solo build proves speed and end-to-end accountability, not that one person should deploy industrial software alone. The immediate extension is a plant design partner and production planner; integration, security and domain support are added only when a real pilot requires them.
+
+13. WHAT IS THE DEFENSIBLE ASSET?
+Over time: the validated constraint templates, incident-to-decision history, shared KPI definitions and trust created by reproducible evidence. The 3D interface and synthetic training grid alone are not a moat.
+
+14. WHY SHOULD THE JURY SELECT YOU NOW?
+Because CableTwin is already public and functional, technically bounded, honest about what is synthetic, and ready for the next falsifiable step: one read-only pilot. Selection converts a strong prototype into industrial evidence instead of rewarding an untested forecast.
+
+15. CAN EXHAUSTIVE SEARCH SCALE TO A FULL FACTORY?
+Not in the same form. The current exact search is intentionally bounded to three lines and ten orders. Larger deployments would use scalable optimization for candidate generation and reserve exact checks for bounded decision windows or critical alternatives. The deck does not claim factory-wide exhaustive scalability.
+
+
+CLAIMS TO AVOID
+===============
+- “First”, “only”, “no competitor”, “industrial accuracy” or “autonomous optimization”.
+- Any Tunisian stoppage frequency, loss, market size, savings or ROI without plant evidence.
+- Any claim of a signed customer, connected factory, production deployment or machine control.
+- Presenting 93.6% as real-plant performance.
+- Presenting illustrative DT values as quotations or savings.
+
+
+EVIDENCE AND SOURCES
+====================
+- Public prototype: https://hackaton-automate-or-die.vercel.app/#twin
+- Public repository: https://github.com/akiroussama/hackaton_automate_or_die
+- APII sector figures, June 2026: https://www.tunisieindustrie.nat.tn/fr/zoom.asp?action=list&idsect=08
+- UNIDO, Industry in Tunisia: https://www.unido.org/regional-offices/tunisia/industry-in-tunisia
+- Siemens Opcenter APS category evidence: https://webinars.sw.siemens.com/en-US/planning-with-opcenter-aps/
+- Dassault Systèmes DELMIA Ortems category evidence: https://www.3ds.com/products/delmia/ortems
+- NIST, human-in-the-loop digital twins: https://www.nist.gov/publications/conceptual-architecture-digital-twins-human-loop-based-smart-manufacturing
+
+
+REHEARSAL GATES
+===============
+- Three consecutive full runs at 3:45–3:55.
+- Demo portion never exceeds 30 seconds.
+- Every number is spoken with its boundary: synthetic, bounded, or source.
+- Slide 3 explanation is understandable without reading small text.
+- No troubleshooting during the timed pitch; switch to screenshot fallback.
+- Final ask is delivered slowly, looking at the jury, without reading.
+- Practice these three Q&A answers first: “What is the AI?”, “Why not Siemens/DELMIA?”, and “Where is the customer evidence?”.
