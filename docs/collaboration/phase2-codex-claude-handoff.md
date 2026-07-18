@@ -72,17 +72,15 @@ resolved before the document is reused.
 
 ## 4. First lock
 
-**Current owner:** Codex
-**Status:** DAY 3 PITCH PREPARATION ACTIVE. Oussama explicitly opened a new,
-optimistic preparation block after the Day 2 submission build. Day 2 product
-and deliverable commits remain accepted; this block prepares tomorrow's
-selection pitch without rewriting the frozen Phase 2 package.
-**Task:** Inspect the organizer's pitch recommendations and Kawasaki template;
-build a jury-ready 10-slide, 4-minute Industry-track pitch with a maximum
-30-second demonstration; prepare the matching speaker script, Q&A battlecard
-and rehearsal/fallback checklist. Claims must remain bounded by executable
-evidence and the synthetic-data disclosure. No unassigned product iteration is
-authorized by this block.
+**Current owner:** Oussama
+**Status:** DAY 3 PITCH PACKAGE READY FOR HUMAN REHEARSAL. The complete
+Industry-track selection package is rendered, adversarially reviewed and
+verified on `codex/day3-pitch`. Selection is still external and no product
+improvement block is open.
+**Task:** Oussama rehearses the four-minute pitch, keeps the live demonstration
+under 30 seconds and uses the PDF/screenshot fallback immediately if needed.
+If selected, the same bounded package is ready for Room 206; any product change
+requires a new explicit team-leader block.
 **Freeze:** `packaging/`, `phase2-final` and `phase2-submission-final` remain
 unchanged. The Day 2 video selected and accepted by Oussama is frozen and was
 not re-reviewed by Codex after that acceptance.
@@ -4022,3 +4020,110 @@ Next permitted action:
 - Inspect all official inputs, copy them into `Day3/official-inputs/`, map the
   10-slide narrative to the scoring grid, and produce a fully rendered and
   adversarially QA'd Day 3 pitch package.
+
+### 2026-07-18 22:53 Europe/Paris - Codex -> Oussama: Day 3 pitch package complete
+
+Task:
+
+- Build the complete selection-pitch package in anticipation of the six-team
+  announcement.
+- Follow the organizer's Kawasaki sequence, four-minute pitch, four-minute Q&A
+  and 30-second-demo limit.
+- Optimize for relevance, technical feasibility, differentiation, viability
+  and dossier clarity without converting synthetic evidence into industrial
+  claims.
+
+Files changed/generated:
+
+- `Day3/official-inputs/Pitch_Preparation_Recommendations.pdf`
+- `Day3/official-inputs/Kawasaki_10_Slide_Template.pdf`
+- `Day3/deliverables/00_READ_ME_FIRST.txt`
+- `Day3/deliverables/01_CableTwin_SUPCOM_Day3_4min_Pitch.pptx`
+- `Day3/deliverables/01_CableTwin_SUPCOM_Day3_4min_Pitch.pdf`
+- `Day3/deliverables/02_CableTwin_SUPCOM_Day3_Speaker_Pack.txt`
+- `Day3/deliverables/02_CableTwin_SUPCOM_Day3_Speaker_Pack.pdf`
+- this coordination file
+
+Artifact commit:
+
+- `e39a064` — `Build Day 3 jury pitch package`
+
+Independent research and adversarial review:
+
+- APII June 2026 sector page verified: 115 Tunisian wire/cable/harness firms
+  with ten employees or more; 107 totally exporting; 72,281 jobs.
+- UNIDO used only for Tunisia industrial/digital-transition context.
+- Siemens Opcenter APS and DELMIA Ortems used to establish an honest mature
+  competitive category, not comparative performance claims.
+- NIST used to support the human-in-the-loop architecture direction.
+- The final positioning avoids `first`, `only`, customer, factory deployment,
+  industrial accuracy, savings and ROI claims.
+
+Commands/checks run:
+
+- full visual inspection of all ten artifact-tool slide renders
+- PowerPoint-native PDF export followed by ten-page Poppler render QA
+- `slides_test.py` on the final PPTX
+- PPTX package inspection for slide and notes parts
+- PDF page count and non-empty text checks
+- live public `#twin` journey replay: incident, local Cost suggestion, human
+  override to Service, approval and 10:07 audit
+- `npm run check`
+- `npm run check:recommender`
+- `npm run benchmark:exact`
+- `git diff --check`
+- frozen-directory and working-tree inspection
+
+Verification result:
+
+- PPTX: 10 slides, 10 speaker-note parts, no overflow detected.
+- Pitch PDF: 10 non-empty pages, full-size render inspected.
+- Speaker pack PDF: 10 non-empty pages, cover/script/demo/Q&A/sources/rehearsal
+  render inspected.
+- Spoken slide notes contain 472 total words including demo instructions and
+  fallback wording; the intended spoken path is approximately 450 words and
+  is designed for a 3:45-3:55 rehearsal target.
+- Demo path is bounded to four actions and 30 seconds maximum.
+- Planner/workflow checks: 9/9.
+- Separate recommender checks: 5/5.
+- Exact bounded verifier: 17,856 candidates; 10,440 feasible schedules;
+  three unique policy optima; Service 140, Cost 170, Stability 620 minutes.
+- `packaging/`, `phase2-final` and `phase2-submission-final` were not modified.
+
+Deliverable SHA-256:
+
+- `00_READ_ME_FIRST.txt`:
+  `0acc2d4347caf33dd27f0fe57962640778a00b2ad8fb4d60c2482c49dc4366d7`
+- `01_CableTwin_SUPCOM_Day3_4min_Pitch.pdf`:
+  `1e1e38669bea57946d6a2ae68b174e83d8857f8463bf29fa5fa6b06f8d77985c`
+- `01_CableTwin_SUPCOM_Day3_4min_Pitch.pptx`:
+  `2101f05117ffc9a44ce4c88bd97bb6fed5c66f63076cc6dd0dc13727031c29c1`
+- `02_CableTwin_SUPCOM_Day3_Speaker_Pack.pdf`:
+  `bb266b8b6f00d63369104b6c06de5ec61046bd6f21a6c55d1fa2882b13dbf03c`
+- `02_CableTwin_SUPCOM_Day3_Speaker_Pack.txt`:
+  `394e0c06585452cec0e4d73ebb4fb858b5667999ae7120dfaf1e951b42f7052c`
+
+Known limitations:
+
+- Selection is not claimed; the package anticipates it.
+- Industrial frequency, loss, willingness to pay, pilot conversion, pricing,
+  savings and ROI remain unvalidated.
+- The telemetry, scenario, DT figures and recommender training grid are fully
+  synthetic.
+- The exact verifier is intentionally bounded; it is not claimed to scale
+  exhaustively to a full factory.
+- The human rehearsal gate cannot be performed by tooling.
+
+Next owner:
+
+- Oussama
+
+Next permitted action:
+
+1. Run three complete rehearsals at 3:45-3:55.
+2. Run the live demo three times and stop each at 30 seconds maximum.
+3. Prioritize the Q&A answers for AI definition, synthetic evidence,
+   Siemens/DELMIA, verifier scalability and missing customer proof.
+4. If selected, present the PPTX in Room 206 and keep the pitch PDF open as the
+   immediate fallback.
+5. Do not start a new product iteration unless Oussama explicitly opens one.
