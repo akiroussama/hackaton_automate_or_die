@@ -72,17 +72,17 @@ resolved before the document is reused.
 
 ## 4. First lock
 
-**Current owner:** Oussama (team leader — external upload and submission only)
-**Status:** DAY 2 BUILD PACKAGE DELIVERED. The product and refreshed
-deliverables are pushed at `ffbcf9a`; the copy-ready local folder is
-`D:\workspace\hackaton_automate_or_die\share_drive` (16 files, 32.73 MiB).
-The official Google Drive upload, public-viewer permission check and form
-submission remain team-leader external actions. Neither Codex nor Claude Code
-owns an active repository block.
-**Task:** Copy every file from `share_drive` into one Google Drive folder, set
-that folder to "Anyone with the link" / Viewer, verify the URL in a private
-browser window, then submit the official form. Do not reopen product or
-deliverable work unless Oussama explicitly transfers ownership again.
+**Current owner:** Codex
+**Status:** DAY 3 PITCH PREPARATION ACTIVE. Oussama explicitly opened a new,
+optimistic preparation block after the Day 2 submission build. Day 2 product
+and deliverable commits remain accepted; this block prepares tomorrow's
+selection pitch without rewriting the frozen Phase 2 package.
+**Task:** Inspect the organizer's pitch recommendations and Kawasaki template;
+build a jury-ready 10-slide, 4-minute Industry-track pitch with a maximum
+30-second demonstration; prepare the matching speaker script, Q&A battlecard
+and rehearsal/fallback checklist. Claims must remain bounded by executable
+evidence and the synthetic-data disclosure. No unassigned product iteration is
+authorized by this block.
 **Freeze:** `packaging/`, `phase2-final` and `phase2-submission-final` remain
 unchanged. The Day 2 video selected and accepted by Oussama is frozen and was
 not re-reviewed by Codex after that acceptance.
@@ -3983,3 +3983,42 @@ Next permitted action:
 4. Paste the exact theme from `00_READ_ME_FIRST.txt`, the folder URL and the
    optional team message into the official form, then submit.
 5. Capture the submission confirmation. No further build work is required.
+
+### 2026-07-18 22:18 Europe/Paris - Oussama -> Codex: open Day 3 pitch-preparation block
+
+Task:
+
+- Anticipate selection and prepare the complete Day 3 jury pitch.
+- Follow the organizer's Kawasaki structure as closely as possible.
+- Respect a 4-minute pitch, 4-minute Q&A and maximum 30-second demo.
+- Optimize explicitly for the supplied weighted criteria while preserving
+  verified product truth and honest limitations.
+
+Permitted scope:
+
+- `Day3/**`
+- external scratch used to inspect and build presentation artifacts
+- this coordination file
+
+Inputs reported by Oussama:
+
+- organizer pitch recommendations
+- organizer Kawasaki pitch template
+- weighted evaluation criteria and schedule screenshots
+- accepted Day 2 product evidence and public demo
+
+Freeze and exclusions:
+
+- Do not mutate `packaging/`, `phase2-final` or `phase2-submission-final`.
+- Do not begin another product improvement iteration under this block.
+- Do not change canonical metrics without executable evidence.
+
+Current owner:
+
+- Codex
+
+Next permitted action:
+
+- Inspect all official inputs, copy them into `Day3/official-inputs/`, map the
+  10-slide narrative to the scoring grid, and produce a fully rendered and
+  adversarially QA'd Day 3 pitch package.
