@@ -1,0 +1,71 @@
+{
+  "pass": 1,
+  "startedAt": "2026-07-18T02:02:25.680Z",
+  "t0": 1784340145681,
+  "transitions": [
+    {
+      "at": 0,
+      "event": "incident",
+      "snapshot": {
+        "state": "incident",
+        "phasePreview": false,
+        "onTime": "7 / 10",
+        "delay": "10 h 20 min",
+        "serviceOnTime": "8 / 10",
+        "serviceCost": "+ 838 DT",
+        "auditEvents": 2
+      }
+    },
+    {
+      "at": 2515,
+      "event": "service-preview",
+      "snapshot": {
+        "state": "incident",
+        "phasePreview": true,
+        "onTime": "8 / 10",
+        "delay": "2 h 20 min",
+        "serviceOnTime": "8 / 10",
+        "serviceCost": "+ 838 DT",
+        "auditEvents": 2
+      }
+    },
+    {
+      "at": 5290,
+      "event": "resolved",
+      "snapshot": {
+        "state": "resolved",
+        "phasePreview": false,
+        "onTime": "8 / 10",
+        "delay": "2 h 20 min",
+        "serviceOnTime": "8 / 10",
+        "serviceCost": "+ 838 DT",
+        "auditEvents": 3
+      }
+    },
+    {
+      "at": 7596,
+      "event": "reset",
+      "snapshot": {
+        "state": "baseline",
+        "phasePreview": false,
+        "onTime": "10 / 10",
+        "delay": "0 h",
+        "serviceOnTime": "\u2014",
+        "serviceCost": "\u2014",
+        "auditEvents": 1
+      }
+    }
+  ],
+  "checkpoints": {
+    "baselineOnTime": true,
+    "incidentOnTime": true,
+    "incidentDelay": true,
+    "servicePreview": true,
+    "resolvedAudit": true,
+    "resetOnTime": true
+  },
+  "elapsedS": 7.596,
+  "errors": [],
+  "pass_result": "SMOKE-TEST (excluded from acceptance)",
+  "note": "TOOLING SMOKE TEST ONLY - machine-driven by a separate CDP driver while the recorder observed. Validates recorder mechanics; does NOT count toward the three required human-operated passes."
+}
