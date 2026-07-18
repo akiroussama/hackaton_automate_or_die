@@ -20,6 +20,9 @@ docs/04-messages-et-questions.md
 output/**/*.zip
 output/*.zip
 
+# alternate generated Day 2 document renders (preserved locally, not submitted)
+output/day2-docs/
+
 # local browser-automation session artifacts
 .playwright-mcp/
 
