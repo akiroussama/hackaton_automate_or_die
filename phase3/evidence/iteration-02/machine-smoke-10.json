@@ -1,0 +1,35 @@
+{
+  "schema": "cabletwin-rehearsal/3",
+  "provenance": "machine-smoke",
+  "mode": "fallback",
+  "index": 10,
+  "armedAt": "2026-07-18T06:10:38.121Z",
+  "budgetS": 90,
+  "narrationSource": {
+    "file": "deck/outline.md",
+    "lines": "202-210",
+    "rev": "e37d744893c4",
+    "sha256_16": "b0250a41b304b40e"
+  },
+  "packageRoot": "D:\\workspace\\hackaton_automate_or_die\\packaging",
+  "transitions": [],
+  "checkpoints": {
+    "observedReload": true,
+    "liveStartObserved": true
+  },
+  "cancelledLoads": [],
+  "elapsedRawS": 0.00076949999999988,
+  "elapsedDisplayS": 0,
+  "gates": {
+    "withinBudget": true,
+    "attestation": true,
+    "zeroErrors": true
+  },
+  "attestation": {
+    "operator": "",
+    "statement": "",
+    "recordingPointer": ""
+  },
+  "result": "PASS",
+  "errors": []
+}

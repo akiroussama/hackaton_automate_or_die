@@ -1,0 +1,26 @@
+{
+  "retestOf": "Codex 2026-07-18 07:35 second correction block",
+  "executedAt": "2026-07-18",
+  "results": {
+    "1_normal_positive": "PASS only after verified reset (machine-smoke-01: PASS, resetVerified true, exit 0)",
+    "2_final_positive": "PASS with audit revalidated and left visible, no reset wait (machine-smoke-02)",
+    "3_negatives": "Cost and Stability each FAIL at the exact strategy gate (machine-smoke-03/04)",
+    "4_no_reload": "cannot arm: INCOMPLETE 'required post-attach reload was not observed in time', bounded by --reload-deadline (machine-smoke-05)",
+    "5_error_matrix": "console.error -> FAIL [console.error]; fetch 404 -> FAIL [console.error,http]; unroutable img -> FAIL [loadingFailed] \u2014 a REAL Network.loadingFailed (machine-smoke-06/07/08)",
+    "6_disconnect": "owned browser killed mid-pass with polling in flight: INCOMPLETE persisted 1s after kill, exit 1 (machine-smoke-09)",
+    "7_raw_boundary": "fixture elapsedRawS=75.004 / display 75.00 -> effective FAIL ['budget']; raw value decides",
+    "8_falsifications": "skeletal PASS json -> FAIL[schema,...]; machine filename with human body -> flagged, never counted; negated attestation -> FAIL[attestation-sentence]; empty pointer -> FAIL[recording-pointer]; corrupt trailing -> FAIL[unparseable], streak broken",
+    "9_streak_semantics": "valid normal+normal+final fixtures -> streak true; trailing FAIL -> false; 75.004 final -> false",
+    "10_cleanup_safety": "unknown 4173 listener: start FAILs with 'close it yourself' message; stop kills nothing (dummy survived); tampered manifest with out-of-root profile: kill skipped on identity mismatch, recursive delete REFUSED, exit 1, manifest kept",
+    "11_two_cycles": "cycle1 and cycle2 READY (internal Stopwatch 2.8s / external 3.3-4.1s, limit 15s); wrong factory-data.js -> asset identity FAIL; after stop: 0 listeners, session root/manifest/profile gone",
+    "12_fallback_assets": "garbage 1001-byte ftyp/%PDF files with wrong sums -> PREFLIGHT FAIL; frozen hashes pass; machine fallback-timer smoke lands as machine-smoke (mode fallback), zero human/fallback reports",
+    "13_statics_invariants": "node --check OK; git diff --check OK; 9/9 tests; benchmark 3x verified; 9/9 package hashes; both tags object+peeled unchanged",
+    "14_diff_scope": "3 permitted source files + iteration-02 evidence only; no human report generated"
+  },
+  "bugsFoundByRetest": [
+    "Chrome launcher PID exits after forking: owned-browser PID now resolved via unique-profile command line",
+    "readline EOF crash in machine mode: prompts now auto-resolve for machine-smoke provenance",
+    "[Environment]::TickCount64 does not exist in Windows PowerShell 5.1 (silent null, dead deadline): replaced by Diagnostics.Stopwatch",
+    "validator crashed on skeletal fixture (d.errors undefined): null-safe now"
+  ]
+}

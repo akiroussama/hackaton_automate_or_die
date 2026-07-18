@@ -1,22 +1,23 @@
 {
-  "schema": "cabletwin-rehearsal/2",
+  "schema": "cabletwin-rehearsal/3",
   "provenance": "machine-smoke",
+  "mode": "normal",
   "index": 1,
-  "armedAt": "2026-07-18T05:08:40.606Z",
+  "armedAt": "2026-07-18T05:57:53.344Z",
   "budgetS": 75,
   "narrationSource": {
     "file": "deck/outline.md",
     "lines": "202-210",
-    "rev": "12e45e0b9888",
+    "rev": "e37d744893c4",
     "sha256_16": "b0250a41b304b40e"
   },
   "packageRoot": "D:\\workspace\\hackaton_automate_or_die\\packaging",
   "transitions": [
     {
-      "atS": 4.28,
+      "atRawS": 2.9352010999999996,
       "event": "incident",
-      "ok": true,
       "snapshot": {
+        "href": "http://127.0.0.1:4173/",
         "state": "incident",
         "onTime": "7 / 10",
         "delay": "10 h 20 min",
@@ -45,10 +46,10 @@
       }
     },
     {
-      "atS": 6.1,
+      "atRawS": 4.7011080000000005,
       "event": "preview",
-      "ok": true,
       "snapshot": {
+        "href": "http://127.0.0.1:4173/",
         "state": "incident",
         "onTime": "8 / 10",
         "delay": "2 h 20 min",
@@ -77,10 +78,10 @@
       }
     },
     {
-      "atS": 7.7,
+      "atRawS": 6.2635502,
       "event": "resolved",
-      "ok": true,
       "snapshot": {
+        "href": "http://127.0.0.1:4173/",
         "state": "resolved",
         "onTime": "8 / 10",
         "delay": "2 h 20 min",
@@ -110,19 +111,24 @@
     }
   ],
   "checkpoints": {
+    "observedReload": true,
     "armedBaseline": true,
     "incident": true,
     "comparison": true,
     "servicePreview": true,
     "resolvedServiceAudit": true,
-    "resetAfterReport": false
+    "resetVerified": true
   },
-  "elapsedS": 7.7,
-  "errors": [],
+  "cancelledLoads": [],
+  "elapsedRawS": 6.2635502,
+  "elapsedDisplayS": 6.26,
   "gates": {
     "allCheckpoints": true,
-    "zeroErrors": true,
-    "withinBudget": true
+    "withinBudget": true,
+    "resetVerified": true,
+    "attestation": true,
+    "zeroErrors": true
   },
-  "result": "PASS"
+  "result": "PASS",
+  "errors": []
 }

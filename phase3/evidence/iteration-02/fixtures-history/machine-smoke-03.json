@@ -1,23 +1,22 @@
 {
-  "schema": "cabletwin-rehearsal/3",
+  "schema": "cabletwin-rehearsal/2",
   "provenance": "machine-smoke",
-  "mode": "final",
-  "index": 2,
-  "armedAt": "2026-07-18T05:58:08.713Z",
+  "index": 3,
+  "armedAt": "2026-07-18T05:09:43.165Z",
   "budgetS": 75,
   "narrationSource": {
     "file": "deck/outline.md",
     "lines": "202-210",
-    "rev": "e37d744893c4",
+    "rev": "12e45e0b9888",
     "sha256_16": "b0250a41b304b40e"
   },
   "packageRoot": "D:\\workspace\\hackaton_automate_or_die\\packaging",
   "transitions": [
     {
-      "atRawS": 2.8769127999999995,
+      "atS": 4.19,
       "event": "incident",
+      "ok": true,
       "snapshot": {
-        "href": "http://127.0.0.1:4173/",
         "state": "incident",
         "onTime": "7 / 10",
         "delay": "10 h 20 min",
@@ -46,14 +45,14 @@
       }
     },
     {
-      "atRawS": 4.694197,
+      "atS": 6.09,
       "event": "preview",
+      "ok": false,
       "snapshot": {
-        "href": "http://127.0.0.1:4173/",
         "state": "incident",
-        "onTime": "8 / 10",
-        "delay": "2 h 20 min",
-        "exposed": "2",
+        "onTime": "7 / 10",
+        "delay": "10 h 20 min",
+        "exposed": "3",
         "service": {
           "onTime": "8 / 10",
           "cost": "+ 838 DT",
@@ -69,66 +68,24 @@
           "cost": "+ 2 729 DT",
           "changes": "0"
         },
-        "serviceSelected": true,
+        "serviceSelected": false,
         "costSelected": false,
-        "stabilitySelected": false,
+        "stabilitySelected": true,
         "approveEnabled": true,
         "auditCount": 2,
         "lastAudit": "10:00 Incident simulé3 commandes exposées par un arrêt de 4 h"
       }
-    },
-    {
-      "atRawS": 6.2496171999999985,
-      "event": "resolved",
-      "snapshot": {
-        "href": "http://127.0.0.1:4173/",
-        "state": "resolved",
-        "onTime": "8 / 10",
-        "delay": "2 h 20 min",
-        "exposed": "2",
-        "service": {
-          "onTime": "8 / 10",
-          "cost": "+ 838 DT",
-          "changes": "3"
-        },
-        "cost": {
-          "onTime": "8 / 10",
-          "cost": "+ 799 DT",
-          "changes": "2"
-        },
-        "stability": {
-          "onTime": "7 / 10",
-          "cost": "+ 2 729 DT",
-          "changes": "0"
-        },
-        "serviceSelected": true,
-        "costSelected": false,
-        "stabilitySelected": false,
-        "approveEnabled": false,
-        "auditCount": 3,
-        "lastAudit": "10:07 Option « Priorité service » validéeResponsable production · 8/10 commandes à l'heure"
-      }
     }
   ],
   "checkpoints": {
-    "observedReload": true,
     "armedBaseline": true,
     "incident": true,
     "comparison": true,
-    "servicePreview": true,
-    "resolvedServiceAudit": true,
-    "finalAuditRevalidated": true
+    "servicePreview": false,
+    "resolvedServiceAudit": false,
+    "resetAfterReport": false
   },
-  "cancelledLoads": [],
-  "elapsedRawS": 6.2496171999999985,
-  "elapsedDisplayS": 6.25,
-  "gates": {
-    "allCheckpoints": true,
-    "withinBudget": true,
-    "attestation": true,
-    "zeroErrors": true
-  },
-  "finalAuditLeftVisible": true,
-  "result": "PASS",
+  "result": "FAIL",
+  "failureReason": "service preview checkpoint failed (wrong strategy selected or values drifted)",
   "errors": []
 }

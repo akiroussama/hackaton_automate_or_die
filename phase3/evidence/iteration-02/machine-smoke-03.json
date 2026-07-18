@@ -1,22 +1,23 @@
 {
-  "schema": "cabletwin-rehearsal/2",
+  "schema": "cabletwin-rehearsal/3",
   "provenance": "machine-smoke",
+  "mode": "normal",
   "index": 3,
-  "armedAt": "2026-07-18T05:09:43.165Z",
+  "armedAt": "2026-07-18T05:59:50.852Z",
   "budgetS": 75,
   "narrationSource": {
     "file": "deck/outline.md",
     "lines": "202-210",
-    "rev": "12e45e0b9888",
+    "rev": "e37d744893c4",
     "sha256_16": "b0250a41b304b40e"
   },
   "packageRoot": "D:\\workspace\\hackaton_automate_or_die\\packaging",
   "transitions": [
     {
-      "atS": 4.19,
+      "atRawS": 3.0411405,
       "event": "incident",
-      "ok": true,
       "snapshot": {
+        "href": "http://127.0.0.1:4173/",
         "state": "incident",
         "onTime": "7 / 10",
         "delay": "10 h 20 min",
@@ -45,14 +46,14 @@
       }
     },
     {
-      "atS": 6.09,
+      "atRawS": 4.867373599999999,
       "event": "preview",
-      "ok": false,
       "snapshot": {
+        "href": "http://127.0.0.1:4173/",
         "state": "incident",
-        "onTime": "7 / 10",
-        "delay": "10 h 20 min",
-        "exposed": "3",
+        "onTime": "8 / 10",
+        "delay": "2 h 50 min",
+        "exposed": "2",
         "service": {
           "onTime": "8 / 10",
           "cost": "+ 838 DT",
@@ -69,8 +70,8 @@
           "changes": "0"
         },
         "serviceSelected": false,
-        "costSelected": false,
-        "stabilitySelected": true,
+        "costSelected": true,
+        "stabilitySelected": false,
         "approveEnabled": true,
         "auditCount": 2,
         "lastAudit": "10:00 Incident simulé3 commandes exposées par un arrêt de 4 h"
@@ -78,14 +79,14 @@
     }
   ],
   "checkpoints": {
+    "observedReload": true,
     "armedBaseline": true,
     "incident": true,
     "comparison": true,
-    "servicePreview": false,
-    "resolvedServiceAudit": false,
-    "resetAfterReport": false
+    "servicePreview": false
   },
+  "cancelledLoads": [],
   "result": "FAIL",
-  "failureReason": "service preview checkpoint failed (wrong strategy selected or values drifted)",
+  "failureReason": "service preview checkpoint failed (wrong strategy or non-exact values)",
   "errors": []
 }

@@ -1,23 +1,22 @@
 {
-  "schema": "cabletwin-rehearsal/3",
+  "schema": "cabletwin-rehearsal/2",
   "provenance": "machine-smoke",
-  "mode": "final",
-  "index": 2,
-  "armedAt": "2026-07-18T05:58:08.713Z",
+  "index": 5,
+  "armedAt": "2026-07-18T05:10:50.405Z",
   "budgetS": 75,
   "narrationSource": {
     "file": "deck/outline.md",
     "lines": "202-210",
-    "rev": "e37d744893c4",
+    "rev": "12e45e0b9888",
     "sha256_16": "b0250a41b304b40e"
   },
   "packageRoot": "D:\\workspace\\hackaton_automate_or_die\\packaging",
   "transitions": [
     {
-      "atRawS": 2.8769127999999995,
+      "atS": 4.78,
       "event": "incident",
+      "ok": true,
       "snapshot": {
-        "href": "http://127.0.0.1:4173/",
         "state": "incident",
         "onTime": "7 / 10",
         "delay": "10 h 20 min",
@@ -46,10 +45,10 @@
       }
     },
     {
-      "atRawS": 4.694197,
+      "atS": 6.6,
       "event": "preview",
+      "ok": true,
       "snapshot": {
-        "href": "http://127.0.0.1:4173/",
         "state": "incident",
         "onTime": "8 / 10",
         "delay": "2 h 20 min",
@@ -78,10 +77,10 @@
       }
     },
     {
-      "atRawS": 6.2496171999999985,
+      "atS": 8.17,
       "event": "resolved",
+      "ok": true,
       "snapshot": {
-        "href": "http://127.0.0.1:4173/",
         "state": "resolved",
         "onTime": "8 / 10",
         "delay": "2 h 20 min",
@@ -111,24 +110,25 @@
     }
   ],
   "checkpoints": {
-    "observedReload": true,
     "armedBaseline": true,
     "incident": true,
     "comparison": true,
     "servicePreview": true,
     "resolvedServiceAudit": true,
-    "finalAuditRevalidated": true
+    "resetAfterReport": false
   },
-  "cancelledLoads": [],
-  "elapsedRawS": 6.2496171999999985,
-  "elapsedDisplayS": 6.25,
+  "elapsedS": 8.17,
+  "errors": [
+    {
+      "ts": 94709.131942,
+      "kind": "http",
+      "detail": "HTTP 404 http://127.0.0.1:4173/retest-nonexistent-asset"
+    }
+  ],
   "gates": {
     "allCheckpoints": true,
-    "withinBudget": true,
-    "attestation": true,
-    "zeroErrors": true
+    "zeroErrors": false,
+    "withinBudget": true
   },
-  "finalAuditLeftVisible": true,
-  "result": "PASS",
-  "errors": []
+  "result": "FAIL"
 }

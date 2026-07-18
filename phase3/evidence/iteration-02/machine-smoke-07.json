@@ -1,9 +1,9 @@
 {
   "schema": "cabletwin-rehearsal/3",
   "provenance": "machine-smoke",
-  "mode": "final",
-  "index": 2,
-  "armedAt": "2026-07-18T05:58:08.713Z",
+  "mode": "normal",
+  "index": 7,
+  "armedAt": "2026-07-18T06:00:52.415Z",
   "budgetS": 75,
   "narrationSource": {
     "file": "deck/outline.md",
@@ -14,7 +14,7 @@
   "packageRoot": "D:\\workspace\\hackaton_automate_or_die\\packaging",
   "transitions": [
     {
-      "atRawS": 2.8769127999999995,
+      "atRawS": 3.5208749,
       "event": "incident",
       "snapshot": {
         "href": "http://127.0.0.1:4173/",
@@ -46,7 +46,7 @@
       }
     },
     {
-      "atRawS": 4.694197,
+      "atRawS": 5.3644986,
       "event": "preview",
       "snapshot": {
         "href": "http://127.0.0.1:4173/",
@@ -78,7 +78,7 @@
       }
     },
     {
-      "atRawS": 6.2496171999999985,
+      "atRawS": 6.8378836,
       "event": "resolved",
       "snapshot": {
         "href": "http://127.0.0.1:4173/",
@@ -117,18 +117,28 @@
     "comparison": true,
     "servicePreview": true,
     "resolvedServiceAudit": true,
-    "finalAuditRevalidated": true
+    "resetVerified": true
   },
   "cancelledLoads": [],
-  "elapsedRawS": 6.2496171999999985,
-  "elapsedDisplayS": 6.25,
+  "elapsedRawS": 6.8378836,
+  "elapsedDisplayS": 6.84,
   "gates": {
     "allCheckpoints": true,
     "withinBudget": true,
-    "attestation": true,
-    "zeroErrors": true
+    "resetVerified": true,
+    "attestation": true
   },
-  "finalAuditLeftVisible": true,
-  "result": "PASS",
-  "errors": []
+  "result": "FAIL",
+  "errors": [
+    {
+      "ts": 1784354441150.262,
+      "kind": "console.error",
+      "detail": "retest: injected console error"
+    },
+    {
+      "ts": 97709.874336,
+      "kind": "http",
+      "detail": "HTTP 404 http://127.0.0.1:4173/retest-nonexistent-asset"
+    }
+  ]
 }

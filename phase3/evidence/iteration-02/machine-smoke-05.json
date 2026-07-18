@@ -1,134 +1,21 @@
 {
-  "schema": "cabletwin-rehearsal/2",
+  "schema": "cabletwin-rehearsal/3",
   "provenance": "machine-smoke",
+  "mode": "normal",
   "index": 5,
-  "armedAt": "2026-07-18T05:10:50.405Z",
+  "armedAt": null,
   "budgetS": 75,
   "narrationSource": {
     "file": "deck/outline.md",
     "lines": "202-210",
-    "rev": "12e45e0b9888",
+    "rev": "e37d744893c4",
     "sha256_16": "b0250a41b304b40e"
   },
   "packageRoot": "D:\\workspace\\hackaton_automate_or_die\\packaging",
-  "transitions": [
-    {
-      "atS": 4.78,
-      "event": "incident",
-      "ok": true,
-      "snapshot": {
-        "state": "incident",
-        "onTime": "7 / 10",
-        "delay": "10 h 20 min",
-        "exposed": "3",
-        "service": {
-          "onTime": "8 / 10",
-          "cost": "+ 838 DT",
-          "changes": "3"
-        },
-        "cost": {
-          "onTime": "8 / 10",
-          "cost": "+ 799 DT",
-          "changes": "2"
-        },
-        "stability": {
-          "onTime": "7 / 10",
-          "cost": "+ 2 729 DT",
-          "changes": "0"
-        },
-        "serviceSelected": false,
-        "costSelected": false,
-        "stabilitySelected": false,
-        "approveEnabled": false,
-        "auditCount": 2,
-        "lastAudit": "10:00 Incident simulé3 commandes exposées par un arrêt de 4 h"
-      }
-    },
-    {
-      "atS": 6.6,
-      "event": "preview",
-      "ok": true,
-      "snapshot": {
-        "state": "incident",
-        "onTime": "8 / 10",
-        "delay": "2 h 20 min",
-        "exposed": "2",
-        "service": {
-          "onTime": "8 / 10",
-          "cost": "+ 838 DT",
-          "changes": "3"
-        },
-        "cost": {
-          "onTime": "8 / 10",
-          "cost": "+ 799 DT",
-          "changes": "2"
-        },
-        "stability": {
-          "onTime": "7 / 10",
-          "cost": "+ 2 729 DT",
-          "changes": "0"
-        },
-        "serviceSelected": true,
-        "costSelected": false,
-        "stabilitySelected": false,
-        "approveEnabled": true,
-        "auditCount": 2,
-        "lastAudit": "10:00 Incident simulé3 commandes exposées par un arrêt de 4 h"
-      }
-    },
-    {
-      "atS": 8.17,
-      "event": "resolved",
-      "ok": true,
-      "snapshot": {
-        "state": "resolved",
-        "onTime": "8 / 10",
-        "delay": "2 h 20 min",
-        "exposed": "2",
-        "service": {
-          "onTime": "8 / 10",
-          "cost": "+ 838 DT",
-          "changes": "3"
-        },
-        "cost": {
-          "onTime": "8 / 10",
-          "cost": "+ 799 DT",
-          "changes": "2"
-        },
-        "stability": {
-          "onTime": "7 / 10",
-          "cost": "+ 2 729 DT",
-          "changes": "0"
-        },
-        "serviceSelected": true,
-        "costSelected": false,
-        "stabilitySelected": false,
-        "approveEnabled": false,
-        "auditCount": 3,
-        "lastAudit": "10:07 Option « Priorité service » validéeResponsable production · 8/10 commandes à l'heure"
-      }
-    }
-  ],
-  "checkpoints": {
-    "armedBaseline": true,
-    "incident": true,
-    "comparison": true,
-    "servicePreview": true,
-    "resolvedServiceAudit": true,
-    "resetAfterReport": false
-  },
-  "elapsedS": 8.17,
-  "errors": [
-    {
-      "ts": 94709.131942,
-      "kind": "http",
-      "detail": "HTTP 404 http://127.0.0.1:4173/retest-nonexistent-asset"
-    }
-  ],
-  "gates": {
-    "allCheckpoints": true,
-    "zeroErrors": false,
-    "withinBudget": true
-  },
-  "result": "FAIL"
+  "transitions": [],
+  "checkpoints": {},
+  "cancelledLoads": [],
+  "result": "INCOMPLETE",
+  "failureReason": "required post-attach reload was not observed in time",
+  "errors": []
 }

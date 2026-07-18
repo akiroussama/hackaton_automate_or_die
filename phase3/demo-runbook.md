@@ -59,10 +59,18 @@ unchanged; the recorder stores this source and revision in every report.
    first word**. Speak the narration aloud while clicking.
 4. Each human report requires your attestation (name, statement, pointer to
    the continuous screen+microphone recording of the session).
-5. `session-summary.json` tracks the streak: three consecutive human PASSes =
-   acceptance. Any FAIL resets the streak. Machine smoke reports never count.
-6. Cleanup: `phase3\start-demo.cmd stop` (closes browser + server, removes
-   the disposable profile).
+5. Pass modes and acceptance:
+   - passes 1 and 2: `--mode normal` — after the clock stops, click
+     Recommencer; the verified 10/10 reset is REQUIRED for the PASS;
+   - pass 3: `--mode final` — the resolved audit is revalidated and LEFT
+     VISIBLE for Q&A (no reset wait);
+   - `session-summary.json` accepts only the trailing sequence normal-PASS,
+     normal-PASS, final-PASS; any FAIL or invalid report resets the streak;
+     machine smoke reports never count;
+   - plus one `--mode fallback` PASS (forced live-to-slide, ≤ 90.0 s raw).
+6. Cleanup: `phase3\start-demo.cmd stop` — stops ONLY the owned session
+   recorded in its manifest (never unknown port listeners) and removes the
+   disposable profile after containment checks.
 
 ## Machine preparation (T-30 before the pitch)
 
@@ -74,19 +82,24 @@ unchanged; the recorder stores this source and revision in every report.
 
 ## Fallback chain (preflight-verified assets)
 
+The recorder preflight validates the MP4 and deck PDF against their frozen
+`SHA256SUMS.txt` entries — signature-only or tampered files fail.
+
 | Level | Asset | Use |
 | ---: | --- | --- |
 | 1 | Live local build (`phase3\start-demo.cmd`) | The default on-stage demo; zero network |
-| 2 | Public build <https://hackaton-automate-or-die.vercel.app/> | If the local machine misbehaves; works on any device |
-| 3 | **Slide 5 of the already-open deck** (frozen captures + native metrics) | **The immediate timed fallback**: narrate the same script over the captures — fits the same 90-second slot |
-| 4 | Accepted MP4 `packaging\03_CableTwin_SUPCOM_Demo_2min.mp4` (1:57.9) | Offline proof for jury/Q&A. **Longer than the 90-second slot** — never play it in full inside the live slot |
+| 2 | **Slide 5 of the ALREADY-OPEN deck** (frozen captures + native metrics) | **The immediate timed fallback** — no network, no app: keep narrating over the captures inside the same 90-second slot |
+| 3 | Public build <https://hackaton-automate-or-die.vercel.app/> | If the whole machine misbehaves; works on any device |
+| 4 | Accepted MP4 `packaging\03_CableTwin_SUPCOM_Demo_2min.mp4` (1:57.9) | Offline proof for jury/Q&A only. **Longer than the 90-second slot** — never played in full inside the live slot |
 
 Rule: never debug live. Switch levels calmly and keep narrating — the
 numbers are identical at every level.
 
-**Required rehearsal:** at least one **forced live-to-slide fallback pass** —
-start live, deliberately switch to slide 5 mid-journey, and finish the
-narration within the 90-second slot.
+**Required rehearsal:** one **forced live-to-slide fallback pass** recorded
+with `node phase3\rehearse-demo.mjs --mode fallback` — start live,
+deliberately switch to slide 5 mid-journey, keep speaking, ENTER at the last
+word. Gate: raw elapsed ≤ 90.0 s + attestation. Separate report type; never
+counts toward the three-pass streak.
 
 ## Q&A staging notes
 

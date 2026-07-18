@@ -2,8 +2,8 @@
   "schema": "cabletwin-rehearsal/3",
   "provenance": "machine-smoke",
   "mode": "normal",
-  "index": 4,
-  "armedAt": "2026-07-18T06:00:05.418Z",
+  "index": 9,
+  "armedAt": "2026-07-18T06:02:03.336Z",
   "budgetS": 75,
   "narrationSource": {
     "file": "deck/outline.md",
@@ -14,7 +14,7 @@
   "packageRoot": "D:\\workspace\\hackaton_automate_or_die\\packaging",
   "transitions": [
     {
-      "atRawS": 3.0265693,
+      "atRawS": 2.9361867,
       "event": "incident",
       "snapshot": {
         "href": "http://127.0.0.1:4173/",
@@ -44,49 +44,16 @@
         "auditCount": 2,
         "lastAudit": "10:00 Incident simulé3 commandes exposées par un arrêt de 4 h"
       }
-    },
-    {
-      "atRawS": 4.806103800000001,
-      "event": "preview",
-      "snapshot": {
-        "href": "http://127.0.0.1:4173/",
-        "state": "incident",
-        "onTime": "7 / 10",
-        "delay": "10 h 20 min",
-        "exposed": "3",
-        "service": {
-          "onTime": "8 / 10",
-          "cost": "+ 838 DT",
-          "changes": "3"
-        },
-        "cost": {
-          "onTime": "8 / 10",
-          "cost": "+ 799 DT",
-          "changes": "2"
-        },
-        "stability": {
-          "onTime": "7 / 10",
-          "cost": "+ 2 729 DT",
-          "changes": "0"
-        },
-        "serviceSelected": false,
-        "costSelected": false,
-        "stabilitySelected": true,
-        "approveEnabled": true,
-        "auditCount": 2,
-        "lastAudit": "10:00 Incident simulé3 commandes exposées par un arrêt de 4 h"
-      }
     }
   ],
   "checkpoints": {
     "observedReload": true,
     "armedBaseline": true,
     "incident": true,
-    "comparison": true,
-    "servicePreview": false
+    "comparison": true
   },
   "cancelledLoads": [],
-  "result": "FAIL",
-  "failureReason": "service preview checkpoint failed (wrong strategy or non-exact values)",
+  "result": "INCOMPLETE",
+  "failureReason": "CDP connection lost mid-pass",
   "errors": []
 }

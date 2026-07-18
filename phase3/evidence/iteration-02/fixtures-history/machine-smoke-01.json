@@ -1,23 +1,22 @@
 {
-  "schema": "cabletwin-rehearsal/3",
+  "schema": "cabletwin-rehearsal/2",
   "provenance": "machine-smoke",
-  "mode": "final",
-  "index": 2,
-  "armedAt": "2026-07-18T05:58:08.713Z",
+  "index": 1,
+  "armedAt": "2026-07-18T05:08:40.606Z",
   "budgetS": 75,
   "narrationSource": {
     "file": "deck/outline.md",
     "lines": "202-210",
-    "rev": "e37d744893c4",
+    "rev": "12e45e0b9888",
     "sha256_16": "b0250a41b304b40e"
   },
   "packageRoot": "D:\\workspace\\hackaton_automate_or_die\\packaging",
   "transitions": [
     {
-      "atRawS": 2.8769127999999995,
+      "atS": 4.28,
       "event": "incident",
+      "ok": true,
       "snapshot": {
-        "href": "http://127.0.0.1:4173/",
         "state": "incident",
         "onTime": "7 / 10",
         "delay": "10 h 20 min",
@@ -46,10 +45,10 @@
       }
     },
     {
-      "atRawS": 4.694197,
+      "atS": 6.1,
       "event": "preview",
+      "ok": true,
       "snapshot": {
-        "href": "http://127.0.0.1:4173/",
         "state": "incident",
         "onTime": "8 / 10",
         "delay": "2 h 20 min",
@@ -78,10 +77,10 @@
       }
     },
     {
-      "atRawS": 6.2496171999999985,
+      "atS": 7.7,
       "event": "resolved",
+      "ok": true,
       "snapshot": {
-        "href": "http://127.0.0.1:4173/",
         "state": "resolved",
         "onTime": "8 / 10",
         "delay": "2 h 20 min",
@@ -111,24 +110,19 @@
     }
   ],
   "checkpoints": {
-    "observedReload": true,
     "armedBaseline": true,
     "incident": true,
     "comparison": true,
     "servicePreview": true,
     "resolvedServiceAudit": true,
-    "finalAuditRevalidated": true
+    "resetAfterReport": false
   },
-  "cancelledLoads": [],
-  "elapsedRawS": 6.2496171999999985,
-  "elapsedDisplayS": 6.25,
+  "elapsedS": 7.7,
+  "errors": [],
   "gates": {
     "allCheckpoints": true,
-    "withinBudget": true,
-    "attestation": true,
-    "zeroErrors": true
+    "zeroErrors": true,
+    "withinBudget": true
   },
-  "finalAuditLeftVisible": true,
-  "result": "PASS",
-  "errors": []
+  "result": "PASS"
 }

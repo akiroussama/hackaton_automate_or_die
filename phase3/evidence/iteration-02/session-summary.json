@@ -1,8 +1,12 @@
 {
-  "generatedAt": "2026-07-18T05:13:18.802Z",
+  "schema": "cabletwin-rehearsal/3/summary",
+  "generatedAt": "2026-07-18T06:10:38.132Z",
   "humanAttempts": [],
-  "machineSmokeCount": 8,
-  "trailingConsecutiveHumanPasses": 0,
-  "acceptanceStreakSatisfied": false,
-  "note": "Only human-provenance reports count; any human FAIL resets the streak."
+  "fallbackAttempts": [],
+  "machineSmokeCount": 10,
+  "machineBodiesClaimingHuman": [],
+  "normalStreakSatisfied": false,
+  "fallbackPassSatisfied": false,
+  "allHumanGatesSatisfied": false,
+  "rule": "streak = trailing normal+normal(with verified resets)+final PASSes; any invalid or FAIL human attempt breaks it; machine evidence never counts"
 }
