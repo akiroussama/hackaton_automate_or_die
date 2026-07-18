@@ -502,7 +502,7 @@ export function initFactoryView(ctx) {
       [260, () => calcLine(`> commandes exposées : ${exposed}`, "is-alert")],
       [520, () => calcLine("> contraintes actives : compatibilité lignes · occupation unique · fenêtre d'arrêt · horizon")],
       [780, () => {
-        calcLine("> vérificateur indépendant — exploration exacte de l'espace borné…");
+        calcLine("> vérificateur exhaustif borné séparé — exploration exacte…");
         animateCounter(counterAValue, SEARCH_SPACE.candidates, 1150, fmt);
       }],
       [1000, () => calcLine("· candidat rejeté — chevauchement de la fenêtre d'arrêt L2", "is-dim")],
@@ -586,7 +586,7 @@ export function initFactoryView(ctx) {
         + "vos données ne sortent jamais. La décision reste humaine.");
     } else {
       html("p", "", cherryBody,
-        "Les trois plans sont vérifiés par une énumération exacte indépendante. En pilote : "
+        "Les trois plans sont vérifiés par une énumération exhaustive bornée séparée. En pilote : "
         + "ré-entraînement du modèle sur l'historique réel de vos incidents — hébergé sur site, "
         + "vos données ne sortent jamais. La décision reste humaine.");
     }
