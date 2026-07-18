@@ -72,15 +72,17 @@ resolved before the document is reused.
 
 ## 4. First lock
 
-**Current owner:** Oussama
-**Status:** DAY 3 PITCH PACKAGE READY FOR HUMAN REHEARSAL. The complete
-Industry-track selection package is rendered, adversarially reviewed and
-verified on `codex/day3-pitch`. Selection is still external and no product
-improvement block is open.
-**Task:** Oussama rehearses the four-minute pitch, keeps the live demonstration
-under 30 seconds and uses the PDF/screenshot fallback immediately if needed.
-If selected, the same bounded package is ready for Room 206; any product change
-requires a new explicit team-leader block.
+**Current owner:** Codex
+**Status:** EXPERT-JURY SAFETY-TWIN SCENARIO RESEARCH ACTIVE. Oussama explicitly
+opened one new bounded improvement: specify a separate, higher-complexity
+human-machine safety demonstration inspired by a documented real incident.
+No implementation is authorized until Codex completes primary-source research,
+ethical/claim boundaries and an exact handoff to Claude Code.
+**Task:** Select one officially documented incident; write a respectful
+counterfactual training scenario using historical-pattern ML, virtual what-if
+trials, hard safety constraints and human final authority; then transfer the
+implementation brief to Claude Code. The existing cable-production twin must
+remain intact and directly accessible.
 **Freeze:** `packaging/`, `phase2-final` and `phase2-submission-final` remain
 unchanged. The Day 2 video selected and accepted by Oussama is frozen and was
 not re-reviewed by Codex after that acceptance.
@@ -4127,3 +4129,48 @@ Next permitted action:
 4. If selected, present the PPTX in Room 206 and keep the pitch PDF open as the
    immediate fallback.
 5. Do not start a new product iteration unless Oussama explicitly opens one.
+
+### 2026-07-18 23:16 Europe/Paris - Oussama -> Codex: open expert-jury safety-twin scenario block
+
+Team-leader direction:
+
+- Create a materially more advanced, high-WOW demonstration for a possible
+  expert-jury presentation on 21 July.
+- Base the story on a real, historically documented industrial incident with
+  human and machine factors.
+- Use ML to surface patterns from incident history and a digital twin to test
+  alternatives virtually before a human decision.
+- Ask Claude Code to implement the new demonstration as a separate twin; never
+  replace or regress the accepted cable-production twin.
+
+Codex research/specification scope:
+
+- primary-source incident research only
+- ethical and counterfactual claim boundaries
+- scenario, user journey, state model, ML role, virtual branches, audit and
+  acceptance-test specification
+- `Day3/scenarios/**` and this coordination file
+
+Non-negotiable boundaries:
+
+- No invented city, year, workforce, casualty or causal fact.
+- No assertion that CableTwin would certainly have prevented an incident or
+  saved named victims.
+- Fatalities may establish the documented stakes, but the demo must remain a
+  respectful safety-learning simulation, not entertainment.
+- Any ML history used by the implementation must be explicitly synthetic or
+  reconstructed unless a usable public dataset is actually sourced.
+- Existing production-twin routes, canonical metrics and accepted Day 2/Day 3
+  artifacts remain unchanged.
+- `packaging/`, `phase2-final` and `phase2-submission-final` remain frozen.
+
+Current owner:
+
+- Codex
+
+Next permitted action:
+
+- Research candidate incidents from official investigations, select one,
+  write the bounded implementation brief, issue an adversarial verdict, and
+  transfer ownership to Claude Code. Do not implement the UI or engine in this
+  block.
