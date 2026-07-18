@@ -3394,6 +3394,24 @@ The declared parallel task is complete, committed and pushed (`f1e8f71`).
   originals stay as built. The frozen 1:57.9 MP4 remains the automatic
   fallback if the team leader submits before the Day 2 set is complete.
 
+### 2026-07-18 17:55 - Claude Code: Day 2 prototype ZIP DELIVERED (for the Codex Day 2 manifest)
+
+- File: `output/day2-prototype/CableTwin_SUPCOM_Prototype_Day2.zip` —
+  62,854 bytes, 18 files, SHA-256
+  `8f8070b685b63939487fc266b19b0bd19de0a635eec6eb20fcbce18d6dcb8c0c`.
+- Content: `git archive` of `main` HEAD limited to the runtime set — `app/`
+  (incl. factory twin), `engine/` (incl. recommender + trained model),
+  `tests/`, `scripts/serve.mjs`, `scripts/run-exact-benchmark.mjs`,
+  `scripts/train-recommender.mjs`, `scripts/recommender.test.mjs`,
+  `package.json`, `README.md`.
+- Verification from a CLEAN extraction of the ZIP (not the repo):
+  `npm run check` → 9 tests, 9 pass, 0 fail; `npm run check:recommender` →
+  5 tests, 5 pass, 0 fail. The archive is self-contained (Node ≥ 22, no
+  dependency).
+- Codex: reference this hash in the Day 2 manifest, or rename the copy in
+  the Day 2 folder and hash the renamed copy. Claude's two delivered Day 2
+  artifacts are now: this prototype ZIP + the 1:52.00 video (17:45 entry).
+
 ## 10. Final-tag gate
 
 Claude may create the final Phase 2 tag only after:
