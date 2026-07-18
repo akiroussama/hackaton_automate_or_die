@@ -3343,6 +3343,57 @@ Next permitted action:
   block or Iteration 2 on lock return, and remains available for any
   technical question about the twin or the recommender.
 
+### 2026-07-18 17:10 - Claude Code parallel-task declaration (team-leader order)
+
+Team-leader order (in session): Codex rebuilds the complete Day 2 delivery
+from scratch in a dedicated Day 2 folder (deck, data room, video, prototype,
+diagram, hashes, manifest — old `packaging/` and both tags untouched), and
+Claude takes "the most expensive independent task in parallel".
+
+Claude hereby takes the **Day 2 demo video (≤ 2:00) rebuilt from scratch
+around the factory twin**. Declared files (disjoint from every Codex
+document): `scripts/record-video-day2.mjs`, `scripts/build_video_day2.py`,
+`output/video-day2/**` (frames, narration WAVs, MP4, SRT). Claude will NOT
+touch deck/data-room/manifest files; Codex should NOT touch the declared
+video files. The video narration will be English, respects every 17:00 red
+line (ML wording "trained on 687 incidents simulated by the twin itself";
+canonical numbers; human authority), and the final MP4+SRT paths and SHA-256
+will be reported here for Codex's Day 2 manifest/hashes. Planned outline:
+living plant hook → incident (telemetry dies, power drops) → cinematic
+recompute (17,856 → 10,440 + ML recommendation) → strategy tabs + human
+choice of Service (arcs, crews) → approval + audit 10:07 → decision-view
+traceability beat → outro with live URL. Target ≤ 1:58. If the new video is
+not fully QA'd by 20:15 local, the frozen 1:57.9 MP4 is the submitted video
+(fallback unchanged). The team leader's own form submission remains the top
+priority and must not wait past ~20:30 for any artifact.
+
+### 2026-07-18 17:45 - Claude Code: Day 2 video DELIVERED (for the Codex Day 2 manifest)
+
+The declared parallel task is complete, committed and pushed (`f1e8f71`).
+
+- File: `output/video-day2/CableTwin_SUPCOM_Demo_2min_Day2.mp4` —
+  **1:52.00**, 1920×1080 H.264 + AAC, 17,855,848 bytes,
+  SHA-256 `6ca0690ef4dd925644167b3b726b641a70b57740451eecbf3d4a41c0246092ac`.
+- Captions: `output/video-day2/CableTwin_SUPCOM_Demo_2min_Day2.srt`,
+  2,056 bytes, SHA-256
+  `444d6b9d3cd4a78df89a71466906b0683c9b098cfb55aa6cdc6902673c776075`.
+- Content: title card → living twin nominal (sensors, patrols) → war-room
+  recompute with the real exposed ids and 17,856 → 10,440 counters → ML
+  recommendation ("trained on 687 incidents simulated by the twin itself",
+  79 % confidence — red-line compliant) → human override to Service (arcs,
+  crews, 620 → 140 min) → approval + audit 10:07 → decision-view
+  traceability beat → end card with the live URL. English narration,
+  8 non-overlapping TTS segments, SRT included.
+- QA: frame-level inspection at 8 timestamps across two builds; one defect
+  found and fixed (single-frame negative counter flash — rAF timestamp
+  clamp, also committed for the live build). Reproducible via
+  `node scripts/record-video-day2.mjs` + `python scripts/build_video_day2.py`.
+- Codex: reference these exact hashes in the Day 2 manifest/SHA256SUMS. If
+  Codex prefers a different final naming convention for the Day 2 folder,
+  rename the copies there and hash the renamed copies — the `output/`
+  originals stay as built. The frozen 1:57.9 MP4 remains the automatic
+  fallback if the team leader submits before the Day 2 set is complete.
+
 ## 10. Final-tag gate
 
 Claude may create the final Phase 2 tag only after:
