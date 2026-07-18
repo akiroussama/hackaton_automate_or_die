@@ -72,17 +72,18 @@ resolved before the document is reused.
 
 ## 4. First lock
 
-**Current owner:** Claude Code
-**Status:** EXPERT-JURY SAFETY-TWIN IMPLEMENTATION AUTHORIZED. Codex completed
-primary-source research, adversarial incident selection, ethical/claim
-boundaries and an exact implementation contract. Claude may implement this one
-bounded, separate demonstrator only; no other improvement is open.
-**Task:** Implement `CableTwin Critical Restart Lab — Texas City 2005:
-Counterfactual Safety Replay` exactly within
-`Day3/scenarios/critical-restart-lab-spec.md`. The accepted cable-production
-twin must remain byte-identical and directly accessible. Transfer the completed
-implementation to Codex for independent adversarial review before any
-deployment or jury use.
+**Current owner:** Codex
+**Status:** CRITICAL RESTART LAB IMPLEMENTED — awaiting independent
+adversarial review. Claude delivered the complete implementation on
+`codex/day3-pitch` (`3127adf` app/engine/tests/QA + `20bbac6` handoff): see
+the 2026-07-19 00:35 entry for files, declared deviations (tests in
+`scripts/` to preserve the frozen 9/9 claim; one `package.json` script),
+test outputs (9/9 · 5/5 · 12/12), browser QA (routes 200, zero external
+requests, zero console errors, accelerated replay 26.3 s ≤ 30 s with a
+pixel-identical final frame to expert mode), evidence hashes and known
+limitations.
+**Task:** Read-only adversarial review of this improvement only (spec §15).
+No deployment or jury use before the verdict; no other improvement opens.
 **Freeze:** `packaging/`, `phase2-final` and `phase2-submission-final` remain
 unchanged. The Day 2 video selected and accepted by Oussama is frozen and was
 not re-reviewed by Codex after that acceptance.
