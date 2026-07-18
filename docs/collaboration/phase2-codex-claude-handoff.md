@@ -3477,6 +3477,80 @@ longer mentions SwissTransfer. Flagging only — Oussama arbitrates.
 Claude's next block: Iteration 2 (rehearsal recorder, 14:59 spec) for
 tomorrow's 14:00 pitch preparation. Available for any technical question.
 
+### 2026-07-19 00:35 - Claude Code -> Codex: Critical Restart Lab IMPLEMENTED (per spec §15)
+
+Files changed/generated (commit `3127adf` on `codex/day3-pitch`, pushed):
+
+- `critical-restart/index.html`, `critical-restart/styles.css`,
+  `critical-restart/app.js` — the separate static app at `/critical-restart/`;
+- `engine/critical-restart-data.js` (CSB facts as the sole source map,
+  seeded cohort constrained by the 19-startup aggregates, CR-01..08,
+  branches), `engine/critical-restart-ml.js` (inspectable weighted k-NN,
+  k=5, seeded, per-neighbor distance contributions),
+  `engine/critical-restart-simulator.js` (bounded material balance, freezes
+  at RELEASE PRECURSOR REACHED, SHA-256 scenario hash);
+- `scripts/critical-restart.test.mjs` + `scripts/capture-critical-restart.mjs`;
+- `package.json` (+1 script `check:critical`). DECLARED DEVIATIONS (spec
+  "stop and record why"): (1) the unit tests live in `scripts/`, NOT
+  `tests/`, because `npm run check` globs `tests/*.test.mjs` and the frozen
+  "9/9" claim must stay byte-consistent — the exact convention already
+  accepted for the recommender; (2) `package.json` gained the one script
+  entry needed to run them.
+
+Byte-identity: `git status` shows ONLY the files above; `/`, `/#twin`,
+decision view, production engine, tests/, accepted artifacts, `packaging/`
+and both tags untouched.
+
+Tests and outputs:
+
+- `npm run check` → 9 tests, 9 pass (unchanged);
+- `npm run check:recommender` → 5/5 (unchanged);
+- `npm run check:critical` → 12/12: source-map figures exact (78 / 7.9 /
+  158 / 170 / 19 / 1 / 14 / 74 / 65 / 15 / 8 / deaths+injured), cohort
+  determinism + aggregate proportions (14/1/4), retrieval determinism,
+  default vector → RECURRENT ABNORMAL STARTUP with 3 contributions per
+  neighbor, similarity drops materially when disagreement+alarm are eased,
+  A = precursor+violations+never approvable, B = delayed non-approvable
+  (CR-01/02), C = only eligible and CR-08-blocked when readiness incomplete,
+  no forbidden result fields, stable 64-hex scenario hash, forbidden-wording
+  scan (with "certified safety system" allowed ONLY negated in the banner).
+
+Browser QA (`scripts/capture-critical-restart.mjs`, tmp/critical-restart-qa/):
+
+- routes 200 for `/`, `/#twin`, `/critical-restart/`; 13 requests, ZERO
+  external; ZERO console errors/exceptions;
+- expert journey state-machine asserted at every transition, 1920×1080
+  renders inspected; 1366×768 inspected (no clipped controls after two
+  layout fixes: drawer[hidden] display bug, alarm-badge/estimate overlap);
+- accelerated replay: 26.3 s ≤ 30 s on the SAME state machine — and
+  `expert-4-finalized.png` and `auto-finalized.png` have the SAME SHA-256
+  (`dc8f82acca35d2da…`): both modes end pixel-identical, mechanically
+  proving there is no separate outcome path;
+- evidence hashes: finalized `dc8f82acca35d2da…`, hd-branches
+  `cd5b7f3c88e4f261…`, qa-report `b7843e603b6ee14d…`.
+
+Known limitations / remaining risks:
+
+- keyboard/grayscale gates (21-22) were designed in (real buttons,
+  focus-visible outlines, text+glyph never color-alone, reduced-motion
+  media query) but not yet exercised by an automated pass — recommend Codex
+  verifies during review;
+- the 1:04 p.m. frame is display-only, correctly separated from branch
+  state; casualty figures appear once, on the fact card, as specified;
+- NO deployment: `/critical-restart/` exists on the branch only; deploying
+  to the public build is a separate team-leader decision;
+- the audit "final snapshot" serializes model/branches/approvals but is not
+  an external file — by design (in-memory demo).
+
+Next owner:
+
+- Codex.
+
+Next permitted action:
+
+- Read-only adversarial review of this improvement only (spec §15). No new
+  improvement begins before the verdict.
+
 ## 10. Final-tag gate
 
 Claude may create the final Phase 2 tag only after:
