@@ -1,0 +1,17 @@
+{
+  "retestOf": "Codex 2026-07-18 06:45 correction block",
+  "executedAt": "2026-07-18",
+  "results": {
+    "1_positive_service_smoke": "PASS - machine-smoke-01: all checkpoints, 7.7s, 0 errors, exit 0",
+    "2_negative_cost_smoke": "PASS - machine-smoke-02: FAIL at service-preview (selected: Cost), exit 1",
+    "3_negative_stability_smoke": "PASS - machine-smoke-03: FAIL at service-preview (selected: Stability), exit 1",
+    "4_error_injection": "PASS - console.error -> machine-smoke-04 FAIL (errors:[console.error]); fetch 404 -> machine-smoke-05 FAIL (errors:[http]); both persisted, exit 1",
+    "5_cdp_disconnect_mid_pass": "PASS - browser killed after incident -> machine-smoke-06 INCOMPLETE persisted, exit 1",
+    "6_overwrite_and_streak": "PASS - stray machine-smoke-99 fixture -> next report machine-smoke-100 (max+1, not count); O_EXCL/wx refuses overwrite (EEXIST); fixture case A (P,F,P,P,P + 2 machine PASS) -> streak 3 satisfied; case B (trailing FAIL) -> streak 0 not satisfied",
+    "7_launcher_port_rejection": "PASS - dummy listener on 4173 -> clear FAIL and exit 1 before any adoption; identity checks (CableTwin body, CSS/engine 200, CDP /json/version, exact tab title) gate READY",
+    "8_cold_start_and_fallback": "PASS - full observation-ready cold start 5.2s (limit 15s, locale-safe ticks timing); preflight exits 2 without a resolvable package root; MP4(ftyp)+PDF(%PDF) verified from --package-root",
+    "9_static_and_invariants": "PASS - node --check OK; git diff --check OK; npm run check 9/9; benchmark 3x verified=true; 9/9 package hashes; both immutable tags (object+peeled) present",
+    "10_diff_scope": "PASS - diff limited to phase3/demo-runbook.md, phase3/start-demo.cmd, phase3/rehearse-demo.mjs + iteration-02 evidence; zero human PASS reports generated"
+  },
+  "note": "machine-smoke-99.json is a deliberately stray index fixture for test 6; smoke-test-machine-pass.json is the superseded pre-correction v1 smoke kept as history."
+}

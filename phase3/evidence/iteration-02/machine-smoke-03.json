@@ -1,0 +1,91 @@
+{
+  "schema": "cabletwin-rehearsal/2",
+  "provenance": "machine-smoke",
+  "index": 3,
+  "armedAt": "2026-07-18T05:09:43.165Z",
+  "budgetS": 75,
+  "narrationSource": {
+    "file": "deck/outline.md",
+    "lines": "202-210",
+    "rev": "12e45e0b9888",
+    "sha256_16": "b0250a41b304b40e"
+  },
+  "packageRoot": "D:\\workspace\\hackaton_automate_or_die\\packaging",
+  "transitions": [
+    {
+      "atS": 4.19,
+      "event": "incident",
+      "ok": true,
+      "snapshot": {
+        "state": "incident",
+        "onTime": "7 / 10",
+        "delay": "10 h 20 min",
+        "exposed": "3",
+        "service": {
+          "onTime": "8 / 10",
+          "cost": "+ 838 DT",
+          "changes": "3"
+        },
+        "cost": {
+          "onTime": "8 / 10",
+          "cost": "+ 799 DT",
+          "changes": "2"
+        },
+        "stability": {
+          "onTime": "7 / 10",
+          "cost": "+ 2 729 DT",
+          "changes": "0"
+        },
+        "serviceSelected": false,
+        "costSelected": false,
+        "stabilitySelected": false,
+        "approveEnabled": false,
+        "auditCount": 2,
+        "lastAudit": "10:00 Incident simulé3 commandes exposées par un arrêt de 4 h"
+      }
+    },
+    {
+      "atS": 6.09,
+      "event": "preview",
+      "ok": false,
+      "snapshot": {
+        "state": "incident",
+        "onTime": "7 / 10",
+        "delay": "10 h 20 min",
+        "exposed": "3",
+        "service": {
+          "onTime": "8 / 10",
+          "cost": "+ 838 DT",
+          "changes": "3"
+        },
+        "cost": {
+          "onTime": "8 / 10",
+          "cost": "+ 799 DT",
+          "changes": "2"
+        },
+        "stability": {
+          "onTime": "7 / 10",
+          "cost": "+ 2 729 DT",
+          "changes": "0"
+        },
+        "serviceSelected": false,
+        "costSelected": false,
+        "stabilitySelected": true,
+        "approveEnabled": true,
+        "auditCount": 2,
+        "lastAudit": "10:00 Incident simulé3 commandes exposées par un arrêt de 4 h"
+      }
+    }
+  ],
+  "checkpoints": {
+    "armedBaseline": true,
+    "incident": true,
+    "comparison": true,
+    "servicePreview": false,
+    "resolvedServiceAudit": false,
+    "resetAfterReport": false
+  },
+  "result": "FAIL",
+  "failureReason": "service preview checkpoint failed (wrong strategy selected or values drifted)",
+  "errors": []
+}

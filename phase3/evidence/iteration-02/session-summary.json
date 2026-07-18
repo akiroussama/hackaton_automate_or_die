@@ -1,0 +1,8 @@
+{
+  "generatedAt": "2026-07-18T05:13:18.802Z",
+  "humanAttempts": [],
+  "machineSmokeCount": 8,
+  "trailingConsecutiveHumanPasses": 0,
+  "acceptanceStreakSatisfied": false,
+  "note": "Only human-provenance reports count; any human FAIL resets the streak."
+}
