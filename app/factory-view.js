@@ -447,7 +447,8 @@ export function initFactoryView(ctx) {
   function animateCounter(node, target, durationMs, formatter) {
     const start = performance.now();
     const step = (now) => {
-      const t = Math.min(1, (now - start) / durationMs);
+      // clamp low too: the first rAF timestamp can precede `start` slightly
+      const t = Math.min(1, Math.max(0, (now - start) / durationMs));
       const eased = 1 - (1 - t) ** 3;
       node.textContent = formatter(Math.round(target * eased));
       if (t < 1) calcRaf = requestAnimationFrame(step);

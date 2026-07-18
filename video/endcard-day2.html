@@ -1,0 +1,37 @@
+<meta charset="utf-8">
+<style>
+  * { margin: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    background: radial-gradient(1600px 1000px at 80% 90%, #0f3d36 0%, #092925 55%, #061b18 100%);
+    font-family: "Segoe UI", Arial, sans-serif; color: #F5F4ED;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; gap: 32px;
+  }
+  .row { display: flex; align-items: center; gap: 26px; }
+  .row img { height: 110px; }
+  .row span { font-size: 72px; font-weight: 700; }
+  .row .mint { color: #C9F36B; }
+  .metric { font-size: 72px; font-weight: 700; color: #C9F36B; }
+  .facts { display: flex; gap: 56px; font-size: 28px; color: #F5F4ED; }
+  .facts b { color: #C9F36B; display: block; font-size: 40px; }
+  .live { font-size: 40px; font-weight: 700; color: #F5F4ED; background: rgba(15,118,110,.35);
+          border: 2px solid #C9F36B; border-radius: 18px; padding: 14px 34px; }
+  .live small { display: block; font-size: 22px; font-weight: 400; color: #8FA8A2; margin-top: 4px; }
+  .who { position: absolute; bottom: 46px; font-size: 26px; color: #8FA8A2; }
+</style>
+<body>
+  <div class="row">
+    <img src="../brand/logo/cabletwin-mark.svg" alt="">
+    <span>Cable<span class="mint">Twin</span></span>
+  </div>
+  <p class="metric">620 → 140 min projected delay</p>
+  <div class="facts">
+    <p><b>9/9</b>automated checks</p>
+    <p><b>17,856</b>candidates verified</p>
+    <p><b>687</b>simulated incidents learned</p>
+    <p><b>0</b>external requests</p>
+  </div>
+  <p class="live">hackaton-automate-or-die.vercel.app<small>runs live in your browser · fully synthetic data</small></p>
+  <p class="who">Automate or Die 2026 · Industry · Team SUPCOM · Oussama Akir</p>
+</body>

@@ -1,0 +1,63 @@
+﻿1
+00:00:00,800 --> 00:00:02,461
+A production line stops.
+
+2
+00:00:02,461 --> 00:00:05,646
+In seconds, a perfect plan becomes impossible.
+
+3
+00:00:05,646 --> 00:00:10,976
+CableTwin is a living digital twin that lets the manager see before deciding.
+
+4
+00:00:11,300 --> 00:00:21,065
+This is the live factory twin: three cable lines, ten client orders, streaming simulated sensors - speed, temperature, tension, power.
+
+5
+00:00:21,065 --> 00:00:25,292
+Fully synthetic data, running locally, completely offline.
+
+6
+00:00:26,200 --> 00:00:28,995
+At ten o'clock, Line 2 stops for four hours.
+
+7
+00:00:28,995 --> 00:00:39,856
+Watch the engine explore seventeen thousand eight hundred fifty-six candidate schedules and keep the ten thousand four hundred forty feasible ones - live, in front of you.
+
+8
+00:00:40,500 --> 00:00:51,572
+A local machine-learning model, trained on six hundred eighty-seven incidents simulated by the twin itself, recommends the balanced Cost route at seventy-nine percent confidence.
+
+9
+00:00:51,572 --> 00:00:53,500
+Line two's telemetry flatlines;
+
+10
+00:00:53,500 --> 00:00:55,428
+plant power drops in real time.
+
+11
+00:00:55,700 --> 00:01:08,396
+The manager stays in command and chooses Service instead: priority orders glide to lines one and three, crews are mobilized, and projected delay falls from six hundred twenty to one hundred forty minutes.
+
+12
+00:01:08,800 --> 00:01:10,748
+One click approves the plan.
+
+13
+00:01:10,748 --> 00:01:18,400
+Nothing is ever sent to a machine - the decision lands in an audit trail: who decided, when, on which numbers.
+
+14
+00:01:19,300 --> 00:01:28,396
+Behind the twin, the same deterministic engine powers the full decision view - revised Gantt, before-and-after KPIs, complete traceability.
+
+15
+00:01:34,500 --> 00:01:41,552
+Verified by nine automated checks, an exact exhaustive benchmark, and a dedicated five-test harness for the recommender.
+
+16
+00:01:41,552 --> 00:01:44,196
+Scan the link - it runs live in your browser.
