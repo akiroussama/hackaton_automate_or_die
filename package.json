@@ -11,6 +11,7 @@
     "benchmark:exact": "node scripts/run-exact-benchmark.mjs",
     "train:recommender": "node scripts/train-recommender.mjs",
     "check:recommender": "node --test scripts/recommender.test.mjs",
+    "check:critical": "node --test scripts/critical-restart.test.mjs",
     "build:phase1": "node scripts/build-phase1.mjs"
   }
 }

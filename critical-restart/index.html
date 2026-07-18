@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="CableTwin Critical Restart Lab — an educational, source-grounded counterfactual safety replay of the Texas City 2005 investigation. Synthetic simulation; not a certified safety system."
+    />
+    <title>CableTwin Critical Restart Lab — Texas City 2005 · Counterfactual Safety Replay</title>
+    <link rel="stylesheet" href="/critical-restart/styles.css" />
+    <script type="module" src="/critical-restart/app.js"></script>
+  </head>
+  <body data-step="briefing" data-mode="idle">
+    <div class="perma-banner" role="note">
+      EDUCATIONAL COUNTERFACTUAL — SYNTHETIC SIMULATION — NOT A CERTIFIED SAFETY SYSTEM
+    </div>
+
+    <header class="lab-head">
+      <div class="lab-title">
+        <p class="lab-kicker">CableTwin · Critical Restart Lab</p>
+        <h1>Texas City 2005 — Counterfactual Safety Replay</h1>
+        <p class="lab-sub">
+          Historical facts: U.S. Chemical Safety Board investigation · Interactive model: synthetic ·
+          <button class="linklike" id="open-sources" type="button">sources &amp; limitations</button>
+        </p>
+      </div>
+      <div class="lab-controls">
+        <button class="btn btn-primary" id="cta" type="button">Begin the replay</button>
+        <button class="btn" id="auto" type="button">▶ 30 s accelerated replay</button>
+        <button class="btn" id="pause" type="button" hidden>⏸ Pause</button>
+        <button class="btn btn-ghost" id="reset" type="button">↺ Reset</button>
+      </div>
+      <ol class="steps" id="steps" aria-label="Replay steps">
+        <li data-s="briefing">Briefing</li>
+        <li data-s="historical_frame">1:04 p.m. frame</li>
+        <li data-s="rewind_to_gate">Decision gate</li>
+        <li data-s="ml_memory">ML memory</li>
+        <li data-s="twin_reconciliation">Twin check</li>
+        <li data-s="branch_comparison">Three futures</li>
+        <li data-s="operations_signed">Operations</li>
+        <li data-s="safety_signed">Process safety</li>
+        <li data-s="recommendation_finalized">Recommendation</li>
+      </ol>
+    </header>
+
+    <main class="lab-grid" id="main">
+      <!-- ================= LEFT — history & ML ================= -->
+      <section class="col col-left">
+        <article class="card fact-card" id="fact-card" aria-labelledby="fact-title">
+          <header><span class="badge badge-fact">CSB DOCUMENTED FACT</span><h2 id="fact-title">This happened</h2></header>
+          <ul class="fact-list">
+            <li><b>Texas City, Texas — 23 March 2005</b></li>
+            <li>Restart of a hydrocarbon isomerization unit (raffinate splitter)</li>
+            <li><b>15 workers killed · 180 injured</b></li>
+            <li>The tower was flooded and overpressurized; flammable material was released</li>
+            <li>Source: U.S. CSB final investigation report</li>
+          </ul>
+          <p class="fact-note">We begin with the investigation, not with a fictional catastrophe.</p>
+        </article>
+
+        <article class="card reveal" data-reveal="ml_memory" aria-labelledby="hist-title">
+          <header><span class="badge badge-fact">CSB DOCUMENTED FACT</span><h2 id="hist-title">Historical memory — 19 startups (April 2000 – March 2005)</h2></header>
+          <ul class="hist-grid" id="hist-grid">
+            <li><b>19</b><span>startups analyzed</span></li>
+            <li><b>1</b><span>kept level &amp; pressure within the cited boundaries</span></li>
+            <li><b>14</b><span>had major level swings</span></li>
+            <li><b>74</b><span>level-alarm activations</span></li>
+            <li><b>65</b><span>high-level set-point exceedances</span></li>
+            <li><b>15</b><span>exceeded the transmitter range</span></li>
+            <li><b>8</b><span>out of range for more than one hour</span></li>
+          </ul>
+        </article>
+
+        <article class="card reveal" data-reveal="ml_memory" aria-labelledby="ml-title">
+          <header><span class="badge badge-syn">DT SYNTHETIC RESULT</span><h2 id="ml-title">Case-based ML — synthetic cohort constrained by CSB aggregates</h2></header>
+          <div class="ml-verdict" id="ml-verdict">
+            <span class="ml-family" id="ml-family">—</span>
+            <span class="ml-score" id="ml-score">—</span>
+          </div>
+          <p class="ml-note">Similarity is <b>evidence, not permission</b>. A model trained on repeated unsafe
+          operations can learn that unsafe looks normal.</p>
+          <ol class="neighbors" id="neighbors" aria-label="Nearest reconstructed episodes"></ol>
+          <p class="ml-meta" id="ml-meta"></p>
+        </article>
+      </section>
+
+      <!-- ================= CENTER — the physical twin ================= -->
+      <section class="col col-center">
+        <div class="gate-banner reveal" data-reveal="rewind_to_gate" id="gate-banner">
+          <span class="badge badge-rec">SOURCE-GROUNDED RECONSTRUCTION</span>
+          PRE-START DECISION GATE — the replay rewinds to a teaching checkpoint, not a documented historical minute
+        </div>
+
+        <article class="card tower-card" aria-labelledby="tower-title">
+          <header>
+            <h2 id="tower-title">Raffinate splitter — indicated vs inferred inventory</h2>
+            <span class="badge badge-fact reveal" data-reveal="historical_frame">1:04 p.m. evidence frame</span>
+          </header>
+
+          <div class="tower-stage">
+            <svg viewBox="0 0 760 560" aria-hidden="true" class="tower-svg">
+              <!-- ground -->
+              <line x1="20" y1="530" x2="740" y2="530" class="ground" />
+
+              <!-- feed pump + line -->
+              <circle cx="80" cy="490" r="26" class="equip" />
+              <circle cx="80" cy="490" r="12" class="equip-core" />
+              <path d="M 106 490 H 200 V 430" class="pipe" />
+              <text x="80" y="545" class="lbl" text-anchor="middle">FEED PUMP</text>
+
+              <!-- tower -->
+              <rect x="200" y="60" width="150" height="410" rx="16" class="tower" />
+              <text x="275" y="48" class="lbl-strong" text-anchor="middle">RAFFINATE SPLITTER · 170 FT</text>
+
+              <!-- graduations -->
+              <g class="grads">
+                <line x1="192" y1="470" x2="200" y2="470" /><text x="186" y="474" text-anchor="end">0</text>
+                <line x1="192" y1="350" x2="200" y2="350" /><text x="186" y="354" text-anchor="end">50</text>
+                <line x1="192" y1="229" x2="200" y2="229" /><text x="186" y="233" text-anchor="end">100</text>
+                <line x1="192" y1="108" x2="200" y2="108" /><text x="186" y="112" text-anchor="end">150</text>
+                <line x1="192" y1="60" x2="200" y2="60" /><text x="186" y="64" text-anchor="end">170</text>
+              </g>
+
+              <!-- post-incident estimated inventory (amber, hatched) : 158/170 ft -->
+              <defs>
+                <pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                  <rect width="8" height="8" fill="rgba(233,118,59,0.16)"/>
+                  <line x1="0" y1="0" x2="0" y2="8" stroke="rgba(233,118,59,0.55)" stroke-width="2.4"/>
+                </pattern>
+              </defs>
+              <rect x="204" y="88.9" width="142" height="381.1" rx="12" fill="url(#hatch)" class="reveal-svg" data-reveal="historical_frame" id="estimate-fill" />
+
+              <!-- transmitter limited span window (green), low on the tower -->
+              <rect x="352" y="404" width="16" height="66" class="span-window" />
+              <line x1="352" y1="418.5" x2="368" y2="418.5" class="span-mark reveal-svg" data-reveal="historical_frame" />
+              <text x="378" y="410" class="lbl-green">TRANSMITTER SPAN</text>
+              <text x="378" y="426" class="lbl-green reveal-svg" data-reveal="historical_frame">INDICATED: 78% OF SENSOR SPAN = 7.9 FT</text>
+
+              <text x="378" y="120" class="lbl-amber reveal-svg" data-reveal="historical_frame">POST-INCIDENT ESTIMATE: 158 FT</text>
+              <line x1="352" y1="112" x2="346" y2="98" class="amber-line reveal-svg" data-reveal="historical_frame" />
+
+              <!-- bottom outlet + control valve -->
+              <path d="M 275 470 V 500 H 420" class="pipe" />
+              <rect x="300" y="492" width="16" height="16" class="valve" transform="rotate(45 308 500)" />
+              <text x="310" y="524" class="lbl" text-anchor="middle">BOTTOM OUTLET / CONTROL VALVE</text>
+
+              <!-- relief path to blowdown drum + stack -->
+              <path d="M 350 120 H 520 V 300" class="pipe pipe-relief" />
+              <rect x="484" y="300" width="72" height="110" rx="10" class="equip" />
+              <text x="520" y="440" class="lbl" text-anchor="middle">BLOWDOWN DRUM</text>
+              <rect x="512" y="200" width="16" height="100" class="equip" />
+              <text x="560" y="214" class="lbl">ATMOSPHERIC STACK</text>
+              <text x="648" y="106" class="lbl">RELIEF PATH</text>
+
+              <!-- independent high-level alarm status -->
+              <g class="alarm-badge">
+                <rect x="600" y="48" width="146" height="52" rx="9" class="alarm-box" />
+                <text x="673" y="68" text-anchor="middle" class="lbl-alarm">INDEPENDENT HIGH-LEVEL ALARM</text>
+                <text x="673" y="86" text-anchor="middle" class="lbl-alarm-status" id="alarm-status">UNAVAILABLE ⚠</text>
+              </g>
+
+              <!-- occupied zone markers, outside the process boundary -->
+              <g class="zone">
+                <rect x="600" y="440" width="140" height="70" rx="8" class="zone-box" />
+                <text x="670" y="468" text-anchor="middle" class="lbl-zone">OCCUPIED ZONE (MODELED)</text>
+                <text x="670" y="486" text-anchor="middle" class="lbl-zone">outside the process boundary</text>
+              </g>
+            </svg>
+            <p class="tower-callout reveal" data-reveal="historical_frame">
+              <span class="badge badge-fact">CSB DOCUMENTED FACT</span>
+              78 percent referred only to the transmitter's <b>limited span</b> — not 78 percent of the
+              170-foot tower. The control system indicated 7.9 ft while the post-incident material-balance
+              estimate was <b>158 ft</b>.
+            </p>
+          </div>
+        </article>
+
+        <article class="card reveal" data-reveal="twin_reconciliation" aria-labelledby="recon-title">
+          <header><span class="badge badge-syn">DT SYNTHETIC RESULT</span><h2 id="recon-title">Twin reconciliation — bounded material balance</h2></header>
+          <p class="recon-line">inventory[t+1] = inventory[t] + feed[t] − outflow[t] <span class="dim">(normalized units)</span></p>
+          <ul class="recon-findings" id="recon-findings">
+            <li>▼ Indicated sensor value trends <b>down</b></li>
+            <li>▲ Cumulative material balance rises <b>beyond the sensor's valid range</b></li>
+            <li>⚠ Independent high-level alarm <b>unavailable</b></li>
+            <li>■ The restart therefore has <b>unknown inventory</b></li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- ================= RIGHT — futures, constraints, approvals ================= -->
+      <section class="col col-right">
+        <article class="card reveal" data-reveal="branch_comparison" aria-labelledby="branches-title">
+          <header><span class="badge badge-syn">DT SYNTHETIC RESULT</span><h2 id="branches-title">Three virtual futures — same initial state, same horizon</h2></header>
+          <div class="branches" id="branches"></div>
+          <p class="branch-note">No branch outputs deaths, injuries, “lives saved”, loss, ROI or a probability of
+          explosion. The simulator stops at the release precursor (CR-07).</p>
+        </article>
+
+        <article class="card reveal" data-reveal="branch_comparison" aria-labelledby="cr-title">
+          <header><h2 id="cr-title">Hard constraints — deterministic, separate from the learned model</h2></header>
+          <ul class="cr-list" id="cr-list"></ul>
+        </article>
+
+        <article class="card approvals reveal" data-reveal="branch_comparison" aria-labelledby="appr-title">
+          <header><h2 id="appr-title">Human authority — two separate roles</h2></header>
+          <div class="role" id="role-ops">
+            <div><b>Operations lead</b><span>accepts the operational delay and confirms that no physical command has been sent</span></div>
+            <button class="btn btn-sign" id="sign-ops" type="button" disabled>Sign</button>
+          </div>
+          <div class="role" id="role-safety">
+            <div><b>Process safety lead</b><span>confirms barrier verification and exposure-zone clearance</span></div>
+            <button class="btn btn-sign" id="sign-safety" type="button" disabled>Sign</button>
+          </div>
+          <button class="btn btn-final" id="finalize" type="button" disabled>Finalize recommendation</button>
+          <p class="final-status" id="final-status" role="status" aria-live="polite"></p>
+        </article>
+
+        <article class="card audit reveal" data-reveal="historical_frame" aria-labelledby="audit-title">
+          <header><h2 id="audit-title">Append-only audit trail</h2></header>
+          <ol class="audit-list" id="audit-list" aria-live="polite"></ol>
+        </article>
+      </section>
+    </main>
+
+    <!-- ================= sources / limitations drawer ================= -->
+    <div class="drawer" id="drawer" hidden>
+      <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+        <header>
+          <h2 id="drawer-title">Sources &amp; limitations</h2>
+          <button class="btn btn-ghost" id="close-sources" type="button">Close ✕</button>
+        </header>
+        <p>
+          Historical facts are sourced from the U.S. CSB investigation. The interactive telemetry,
+          reconstructed startup episodes and virtual branch outcomes are synthetic. They demonstrate a
+          decision-support architecture; they do not reproduce refinery thermodynamics, prove a
+          historical counterfactual, or issue commands to physical equipment.
+        </p>
+        <p><b>Independent educational reconstruction. CableTwin is not affiliated with BP or the U.S.
+        Chemical Safety Board.</b></p>
+        <ul id="source-links"></ul>
+        <p class="drawer-close-note">
+          This source-grounded synthetic reconstruction demonstrates how historical pattern retrieval,
+          bounded virtual testing, hard constraints and human approval can be combined before a physical
+          decision. It does not prove the historical counterfactual.
+        </p>
+      </div>
+    </div>
+
+    <footer class="lab-foot">
+      <span>CableTwin Critical Restart Lab · educational demonstrator · all interactive values are synthetic</span>
+      <span id="hash-line">scenario hash: —</span>
+    </footer>
+  </body>
+</html>
