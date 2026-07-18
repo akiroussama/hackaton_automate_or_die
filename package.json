@@ -9,6 +9,8 @@
     "test": "node --test tests/*.test.mjs",
     "check": "node --check app/app.js && node --test tests/*.test.mjs",
     "benchmark:exact": "node scripts/run-exact-benchmark.mjs",
+    "train:recommender": "node scripts/train-recommender.mjs",
+    "check:recommender": "node --test scripts/recommender.test.mjs",
     "build:phase1": "node scripts/build-phase1.mjs"
   }
 }

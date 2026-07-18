@@ -5,6 +5,8 @@
 // canonical and re-provable via `npm run benchmark:exact`) and the REAL plan
 // metrics coming from `generateRecoveryPlans`.
 
+import { recommendPlan } from "../engine/recommender.js";
+
 const SVG_NS = "http://www.w3.org/2000/svg";
 const ISO_COS = 0.866;
 const ISO_SIN = 0.5;
@@ -27,6 +29,13 @@ const TELEMETRY_BASE = {
 // Canonical bounded search space (same figures as the deck, the data room and
 // `npm run benchmark:exact`): 17,856 candidate schedules, 10,440 feasible.
 const SEARCH_SPACE = { candidates: 17856, feasible: 10440 };
+
+// If the local ML recommender is unavailable, fall back to the decision
+// view's static "Recommandé par CableTwin" ribbon (cost). On the canonical
+// incident the trained model and the ribbon agree — enforced by
+// scripts/recommender.test.mjs.
+const FALLBACK_RECOMMENDATION = "cost";
+const STRATEGY_LABELS = { service: "Service", cost: "Coût maîtrisé", stability: "Stabilité" };
 
 function mulberry32(seed) {
   let a = seed >>> 0;
@@ -397,6 +406,12 @@ export function initFactoryView(ctx) {
     root.dataset.calc = "done";
     root.dataset.panel = "open";
     if (calcDone) { calcDone(); calcDone = null; }
+    // Auto-preview the model's recommendation — the human can still switch
+    // tabs and decide otherwise (and usually does, on stage: that IS the story).
+    const state = ctx.getState();
+    if (!state.selectedPlan && !state.approvedPlan && state.plans.length) {
+      ctx.actions.selectStrategy(recommendedId());
+    }
   }
 
   calc.addEventListener("click", () => {
@@ -438,8 +453,13 @@ export function initFactoryView(ctx) {
       [2300, () => calcLine(planLine("service", "SERVICE"), "is-optimum")],
       [2520, () => calcLine(planLine("cost", "COÛT MAÎTRISÉ"), "is-optimum")],
       [2740, () => calcLine(planLine("stability", "STABILITÉ"), "is-optimum")],
-      [3050, () => calcLine("> RECALCUL TERMINÉ — 3 scénarios prêts · la décision reste humaine", "is-final")],
-      [3350, () => finishCalc()],
+      [3000, () => calcLine(
+        currentReco
+          ? `> modèle ML local — recommandation : ${STRATEGY_LABELS[currentReco.strategyId]} · confiance ${Math.round(currentReco.confidence * 100)} % · appris sur ${currentReco.model.datasetSize} incidents simulés`
+          : "> modèle ML local — indisponible, repli sur la politique produit",
+        "is-reco")],
+      [3300, () => calcLine("> RECALCUL TERMINÉ — 3 scénarios prêts · la décision reste humaine", "is-final")],
+      [3600, () => finishCalc()],
     ];
 
     if (reducedMotion) {
@@ -454,6 +474,18 @@ export function initFactoryView(ctx) {
 
   const inspector = html("aside", "ft-inspector", stage);
   inspector.setAttribute("aria-label", "Scénarios de reprise calculés");
+
+  const intro = html("div", "ft-inspector-intro", inspector);
+  html("strong", "", intro, "Trois chemins de reprise, un même incident");
+  html("p", "", intro,
+    "Le moteur extrait des 10 440 plannings faisables un optimum par politique : "
+    + "protéger le service client, maîtriser le coût, ou préserver la stabilité "
+    + "de l'atelier. CableTwin recommande une option — le responsable compare "
+    + "et garde la décision finale.");
+  const cherry = html("div", "ft-cherry", intro);
+  html("span", "ft-cherry-label", cherry, "✦ Choix assisté par IA — modèle local");
+  const cherryBody = html("div", "ft-cherry-body", cherry);
+
   const tabsRow = html("div", "ft-inspector-tabs", inspector);
   const strategyDefs = [
     ["service", "Service"],
@@ -461,14 +493,41 @@ export function initFactoryView(ctx) {
     ["stability", "Stabilité"],
   ];
   const strategyTabs = new Map();
+  const recoBadges = new Map();
   for (const [id, label] of strategyDefs) {
     const tab = html("button", "ft-tab", tabsRow, label);
     tab.type = "button";
     tab.dataset.ftStrategy = id;
     tab.setAttribute("aria-pressed", "false");
     tab.addEventListener("click", () => ctx.actions.selectStrategy(id));
+    recoBadges.set(id, html("span", "ft-tab-reco", tab, "★ Recommandé"));
     strategyTabs.set(id, tab);
   }
+
+  let currentReco = null;
+  const recommendedId = () => currentReco?.strategyId ?? FALLBACK_RECOMMENDATION;
+
+  function renderCherry() {
+    cherryBody.replaceChildren();
+    if (currentReco) {
+      const pct = Math.round(currentReco.confidence * 100);
+      const acc = (currentReco.model.testAccuracy * 100).toFixed(1).replace(".", ",");
+      const factors = currentReco.topFactors.slice(0, 2).map((factor) => factor.name).join(" · ");
+      html("p", "", cherryBody,
+        `Modèle entraîné sur ${currentReco.model.datasetSize} incidents simulés par le jumeau `
+        + `(précision test ${acc} %) : recommande « ${STRATEGY_LABELS[currentReco.strategyId]} » `
+        + `à ${pct} %. Facteurs dominants : ${factors}.`);
+      html("p", "ft-cherry-foot", cherryBody,
+        "En pilote : ré-entraînement sur l'historique réel de vos incidents — hébergé sur site, "
+        + "vos données ne sortent jamais. La décision reste humaine.");
+    } else {
+      html("p", "", cherryBody,
+        "Recommandation multi-objectifs explicable, vérifiée par énumération exacte. En pilote : "
+        + "apprentissage de l'historique d'incidents de votre usine — modèle hébergé sur site, "
+        + "vos données ne sortent jamais.");
+    }
+  }
+  renderCherry();
   const inspectorBody = html("div", "ft-inspector-body", inspector);
   const approveBtn = html("button", "ft-btn ft-btn-approve ft-inspector-approve", inspector, "✓ Valider ce plan");
   approveBtn.type = "button";
@@ -490,7 +549,7 @@ export function initFactoryView(ctx) {
       ],
     },
     cost: {
-      tagline: "Le meilleur compromis économique.",
+      tagline: "Le meilleur équilibre délai / coût pour la journée.",
       pros: (m) => [
         `Surcoût le plus bas des trois plans (${ctx.formatDt(ctx.costDelta(m), true)})`,
         `${m.onTimeOrders}/10 commandes à l'heure`,
@@ -750,6 +809,9 @@ export function initFactoryView(ctx) {
       tab.disabled = phase === "baseline" || (phase === "resolved" && state.approvedPlan?.strategy.id !== id);
       tab.classList.toggle("is-nudge", nudge && !pressed);
     }
+    for (const [id, badge] of recoBadges) {
+      badge.classList.toggle("is-visible", phase !== "baseline" && id === recommendedId());
+    }
   }
 
   function syncKpis(metrics, phase) {
@@ -789,6 +851,17 @@ export function initFactoryView(ctx) {
   return function sync(view, phase) {
     root.dataset.phase = phase;
     const state = ctx.getState();
+
+    if (phase === "baseline") {
+      currentReco = null;
+    } else if (state.plans.length && !currentReco) {
+      try {
+        currentReco = recommendPlan(scenario, incidentImpact, state.plans);
+      } catch {
+        currentReco = null;
+      }
+    }
+    renderCherry();
 
     for (const layout of LINE_LAYOUT) {
       const stopped = layout.id === scenario.incident.lineId && phase !== "baseline";
