@@ -420,7 +420,7 @@ export function initFactoryView(ctx) {
   const calcWindow = html("div", "ft-calc-window", calc);
   const calcHead = html("div", "ft-calc-head", calcWindow);
   html("span", "ft-calc-dot", calcHead);
-  html("strong", "", calcHead, "CABLETWIN · MOTEUR DE REPLANIFICATION");
+  html("strong", "", calcHead, "CABLETWIN · PLANIFICATION + VÉRIFICATION");
   html("span", "ft-calc-live", calcHead, "EN CALCUL");
   const calcLog = html("div", "ft-calc-log", calcWindow);
   const calcCounters = html("div", "ft-calc-counters", calcWindow);
@@ -500,17 +500,17 @@ export function initFactoryView(ctx) {
     const script = [
       [0, () => calcLine(`> analyse incident — ${scenario.incident.lineId} hors service 10:00 → 14:00`, "is-alert")],
       [260, () => calcLine(`> commandes exposées : ${exposed}`, "is-alert")],
-      [520, () => calcLine("> contraintes actives : compatibilité lignes · occupation unique · fenêtre d'arrêt · échéances")],
+      [520, () => calcLine("> contraintes actives : compatibilité lignes · occupation unique · fenêtre d'arrêt · horizon")],
       [780, () => {
-        calcLine("> exploration exhaustive de l'espace borné…");
+        calcLine("> vérificateur indépendant — exploration exacte de l'espace borné…");
         animateCounter(counterAValue, SEARCH_SPACE.candidates, 1150, fmt);
       }],
       [1000, () => calcLine("· candidat rejeté — chevauchement de la fenêtre d'arrêt L2", "is-dim")],
       [1150, () => calcLine("· candidat rejeté — ligne incompatible avec la section du câble", "is-dim")],
-      [1300, () => calcLine("· candidat rejeté — dépassement d'échéance client prioritaire", "is-dim")],
+      [1300, () => calcLine("· candidat évalué — retard client prioritaire pénalisé", "is-dim")],
       [1480, () => calcLine("· candidat retenu — plan faisable, coût recalculé", "is-dim")],
       [1700, () => {
-        calcLine(`> ${fmt(SEARCH_SPACE.feasible)} plannings faisables retenus`);
+        calcLine(`> certificat : ${fmt(SEARCH_SPACE.feasible)} plannings faisables`);
         animateCounter(counterBValue, SEARCH_SPACE.feasible, 800, fmt);
       }],
       [2050, () => calcLine("> évaluation multi-objectifs : retard · service · surcoût · stabilité")],
@@ -519,7 +519,7 @@ export function initFactoryView(ctx) {
       [2740, () => calcLine(planLine("stability", "STABILITÉ"), "is-optimum")],
       [3000, () => calcLine(
         currentReco
-          ? `> modèle ML local — recommandation : ${STRATEGY_LABELS[currentReco.strategyId]} · confiance ${Math.round(currentReco.confidence * 100)} % · appris sur ${currentReco.model.datasetSize} incidents simulés`
+          ? `> modèle ML local — recommandation : ${STRATEGY_LABELS[currentReco.strategyId]} · confiance ${Math.round(currentReco.confidence * 100)} % · appris sur ${currentReco.model.datasetSize} incidents simulés générés par le jumeau`
           : "> modèle ML local — indisponible, repli sur la politique produit",
         "is-reco")],
       [3300, () => calcLine("> RECALCUL TERMINÉ — 3 scénarios prêts · la décision reste humaine", "is-final")],
@@ -542,10 +542,10 @@ export function initFactoryView(ctx) {
   const intro = html("div", "ft-inspector-intro", inspector);
   html("strong", "", intro, "Trois chemins de reprise, un même incident");
   html("p", "", intro,
-    "Le moteur extrait des 10 440 plannings faisables un optimum par politique : "
-    + "protéger le service client, maîtriser le coût, ou préserver la stabilité "
-    + "de l'atelier. CableTwin recommande une option — le responsable compare "
-    + "et garde la décision finale.");
+    "Le planificateur construit un plan par politique : protéger le service client, "
+    + "maîtriser le coût, ou préserver la stabilité de l'atelier. Un vérificateur "
+    + "indépendant confirme leurs optima parmi 10 440 plannings faisables. CableTwin "
+    + "recommande une option — le responsable compare et garde la décision finale.");
   const cherry = html("div", "ft-cherry", intro);
   html("span", "ft-cherry-label", cherry, "✦ Choix assisté par IA — modèle local");
   const cherryBody = html("div", "ft-cherry-body", cherry);
@@ -578,7 +578,7 @@ export function initFactoryView(ctx) {
       const acc = (currentReco.model.testAccuracy * 100).toFixed(1).replace(".", ",");
       const factors = currentReco.topFactors.slice(0, 2).map((factor) => factor.name).join(" · ");
       html("p", "", cherryBody,
-        `Modèle entraîné sur ${currentReco.model.datasetSize} incidents simulés par le jumeau `
+        `Modèle entraîné sur ${currentReco.model.datasetSize} incidents simulés générés par le jumeau `
         + `(précision test ${acc} %) : recommande « ${STRATEGY_LABELS[currentReco.strategyId]} » `
         + `à ${pct} %. Facteurs dominants : ${factors}.`);
       html("p", "ft-cherry-foot", cherryBody,
@@ -586,9 +586,9 @@ export function initFactoryView(ctx) {
         + "vos données ne sortent jamais. La décision reste humaine.");
     } else {
       html("p", "", cherryBody,
-        "Recommandation multi-objectifs explicable, vérifiée par énumération exacte. En pilote : "
-        + "apprentissage de l'historique d'incidents de votre usine — modèle hébergé sur site, "
-        + "vos données ne sortent jamais.");
+        "Les trois plans sont vérifiés par une énumération exacte indépendante. En pilote : "
+        + "ré-entraînement du modèle sur l'historique réel de vos incidents — hébergé sur site, "
+        + "vos données ne sortent jamais. La décision reste humaine.");
     }
   }
   renderCherry();
