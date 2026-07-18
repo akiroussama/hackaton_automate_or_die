@@ -544,7 +544,7 @@ export function initFactoryView(ctx) {
   html("p", "", intro,
     "Le planificateur construit un plan par politique : protéger le service client, "
     + "maîtriser le coût, ou préserver la stabilité de l'atelier. Un vérificateur "
-    + "indépendant confirme leurs optima parmi 10 440 plannings faisables. CableTwin "
+    + "exhaustif borné séparé confirme leurs optima parmi 10 440 plannings faisables. CableTwin "
     + "recommande une option — le responsable compare et garde la décision finale.");
   const cherry = html("div", "ft-cherry", intro);
   html("span", "ft-cherry-label", cherry, "✦ Choix assisté par IA — modèle local");
