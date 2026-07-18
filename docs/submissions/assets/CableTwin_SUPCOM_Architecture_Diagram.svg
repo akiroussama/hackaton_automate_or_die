@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1680 1050" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="12" markerHeight="12" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0F766E"/>
+    </marker>
+    <marker id="arrd" markerWidth="12" markerHeight="12" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5B8781"/>
+    </marker>
+  </defs>
+
+  <!-- ======================= HEADER ======================= -->
+  <rect x="0" y="0" width="1680" height="118" fill="#092925"/>
+  <!-- brand motif: three cable lines, line 2 broken, mint recovery bypass -->
+  <g stroke-linecap="round">
+    <line x1="48" y1="40" x2="152" y2="40" stroke="#F5F4ED" stroke-width="6"/>
+    <line x1="48" y1="61" x2="88" y2="61" stroke="#F5F4ED" stroke-width="6"/>
+    <line x1="124" y1="61" x2="152" y2="61" stroke="#F5F4ED" stroke-width="6"/>
+    <circle cx="106" cy="61" r="7" fill="#E9763B"/>
+    <path d="M 86 61 C 96 40, 116 40, 126 61" stroke="#C9F36B" stroke-width="5" fill="none"/>
+    <line x1="48" y1="82" x2="152" y2="82" stroke="#F5F4ED" stroke-width="6"/>
+  </g>
+  <text x="180" y="64" font-size="42" font-weight="bold" fill="#F5F4ED">CableTwin</text>
+  <text x="180" y="94" font-size="18" fill="#C9F36B">System architecture — the decision twin for cable production</text>
+  <text x="1632" y="44" font-size="16" font-weight="bold" fill="#F5F4ED" text-anchor="end">Team SUPCOM · Oussama Akir</text>
+  <text x="1632" y="68" font-size="15" fill="#CFE8E4" text-anchor="end">Automate or Die 2026 — Phase 2 build</text>
+  <text x="1632" y="92" font-size="15" fill="#CFE8E4" text-anchor="end">Frozen at tag phase2-submission-final · 18 July 2026</text>
+
+  <!-- ======================= BODY ======================= -->
+  <rect x="0" y="118" width="1680" height="832" fill="#F5F4ED"/>
+
+  <!-- ============ BOX 1 · DATA ============ -->
+  <g>
+    <rect x="60" y="150" width="950" height="138" rx="14" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.5"/>
+    <rect x="60" y="164" width="6" height="110" fill="#0F766E"/>
+    <text x="92" y="188" font-size="22" font-weight="bold" fill="#092925">1 · Synthetic factory data</text>
+    <text x="982" y="186" font-size="15" fill="#0F766E" text-anchor="end" font-family="Consolas, monospace">engine/factory-data.js</text>
+    <text x="92" y="222" font-size="17" fill="#2B3A37">3 production lines · 10 client orders · line–order compatibilities · cost coefficients</text>
+    <rect x="92" y="238" width="404" height="32" rx="16" fill="#FDF1EA" stroke="#E9763B" stroke-width="1.5"/>
+    <text x="294" y="254" font-size="15" fill="#B4501F" text-anchor="middle" dominant-baseline="central">Reproducible incident: Line 2 stops 10:00 → 14:00 (4 h)</text>
+    <rect x="516" y="238" width="330" height="32" rx="16" fill="#F2F1EC" stroke="#8A8F8C" stroke-width="1"/>
+    <text x="681" y="254" font-size="15" fill="#55605C" text-anchor="middle" dominant-baseline="central">Illustrative synthetic data — no customer data</text>
+  </g>
+  <line x1="535" y1="288" x2="535" y2="326" stroke="#0F766E" stroke-width="3" marker-end="url(#arr)"/>
+  <text x="552" y="312" font-size="14" fill="#0F766E">fresh scenario object</text>
+
+  <!-- ============ BOX 2 · ENGINE ============ -->
+  <g>
+    <rect x="60" y="330" width="950" height="196" rx="14" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.5"/>
+    <rect x="60" y="344" width="6" height="168" fill="#0F766E"/>
+    <text x="92" y="368" font-size="22" font-weight="bold" fill="#092925">2 · Deterministic twin engine</text>
+    <text x="982" y="366" font-size="15" fill="#0F766E" text-anchor="end" font-family="Consolas, monospace">engine/twin-engine.js</text>
+    <!-- pipeline chips -->
+    <g font-size="14.5">
+      <rect x="92" y="388" width="150" height="34" rx="17" fill="#E8F3F1" stroke="#0F766E" stroke-width="1"/>
+      <text x="167" y="405" fill="#092925" text-anchor="middle" dominant-baseline="central">Validate scenario</text>
+      <text x="252" y="405" fill="#0F766E" text-anchor="middle" dominant-baseline="central">→</text>
+      <rect x="262" y="388" width="142" height="34" rx="17" fill="#E8F3F1" stroke="#0F766E" stroke-width="1"/>
+      <text x="333" y="405" fill="#092925" text-anchor="middle" dominant-baseline="central">Analyze incident</text>
+      <text x="414" y="405" fill="#0F766E" text-anchor="middle" dominant-baseline="central">→</text>
+      <rect x="424" y="388" width="238" height="34" rx="17" fill="#E8F3F1" stroke="#0F766E" stroke-width="1"/>
+      <text x="543" y="405" fill="#092925" text-anchor="middle" dominant-baseline="central">Generate 3 constrained plans</text>
+      <text x="672" y="405" fill="#0F766E" text-anchor="middle" dominant-baseline="central">→</text>
+      <rect x="682" y="388" width="104" height="34" rx="17" fill="#E8F3F1" stroke="#0F766E" stroke-width="1"/>
+      <text x="734" y="405" fill="#092925" text-anchor="middle" dominant-baseline="central">Score KPIs</text>
+      <text x="796" y="405" fill="#0F766E" text-anchor="middle" dominant-baseline="central">→</text>
+      <rect x="806" y="388" width="136" height="34" rx="17" fill="#E8F3F1" stroke="#0F766E" stroke-width="1"/>
+      <text x="874" y="405" fill="#092925" text-anchor="middle" dominant-baseline="central">Approval event</text>
+    </g>
+    <text x="92" y="452" font-size="16" fill="#2B3A37">Hard constraints on every candidate: line compatibility, no double-booking, incident window, deadlines</text>
+    <rect x="92" y="470" width="740" height="34" rx="17" fill="#F3FADF" stroke="#9CBE3E" stroke-width="1.2"/>
+    <text x="462" y="487" font-size="14.5" fill="#4A5F14" text-anchor="middle" dominant-baseline="central">Explainable search-and-planning AI — deterministic · no LLM · no external model · no training data</text>
+  </g>
+  <line x1="535" y1="526" x2="535" y2="564" stroke="#0F766E" stroke-width="3" marker-end="url(#arr)"/>
+  <text x="552" y="550" font-size="14" fill="#0F766E">three comparable recovery plans + before/after KPIs</text>
+
+  <!-- ============ BOX 3 · UI ============ -->
+  <g>
+    <rect x="60" y="568" width="950" height="182" rx="14" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.5"/>
+    <rect x="60" y="582" width="6" height="154" fill="#0F766E"/>
+    <text x="92" y="606" font-size="22" font-weight="bold" fill="#092925">3 · Decision interface (production manager)</text>
+    <text x="982" y="604" font-size="15" fill="#0F766E" text-anchor="end" font-family="Consolas, monospace">app/index.html · app.js · styles.css</text>
+    <!-- journey chips -->
+    <g font-size="14.5">
+      <rect x="92" y="626" width="126" height="34" rx="17" fill="#E8F3F1" stroke="#0F766E" stroke-width="1"/>
+      <text x="155" y="643" fill="#092925" text-anchor="middle" dominant-baseline="central">Nominal 10/10</text>
+      <text x="228" y="643" fill="#0F766E" text-anchor="middle" dominant-baseline="central">→</text>
+      <rect x="238" y="626" width="88" height="34" rx="17" fill="#FDF1EA" stroke="#E9763B" stroke-width="1.5"/>
+      <text x="282" y="643" fill="#B4501F" text-anchor="middle" dominant-baseline="central">Incident</text>
+      <text x="336" y="643" fill="#0F766E" text-anchor="middle" dominant-baseline="central">→</text>
+      <rect x="346" y="626" width="166" height="34" rx="17" fill="#E8F3F1" stroke="#0F766E" stroke-width="1"/>
+      <text x="429" y="643" fill="#092925" text-anchor="middle" dominant-baseline="central">Compare strategies</text>
+      <text x="522" y="643" fill="#0F766E" text-anchor="middle" dominant-baseline="central">→</text>
+      <rect x="532" y="626" width="126" height="34" rx="17" fill="#E8F3F1" stroke="#0F766E" stroke-width="1"/>
+      <text x="595" y="643" fill="#092925" text-anchor="middle" dominant-baseline="central">Gantt preview</text>
+      <text x="668" y="643" fill="#0F766E" text-anchor="middle" dominant-baseline="central">→</text>
+      <rect x="678" y="626" width="86" height="34" rx="17" fill="#E8F3F1" stroke="#0F766E" stroke-width="1"/>
+      <text x="721" y="643" fill="#092925" text-anchor="middle" dominant-baseline="central">Approve</text>
+      <text x="774" y="643" fill="#0F766E" text-anchor="middle" dominant-baseline="central">→</text>
+      <rect x="784" y="626" width="104" height="34" rx="17" fill="#E8F3F1" stroke="#0F766E" stroke-width="1"/>
+      <text x="836" y="643" fill="#092925" text-anchor="middle" dominant-baseline="central">Audit trail</text>
+      <text x="898" y="643" fill="#0F766E" text-anchor="middle" dominant-baseline="central">→</text>
+      <rect x="908" y="626" width="72" height="34" rx="17" fill="#E8F3F1" stroke="#0F766E" stroke-width="1"/>
+      <text x="944" y="643" fill="#092925" text-anchor="middle" dominant-baseline="central">Reset</text>
+    </g>
+    <text x="92" y="692" font-size="16" fill="#2B3A37">Side-by-side Service / Cost / Stability trade-offs, each previewed on a revised Gantt before approval</text>
+    <text x="92" y="722" font-size="15" fill="#55605C" font-family="Consolas, monospace">scripts/serve.mjs → http://127.0.0.1:4173 · Node.js 22 · zero dependencies · zero external requests</text>
+  </g>
+  <line x1="535" y1="750" x2="535" y2="788" stroke="#0F766E" stroke-width="3" marker-end="url(#arr)"/>
+  <text x="552" y="774" font-size="14" fill="#0F766E">explicit approval only after human review</text>
+
+  <!-- ============ BOX 4 · HUMAN AUTHORITY ============ -->
+  <g>
+    <rect x="60" y="792" width="950" height="118" rx="14" fill="#FFF8F3" stroke="#E9763B" stroke-width="2"/>
+    <text x="92" y="828" font-size="22" font-weight="bold" fill="#092925">4 · Human authority &amp; audit</text>
+    <text x="982" y="826" font-size="15" fill="#B4501F" text-anchor="end">human-in-command</text>
+    <text x="92" y="860" font-size="17" fill="#2B3A37">The production manager approves or rejects; every approval becomes a timestamped audit event.</text>
+    <text x="92" y="890" font-size="17" font-weight="bold" fill="#B4501F">It never sends a command to a machine — it informs the decision; it does not replace the decider.</text>
+  </g>
+
+  <!-- ============ RIGHT · EXACT VERIFIER ============ -->
+  <line x1="1010" y1="219" x2="1056" y2="219" stroke="#5B8781" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrd)"/>
+  <g>
+    <rect x="1060" y="150" width="560" height="320" rx="14" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.5"/>
+    <rect x="1060" y="164" width="6" height="292" fill="#0F766E"/>
+    <text x="1092" y="188" font-size="22" font-weight="bold" fill="#092925">Independent exact verifier</text>
+    <text x="1592" y="214" font-size="15" fill="#0F766E" text-anchor="end" font-family="Consolas, monospace">engine/exact-benchmark.js</text>
+    <rect x="1110" y="232" width="460" height="38" rx="8" fill="#EAF4E0" stroke="#9CBE3E" stroke-width="1"/>
+    <text x="1340" y="251" font-size="18" font-weight="bold" fill="#092925" text-anchor="middle" dominant-baseline="central">17,856 candidate schedules</text>
+    <line x1="1340" y1="270" x2="1340" y2="292" stroke="#0F766E" stroke-width="2.5" marker-end="url(#arr)"/>
+    <text x="1352" y="285" font-size="13.5" fill="#55605C">exhaustive bounded enumeration</text>
+    <rect x="1170" y="296" width="340" height="38" rx="8" fill="#DDF0C4" stroke="#9CBE3E" stroke-width="1"/>
+    <text x="1340" y="315" font-size="18" font-weight="bold" fill="#092925" text-anchor="middle" dominant-baseline="central">10,440 feasible schedules</text>
+    <line x1="1340" y1="334" x2="1340" y2="356" stroke="#0F766E" stroke-width="2.5" marker-end="url(#arr)"/>
+    <text x="1352" y="349" font-size="13.5" fill="#55605C">three policy objectives</text>
+    <rect x="1220" y="360" width="240" height="38" rx="8" fill="#C9F36B" stroke="#9CBE3E" stroke-width="1"/>
+    <text x="1340" y="379" font-size="18" font-weight="bold" fill="#092925" text-anchor="middle" dominant-baseline="central">3 unique optima</text>
+    <text x="1340" y="416" font-size="14.5" fill="#2B3A37" text-anchor="middle">Service · Cost · Stability — each verified and unique</text>
+    <text x="1092" y="442" font-size="15" fill="#55605C">Kept separate from the live planner so it can detect —</text>
+    <text x="1092" y="462" font-size="15" fill="#55605C">rather than reproduce — a planning error.</text>
+  </g>
+  <line x1="1340" y1="470" x2="1340" y2="506" stroke="#5B8781" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrd)"/>
+  <text x="1352" y="494" font-size="13.5" fill="#55605C">optima cross-checked</text>
+
+  <!-- ============ RIGHT · VERIFICATION &amp; EVIDENCE ============ -->
+  <g>
+    <rect x="1060" y="510" width="560" height="300" rx="14" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.5"/>
+    <rect x="1060" y="524" width="6" height="272" fill="#0F766E"/>
+    <text x="1092" y="548" font-size="22" font-weight="bold" fill="#092925">Verification &amp; evidence</text>
+    <g>
+      <rect x="1092" y="572" width="10" height="10" fill="#0F766E"/>
+      <text x="1114" y="582" font-size="15.5" fill="#2B3A37">npm run check — 9/9 acceptance &amp; regression checks</text>
+      <text x="1114" y="602" font-size="13.5" fill="#7A827E" font-family="Consolas, monospace">tests/twin-engine.test.mjs</text>
+      <rect x="1092" y="628" width="10" height="10" fill="#0F766E"/>
+      <text x="1114" y="638" font-size="15.5" fill="#2B3A37">npm run benchmark:exact — re-proves the three optima</text>
+      <text x="1114" y="658" font-size="13.5" fill="#7A827E">instant re-verification during jury Q&amp;A</text>
+      <rect x="1092" y="684" width="10" height="10" fill="#0F766E"/>
+      <text x="1114" y="694" font-size="15.5" fill="#2B3A37">Real-browser replay evidence (Chrome DevTools Protocol)</text>
+      <text x="1114" y="714" font-size="13.5" fill="#7A827E">screenshots · machine-read UI metrics · zero-network trace</text>
+      <rect x="1092" y="740" width="10" height="10" fill="#0F766E"/>
+      <text x="1114" y="750" font-size="15.5" fill="#2B3A37">SHA-256-frozen deliverables &amp; immutable git tags</text>
+      <text x="1114" y="770" font-size="13.5" fill="#7A827E" font-family="Consolas, monospace">phase2-final · phase2-submission-final</text>
+    </g>
+  </g>
+
+  <!-- ======================= FOOTER ======================= -->
+  <rect x="0" y="950" width="1680" height="100" fill="#092925"/>
+  <text x="60" y="988" font-size="18" font-weight="bold" fill="#C9F36B">Deployment boundary</text>
+  <text x="60" y="1014" font-size="15.5" fill="#F5F4ED">Fully offline · zero external dependencies · read-only by design · no PLC / machine / MES / ERP / cloud access</text>
+  <text x="60" y="1036" font-size="14" fill="#CFE8E4">All cost figures are illustrative and synthetic — never a real ROI claim.</text>
+  <text x="1632" y="1000" font-size="15" fill="#CFE8E4" text-anchor="end" font-family="Consolas, monospace">github.com/akiroussama/hackaton_automate_or_die</text>
+  <text x="1632" y="1026" font-size="15" fill="#CFE8E4" text-anchor="end" font-family="Consolas, monospace">verify: npm run check · npm run benchmark:exact · npm run dev</text>
+</svg>
