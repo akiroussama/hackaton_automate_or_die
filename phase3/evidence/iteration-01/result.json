@@ -1,0 +1,126 @@
+{
+  "verifiedAt": "2026-07-18T01:47:24.628Z",
+  "url": "https://hackaton-automate-or-die.vercel.app/",
+  "origin": "https://hackaton-automate-or-die.vercel.app",
+  "desktop": {
+    "label": "desktop",
+    "width": 1920,
+    "height": 1080,
+    "gates": {
+      "sixControlsPresent": true,
+      "tapTargets": true,
+      "journey": true,
+      "noHorizontalOverflow": true,
+      "sameOriginOnly": true,
+      "noConsoleExceptions": true,
+      "noPageErrors": false,
+      "noFailedRequests": false
+    },
+    "controls": {
+      "reset": {
+        "w": 111,
+        "h": 38
+      },
+      "simulate": {
+        "w": 216,
+        "h": 51
+      },
+      "strategy-service": {
+        "w": 341,
+        "h": 47
+      },
+      "strategy-cost": {
+        "w": 341,
+        "h": 47
+      },
+      "strategy-stability": {
+        "w": 341,
+        "h": 47
+      },
+      "approve": {
+        "w": 551,
+        "h": 51
+      }
+    },
+    "metrics": {
+      "nominalOnTime": "10 / 10",
+      "incidentOnTime": "7 / 10",
+      "incidentDelay": "10 h 20 min",
+      "serviceCard": {
+        "onTime": "8 / 10",
+        "cost": "+ 838 DT"
+      },
+      "auditEvents": 3,
+      "afterReset": "10 / 10"
+    },
+    "foreignRequests": [],
+    "consoleExceptions": [],
+    "pageErrors": [
+      "network: Failed to load resource: the server responded with a status of 404 ()"
+    ],
+    "failedRequests": [
+      "HTTP 404 https://hackaton-automate-or-die.vercel.app/favicon.ico"
+    ],
+    "requestCount": 6,
+    "pass": false
+  },
+  "mobile": {
+    "label": "mobile",
+    "width": 390,
+    "height": 844,
+    "gates": {
+      "sixControlsPresent": true,
+      "tapTargets": false,
+      "journey": true,
+      "noHorizontalOverflow": true,
+      "sameOriginOnly": true,
+      "noConsoleExceptions": true,
+      "noPageErrors": true,
+      "noFailedRequests": true
+    },
+    "controls": {
+      "reset": {
+        "w": 111,
+        "h": 38
+      },
+      "simulate": {
+        "w": 338,
+        "h": 51
+      },
+      "strategy-service": {
+        "w": 312,
+        "h": 47
+      },
+      "strategy-cost": {
+        "w": 312,
+        "h": 47
+      },
+      "strategy-stability": {
+        "w": 312,
+        "h": 47
+      },
+      "approve": {
+        "w": 322,
+        "h": 51
+      }
+    },
+    "metrics": {
+      "nominalOnTime": "10 / 10",
+      "incidentOnTime": "7 / 10",
+      "incidentDelay": "10 h 20 min",
+      "serviceCard": {
+        "onTime": "8 / 10",
+        "cost": "+ 838 DT"
+      },
+      "auditEvents": 3,
+      "afterReset": "10 / 10"
+    },
+    "foreignRequests": [],
+    "consoleExceptions": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "requestCount": 5,
+    "pass": false
+  },
+  "pass": false
+}
