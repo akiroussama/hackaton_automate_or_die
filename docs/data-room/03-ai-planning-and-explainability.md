@@ -1,4 +1,4 @@
-# 03 — AI planning and explainability
+# 03 — AI planning, learned recommendation and explainability
 
 ## The core AI is the planning decision
 
@@ -6,6 +6,11 @@ CableTwin uses **symbolic, constraint-based AI planning** to transform a broken
 production schedule into feasible recovery alternatives. The intelligence is
 not a chatbot and it is not the dashboard: it is the structured search over
 line assignments, order sequences and time slots under industrial rules.
+
+The current build also contains a **separate local learned recommender**. It
+classifies the incident and the three completed plans to suggest which existing
+route best matches an explicit arbitration policy. It never creates a schedule,
+changes a constraint or approves a plan.
 
 An interface alone can display that Line 2 stopped. The planning engine must
 answer the harder question:
@@ -46,9 +51,9 @@ for a better score.
 Lexicographic objectives make the priority order explicit and reproducible.
 They avoid a hidden composite score whose weights a manager cannot interpret.
 
-## Two independent layers of evidence
+## Three complementary technical layers
 
-### 1. Live decision engine
+### 1. Deterministic live decision engine
 
 [`engine/twin-engine.js`](../../engine/twin-engine.js) contains the
 dependency-free planner used by the browser. It is a deterministic constructive
@@ -64,7 +69,40 @@ search:
 This implementation is fast, explainable and reliable for the demonstration.
 It does not claim general factory-scale optimality.
 
-### 2. Independent exhaustive verifier
+### 2. Separate local learned recommender
+
+The recommender is a softmax-regression classifier trained from scratch in
+plain JavaScript. Its training set contains **687 simulated incidents generated
+by the twin itself** by varying the stopped line, start time and stop duration
+and replaying each scenario through the implemented deterministic planner.
+
+Each scenario is labelled by one documented demonstration policy:
+
+```text
+utility = -estimatedCostDt
+          - 120 DT per late order
+          - 35 DT per reassignment
+```
+
+The model uses 16 explainable features, including exposure, incident timing,
+recoverable delay and pairwise differences between the three completed plans.
+It reports:
+
+| Learned-assist fact | Result |
+| --- | ---: |
+| Synthetic incidents | **687** |
+| Training accuracy | **95.7%** |
+| Held-out synthetic-grid test accuracy | **93.6%** |
+| Canonical suggestion | **Cost** |
+| Displayed confidence on the canonical incident | **79%** |
+| Dedicated checks | **5/5** |
+
+The test result measures agreement with the encoded labeling policy on a
+held-out subset of the synthetic grid. It is not plant accuracy, an operational
+KPI or evidence that the policy represents a real manager. The planner remains
+deterministic and non-learning.
+
+### 3. Separate exhaustive bounded verifier
 
 [`engine/exact-benchmark.js`](../../engine/exact-benchmark.js) does not reuse
 the live planner's construction logic. For the fixed bounded scenario, it
@@ -96,8 +134,8 @@ number of on-time orders” rule would hide:
   and **690 priority-weighted delay minutes**.
 
 The planner therefore protects the severity and priority of lateness, not only a
-headline count. The independent oracle confirms that this is the unique optimum
-for the declared Service policy in the bounded scenario.
+headline count. The separate bounded verifier confirms that this is the unique
+optimum for the declared Service policy in the bounded scenario.
 
 The other baseline is equally important: avoiding every line reassignment
 preserves workshop stability but leaves **620 minutes of delay** and only
@@ -106,7 +144,7 @@ Service to reach **140 minutes** and **216 km**.
 
 ## Explainability by construction
 
-Every recommendation can be inspected at four levels:
+Every recovery plan can be inspected at four levels:
 
 1. **Inputs:** orders, priorities, eligible lines, durations and incident
    window.
@@ -118,6 +156,11 @@ Every recommendation can be inspected at four levels:
 The manager sees the revised Gantt before approval. The approved strategy,
 actor, timestamp and metric snapshot are stored in the audit trail.
 
+The learned suggestion adds a fifth, separate level: the interface shows the
+model's route, displayed confidence and leading factors. These factors explain
+the classifier's output; they do not replace the plan's constraint and KPI
+explanation.
+
 ## Human approval is a design principle
 
 The engine proposes; the production manager decides. Approval is a separate,
@@ -126,19 +169,23 @@ no connection capable of commanding a machine or modifying a production
 system.
 
 This boundary mitigates automation bias and makes an incomplete model safer:
-the planner can reject, question or override a route before it affects the
-workshop.
+the manager can select a different route or withhold approval before anything
+affects the workshop. In the canonical demonstration the model suggests Cost,
+while choosing Service on stage demonstrates that human authority is real.
 
-## What is AI today, and what could be learned later
+## What is AI today, and what changes in a pilot
 
 | Layer | Phase 2 status | Possible pilot evolution |
 | --- | --- | --- |
 | Constraint model | Working and explicit | Add planner-validated setup, material, labour and precedence rules |
 | Decision planning | Working and deterministic | Replace or complement constructive search with CP-SAT at larger scale |
+| Route recommender | Working local softmax model trained on twin-generated synthetic incidents | Retrain on sufficient real incident history, on-site, with a separate representative holdout and rollback |
 | Exact evaluation | Working for the bounded demo | Use benchmark suites and optimality gaps for larger cases |
 | Incident-duration prediction | Not claimed | Estimate a duration distribution only if validated history exists |
 | Natural-language explanation | Not required | Optional wording layer; never responsible for schedules or KPI |
 
-No machine-learning model is claimed without training data. The current AI value
-comes from constrained decision search, explicit multi-objective reasoning and
-verifiable alternatives.
+During a pilot, real incident history remains inside the plant's approved
+environment. Retraining is versioned and on-site; data never leaves the plant.
+The learned model remains advisory until plant-specific validation demonstrates
+adequate generalization and calibration. The deterministic planner and the
+three-route comparison remain the safe fallback.

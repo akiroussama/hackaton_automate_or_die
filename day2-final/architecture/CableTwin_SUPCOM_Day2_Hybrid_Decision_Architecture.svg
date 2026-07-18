@@ -1,0 +1,299 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc" shape-rendering="geometricPrecision">
+  <!-- Standalone Day 2 jury architecture: planner, learned advisor, verifier, human authority. -->
+  <title id="title">CableTwin Day 2 hybrid decision architecture</title>
+  <desc id="desc">A synthetic factory scenario drives a simulated twin and telemetry view. A deterministic non-learning planner builds three recovery routes. A separate local learned recommender, trained on 687 incidents simulated by the twin, suggests Cost among the existing routes at 93.6 percent held-out synthetic test accuracy. A separate exact bounded verifier checks the three policy optima. A human production manager remains the final authority and no machine is controlled.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#061B18"/>
+      <stop offset="0.55" stop-color="#092925"/>
+      <stop offset="1" stop-color="#0B342E"/>
+    </linearGradient>
+    <linearGradient id="enginePanel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#123E37"/>
+      <stop offset="1" stop-color="#0B2F2A"/>
+    </linearGradient>
+    <linearGradient id="learnedPanel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0C3033"/>
+      <stop offset="1" stop-color="#102A31"/>
+    </linearGradient>
+    <linearGradient id="humanPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F5F4ED"/>
+    </linearGradient>
+    <radialGradient id="mintAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#C9F36B" stop-opacity="0.13"/>
+      <stop offset="1" stop-color="#C9F36B" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cyanAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#49B7AB" stop-opacity="0.13"/>
+      <stop offset="1" stop-color="#49B7AB" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orangeAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#E9763B" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#E9763B" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#8FA8A2" stroke-width="1" stroke-opacity="0.055"/>
+      <circle cx="0" cy="0" r="1.5" fill="#C9F36B" fill-opacity="0.08"/>
+    </pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="14" stdDeviation="17" flood-color="#020B0A" flood-opacity="0.36"/>
+    </filter>
+    <filter id="smallShadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#020B0A" flood-opacity="0.28"/>
+    </filter>
+    <marker id="arrowMint" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0 0L10 5.5L0 11Z" fill="#C9F36B"/>
+    </marker>
+    <marker id="arrowTeal" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0 0L10 5.5L0 11Z" fill="#49B7AB"/>
+    </marker>
+    <style>
+      text { font-family: "Segoe UI", Arial, Helvetica, sans-serif; }
+      .cream { fill: #F5F4ED; }
+      .mint { fill: #C9F36B; }
+      .teal { fill: #49B7AB; }
+      .soft { fill: #9AB2AD; }
+      .orange { fill: #E9763B; }
+      .ink { fill: #092925; }
+      .eyebrow { font-size: 13.5px; font-weight: 700; letter-spacing: 2.4px; }
+      .mono { font-family: Consolas, "Courier New", monospace; }
+    </style>
+  </defs>
+
+  <!-- Canvas -->
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#grid)"/>
+  <ellipse cx="655" cy="610" rx="610" ry="480" fill="url(#mintAura)"/>
+  <ellipse cx="1290" cy="650" rx="520" ry="430" fill="url(#cyanAura)"/>
+  <ellipse cx="170" cy="575" rx="300" ry="370" fill="url(#orangeAura)"/>
+
+  <!-- Brand header -->
+  <g transform="translate(56 36)">
+    <rect width="62" height="62" rx="16" fill="#0B312C" stroke="#0F766E" stroke-width="2"/>
+    <path d="M12 20H50M12 42H50" stroke="#0F766E" stroke-width="5" stroke-linecap="round"/>
+    <path d="M12 31H25M39 31H50" stroke="#0F766E" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="32" cy="31" r="4.5" fill="none" stroke="#E9763B" stroke-width="3"/>
+    <path d="M23 31C26 19 38 19 42 31" fill="none" stroke="#C9F36B" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <text x="136" y="75" font-size="32" font-weight="700" class="cream">Cable<tspan class="mint">Twin</tspan></text>
+  <g transform="translate(1414 42)">
+    <rect width="450" height="50" rx="25" fill="#0B312C" stroke="#0F766E" stroke-width="1.5"/>
+    <circle cx="25" cy="25" r="5" fill="#C9F36B"/>
+    <text x="43" y="31" font-size="14.5" font-weight="700" letter-spacing="1.3" class="cream">DAY 2 · HYBRID DECISION ARCHITECTURE</text>
+  </g>
+  <text x="1864" y="119" text-anchor="end" font-size="15" class="soft">SUPCOM · Oussama Akir · Industry</text>
+
+  <!-- Five-second story -->
+  <text x="56" y="185" font-size="52" font-weight="750" class="cream">
+    One line stops. <tspan class="mint">Three verified routes.</tspan> One human decides.
+  </text>
+  <text x="58" y="226" font-size="20" class="soft">Day 2 adds one local learned suggestion - never a generated route.</text>
+  <path d="M58 258H1862" stroke="#0F766E" stroke-width="1.5" stroke-opacity="0.68"/>
+
+  <!-- Stage labels -->
+  <text x="58" y="309" class="eyebrow orange">01 · SIMULATED TWIN</text>
+  <text x="410" y="309" class="eyebrow mint">02 · NON-LEARNING PLANNER</text>
+  <text x="964" y="309" class="eyebrow teal">03 · ROUTES + LOCAL ADVISOR</text>
+  <text x="1536" y="309" class="eyebrow cream">04 · HUMAN AUTHORITY</text>
+
+  <!-- Main-path connectors, behind cards -->
+  <path d="M376 548C395 548 395 527 410 527" fill="none" stroke="#0F766E" stroke-width="13" stroke-linecap="round"/>
+  <path d="M376 548C395 548 395 527 410 527" fill="none" stroke="#C9F36B" stroke-width="4.5" stroke-linecap="round" marker-end="url(#arrowMint)"/>
+
+  <path d="M930 423C946 423 946 425 964 425" fill="none" stroke="#0F766E" stroke-width="12" stroke-linecap="round"/>
+  <path d="M930 423C946 423 946 425 964 425" fill="none" stroke="#C9F36B" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowMint)"/>
+  <path d="M930 518H964" fill="none" stroke="#0F766E" stroke-width="12" stroke-linecap="round"/>
+  <path d="M930 518H964" fill="none" stroke="#F5F4ED" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowMint)"/>
+  <path d="M930 613C946 613 946 611 964 611" fill="none" stroke="#0F766E" stroke-width="12" stroke-linecap="round"/>
+  <path d="M930 613C946 613 946 611 964 611" fill="none" stroke="#49B7AB" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowTeal)"/>
+
+  <path d="M1502 425C1519 425 1519 449 1536 449" fill="none" stroke="#0F766E" stroke-width="11" stroke-linecap="round"/>
+  <path d="M1502 425C1519 425 1519 449 1536 449" fill="none" stroke="#C9F36B" stroke-width="3.5" stroke-linecap="round" marker-end="url(#arrowMint)"/>
+  <path d="M1502 518H1536" fill="none" stroke="#0F766E" stroke-width="11" stroke-linecap="round"/>
+  <path d="M1502 518H1536" fill="none" stroke="#F5F4ED" stroke-width="3.5" stroke-linecap="round" marker-end="url(#arrowMint)"/>
+  <path d="M1502 611C1519 611 1519 587 1536 587" fill="none" stroke="#0F766E" stroke-width="11" stroke-linecap="round"/>
+  <path d="M1502 611C1519 611 1519 587 1536 587" fill="none" stroke="#49B7AB" stroke-width="3.5" stroke-linecap="round" marker-end="url(#arrowTeal)"/>
+
+  <!-- Simulated twin card -->
+  <g filter="url(#shadow)">
+    <rect x="56" y="332" width="320" height="520" rx="28" fill="#0B2D29" stroke="#8B4A2D" stroke-width="2"/>
+    <rect x="56" y="332" width="320" height="8" rx="4" fill="#E9763B"/>
+  </g>
+  <text x="86" y="380" font-size="14" font-weight="700" letter-spacing="1.5" class="soft">SYNTHETIC SCENARIO</text>
+  <text x="86" y="421" font-size="34" font-weight="800" class="cream">Simulated twin</text>
+  <text x="86" y="451" font-size="17" font-weight="700" class="orange">LINE 2 STOP · 10:00-14:00</text>
+
+  <g transform="translate(86 485)">
+    <text x="0" y="10" font-size="13" font-weight="700" class="soft">L1</text>
+    <path d="M32 5H242" stroke="#49B7AB" stroke-width="8" stroke-linecap="round"/>
+    <text x="0" y="71" font-size="13" font-weight="700" class="orange">L2</text>
+    <path d="M32 66H111M165 66H242" stroke="#E9763B" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="138" cy="66" r="10" fill="#092925" stroke="#E9763B" stroke-width="5"/>
+    <path d="M101 66C115 27 157 27 176 66" fill="none" stroke="#C9F36B" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="176" cy="66" r="6" fill="#C9F36B"/>
+    <text x="0" y="132" font-size="13" font-weight="700" class="soft">L3</text>
+    <path d="M32 127H242" stroke="#49B7AB" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <rect x="86" y="640" width="260" height="128" rx="18" fill="#102F2B" stroke="#0F766E" stroke-width="1.4"/>
+  <text x="104" y="670" font-size="12.5" font-weight="700" letter-spacing="1.2" class="teal">SIMULATED TELEMETRY</text>
+  <text x="104" y="704" font-size="13" class="soft">L2 speed</text>
+  <text x="328" y="704" text-anchor="end" font-size="19" font-weight="800" class="orange">0.0 m/min</text>
+  <text x="104" y="733" font-size="13" class="soft">Temperature</text>
+  <text x="328" y="733" text-anchor="end" font-size="16" font-weight="700" class="cream">cooling</text>
+  <text x="104" y="756" font-size="11.5" class="soft">Seeded · deterministic · clearly synthetic</text>
+  <text x="86" y="806" font-size="16" class="cream">3 lines · 10 orders</text>
+  <text x="86" y="831" font-size="11.5" class="soft">Twin view mirrors the same executable state.</text>
+
+  <!-- Deterministic planner -->
+  <g filter="url(#shadow)">
+    <rect x="410" y="332" width="520" height="352" rx="30" fill="url(#enginePanel)" stroke="#58A99F" stroke-width="2"/>
+    <rect x="410" y="332" width="520" height="8" rx="4" fill="#C9F36B"/>
+  </g>
+  <text x="444" y="382" font-size="14.5" font-weight="700" letter-spacing="1.35" class="mint">DETERMINISTIC · NON-LEARNING</text>
+  <text x="444" y="424" font-size="35" font-weight="800" class="cream">Constraint planner</text>
+
+  <g filter="url(#smallShadow)">
+    <rect x="444" y="454" width="132" height="66" rx="17" fill="#0A2824" stroke="#49B7AB" stroke-width="1.5"/>
+    <rect x="600" y="454" width="156" height="66" rx="17" fill="#173D32" stroke="#C9F36B" stroke-width="2"/>
+    <rect x="780" y="454" width="116" height="66" rx="17" fill="#0A2824" stroke="#49B7AB" stroke-width="1.5"/>
+  </g>
+  <text x="510" y="481" text-anchor="middle" font-size="12" font-weight="700" letter-spacing="1" class="soft">VALIDATE</text>
+  <text x="510" y="503" text-anchor="middle" font-size="17" font-weight="700" class="cream">Constraints</text>
+  <text x="678" y="481" text-anchor="middle" font-size="12" font-weight="700" letter-spacing="1" class="mint">BUILD</text>
+  <text x="678" y="503" text-anchor="middle" font-size="17" font-weight="750" class="cream">3 routes</text>
+  <text x="838" y="481" text-anchor="middle" font-size="12" font-weight="700" letter-spacing="1" class="soft">SCORE</text>
+  <text x="838" y="503" text-anchor="middle" font-size="17" font-weight="700" class="cream">KPIs</text>
+  <path d="M576 487H594" stroke="#C9F36B" stroke-width="3" marker-end="url(#arrowMint)"/>
+  <path d="M756 487H774" stroke="#C9F36B" stroke-width="3" marker-end="url(#arrowMint)"/>
+
+  <text x="444" y="558" font-size="13" font-weight="700" letter-spacing="1.1" class="soft">HARD CONSTRAINTS</text>
+  <g font-size="13.5" class="cream">
+    <rect x="444" y="577" width="112" height="35" rx="18" fill="#092925" stroke="#0F766E"/>
+    <text x="500" y="600" text-anchor="middle">Compatibility</text>
+    <rect x="565" y="577" width="102" height="35" rx="18" fill="#092925" stroke="#0F766E"/>
+    <text x="616" y="600" text-anchor="middle">No overlap</text>
+    <rect x="676" y="577" width="120" height="35" rx="18" fill="#092925" stroke="#0F766E"/>
+    <text x="736" y="600" text-anchor="middle">Stop window</text>
+    <rect x="805" y="577" width="91" height="35" rx="18" fill="#092925" stroke="#0F766E"/>
+    <text x="850" y="600" text-anchor="middle">Horizon</text>
+  </g>
+  <rect x="444" y="630" width="452" height="38" rx="19" fill="#172F20" stroke="#769834" stroke-width="1.2"/>
+  <text x="670" y="655" text-anchor="middle" font-size="15" font-weight="650" class="mint">Builds routes · no training · no LLM</text>
+
+  <!-- Separate exact verifier -->
+  <g filter="url(#smallShadow)">
+    <rect x="410" y="706" width="520" height="146" rx="22" fill="#071F1C" stroke="#0F766E" stroke-width="1.5" stroke-dasharray="7 5"/>
+  </g>
+  <text x="436" y="736" font-size="11.5" font-weight="700" letter-spacing="1.25" class="soft">SEPARATE EXACT BOUNDED VERIFIER</text>
+  <text x="904" y="736" text-anchor="end" font-size="10.5" class="soft">shared validation + KPI functions</text>
+  <text x="484" y="783" text-anchor="middle" font-size="27" font-weight="800" class="cream">17,856</text>
+  <text x="484" y="805" text-anchor="middle" font-size="9.5" class="soft">assignment / sequence candidates</text>
+  <text x="590" y="786" text-anchor="middle" font-size="25" font-weight="700" class="mint">→</text>
+  <text x="692" y="783" text-anchor="middle" font-size="27" font-weight="800" class="cream">10,440</text>
+  <text x="692" y="805" text-anchor="middle" font-size="9.5" class="soft">feasible schedules</text>
+  <text x="797" y="786" text-anchor="middle" font-size="25" font-weight="700" class="mint">→</text>
+  <text x="865" y="783" text-anchor="middle" font-size="27" font-weight="800" class="mint">3</text>
+  <text x="865" y="805" text-anchor="middle" font-size="9.5" class="soft">unique policy optima</text>
+  <text x="670" y="833" text-anchor="middle" font-size="11.5" class="soft">Does not reuse planner construction logic; exhaustively cross-checks the 3 policy optima.</text>
+
+  <!-- Planner-built routes and separate learned advisor -->
+  <g filter="url(#shadow)">
+    <rect x="964" y="332" width="538" height="520" rx="28" fill="#0B2D29" stroke="#27655E" stroke-width="2"/>
+  </g>
+  <text x="994" y="380" font-size="15" font-weight="700" letter-spacing="1.25" class="soft">THREE PLANNER-BUILT ROUTES</text>
+
+  <g filter="url(#smallShadow)">
+    <rect x="994" y="402" width="478" height="76" rx="18" fill="#173D32" stroke="#C9F36B" stroke-width="1.8"/>
+    <rect x="994" y="493" width="478" height="76" rx="18" fill="#183B35" stroke="#49B7AB" stroke-width="2"/>
+    <rect x="994" y="584" width="478" height="76" rx="18" fill="#123E39" stroke="#49B7AB" stroke-opacity="0.8" stroke-width="1.5"/>
+  </g>
+  <circle cx="1022" cy="430" r="8" fill="#C9F36B"/>
+  <text x="1044" y="435" font-size="15" font-weight="750" letter-spacing="1" class="mint">SERVICE</text>
+  <text x="1444" y="438" text-anchor="end" font-size="27" font-weight="800" class="cream">140 min delay</text>
+
+  <circle cx="1022" cy="521" r="8" fill="#49B7AB"/>
+  <text x="1044" y="526" font-size="15" font-weight="750" letter-spacing="1" class="teal">COST</text>
+  <text x="1320" y="529" text-anchor="end" font-size="27" font-weight="800" class="cream">1,931.45 DT*</text>
+  <rect x="1335" y="505" width="118" height="31" rx="16" fill="#173D32" stroke="#C9F36B" stroke-width="1.4"/>
+  <text x="1394" y="526" text-anchor="middle" font-size="11.5" font-weight="800" letter-spacing="0.8" class="mint">SUGGESTED</text>
+
+  <circle cx="1022" cy="612" r="8" fill="#49B7AB"/>
+  <text x="1044" y="617" font-size="15" font-weight="750" letter-spacing="1" class="teal">STABILITY</text>
+  <text x="1444" y="620" text-anchor="end" font-size="27" font-weight="800" class="cream">0 moves</text>
+
+  <g filter="url(#smallShadow)">
+    <rect x="994" y="684" width="478" height="142" rx="20" fill="url(#learnedPanel)" stroke="#49B7AB" stroke-width="1.7" stroke-dasharray="7 5"/>
+  </g>
+  <text x="1018" y="712" font-size="11.5" font-weight="700" letter-spacing="1.2" class="teal">SEPARATE LOCAL LEARNED RECOMMENDER</text>
+  <text x="1018" y="746" font-size="23" font-weight="800" class="cream">Suggests <tspan class="mint">COST</tspan></text>
+  <text x="1018" y="780" font-size="12" class="soft">Trained on</text>
+  <text x="1083" y="780" font-size="18" font-weight="800" class="cream">687</text>
+  <text x="1126" y="780" font-size="10.5" class="soft">incidents simulated by the twin</text>
+  <text x="1280" y="780" font-size="18" font-weight="800" class="cream">93.6%</text>
+  <text x="1348" y="780" font-size="10.5" class="soft">held-out synthetic</text>
+  <text x="1348" y="797" font-size="10.5" class="soft">test accuracy</text>
+  <text x="1018" y="817" font-size="11" class="soft">Selects among existing routes · never creates or edits a schedule.</text>
+  <text x="1472" y="844" text-anchor="end" font-size="10.5" class="soft">*illustrative synthetic comparison output</text>
+
+  <!-- Human authority -->
+  <g filter="url(#shadow)">
+    <rect x="1536" y="332" width="328" height="520" rx="28" fill="url(#humanPanel)" stroke="#C9F36B" stroke-width="2"/>
+    <rect x="1536" y="332" width="328" height="8" rx="4" fill="#C9F36B"/>
+  </g>
+  <text x="1566" y="380" font-size="14.5" font-weight="750" letter-spacing="1.25" class="ink">HUMAN IN COMMAND</text>
+  <g transform="translate(1566 408)">
+    <circle cx="30" cy="27" r="18" fill="#0F766E"/>
+    <path d="M3 74C7 48 18 40 30 40C42 40 54 48 58 74" fill="#0F766E"/>
+    <path d="M67 22H268" stroke="#D6DDD5" stroke-width="2"/>
+    <text x="76" y="49" font-size="27" font-weight="800" class="ink">Production</text>
+    <text x="76" y="78" font-size="27" font-weight="800" class="ink">manager</text>
+  </g>
+  <g transform="translate(1566 536)">
+    <circle cx="15" cy="10" r="14" fill="#E6F1EF"/>
+    <text x="15" y="16" text-anchor="middle" font-size="14" font-weight="800" class="ink">1</text>
+    <text x="42" y="16" font-size="15.5" font-weight="650" class="ink">Preview twin + Gantt</text>
+    <path d="M15 27V54" stroke="#8FA8A2" stroke-width="2"/>
+    <circle cx="15" cy="70" r="14" fill="#E6F1EF"/>
+    <text x="15" y="76" text-anchor="middle" font-size="14" font-weight="800" class="ink">2</text>
+    <text x="42" y="76" font-size="15.5" font-weight="650" class="ink">Review routes + suggestion</text>
+    <path d="M15 87V114" stroke="#8FA8A2" stroke-width="2"/>
+    <circle cx="15" cy="130" r="14" fill="#C9F36B"/>
+    <text x="15" y="136" text-anchor="middle" font-size="14" font-weight="800" class="ink">3</text>
+    <text x="42" y="136" font-size="15.5" font-weight="750" class="ink">Approve or reject</text>
+  </g>
+  <rect x="1566" y="732" width="268" height="58" rx="16" fill="#FFF0E8" stroke="#E9763B" stroke-width="1.5"/>
+  <circle cx="1592" cy="761" r="9" fill="none" stroke="#E9763B" stroke-width="3"/>
+  <path d="M1586 755L1598 767M1598 755L1586 767" stroke="#E9763B" stroke-width="2"/>
+  <text x="1612" y="766" font-size="14.5" font-weight="800" letter-spacing="0.5" fill="#B4501F">NO MACHINE COMMAND</text>
+  <text x="1566" y="817" font-size="11" class="ink">In-memory approval + timestamped audit event</text>
+  <text x="1566" y="838" font-size="10.5" fill="#526460">Suggestion is advisory; manager may choose any route.</text>
+
+  <!-- Deployment and evidence boundary -->
+  <g filter="url(#smallShadow)">
+    <rect x="56" y="908" width="1808" height="126" rx="26" fill="#081F1C" stroke="#0F766E" stroke-width="1.5"/>
+  </g>
+  <text x="84" y="943" font-size="12.5" font-weight="700" letter-spacing="1.8" class="mint">LOCAL DEPLOYMENT + EVIDENCE BOUNDARY</text>
+  <g font-size="12.5" font-weight="700" letter-spacing="0.55" class="cream">
+    <rect x="84" y="962" width="142" height="40" rx="20" fill="#12352F" stroke="#0F766E"/>
+    <text x="155" y="988" text-anchor="middle">SYNTHETIC DATA</text>
+    <rect x="238" y="962" width="176" height="40" rx="20" fill="#12352F" stroke="#0F766E"/>
+    <text x="326" y="988" text-anchor="middle">SIMULATED TELEMETRY</text>
+    <rect x="426" y="962" width="138" height="40" rx="20" fill="#12352F" stroke="#0F766E"/>
+    <text x="495" y="988" text-anchor="middle">LOCAL + OFFLINE</text>
+    <rect x="576" y="962" width="116" height="40" rx="20" fill="#12352F" stroke="#0F766E"/>
+    <text x="634" y="988" text-anchor="middle">READ-ONLY</text>
+    <rect x="704" y="962" width="190" height="40" rx="20" fill="#12352F" stroke="#0F766E"/>
+    <text x="799" y="988" text-anchor="middle">NO MACHINE CONTROL</text>
+    <rect x="906" y="962" width="112" height="40" rx="20" fill="#173D32" stroke="#C9F36B"/>
+    <text x="962" y="988" text-anchor="middle" class="mint">9/9 CORE</text>
+    <rect x="1030" y="962" width="126" height="40" rx="20" fill="#173D32" stroke="#49B7AB"/>
+    <text x="1093" y="988" text-anchor="middle" class="teal">5/5 ML</text>
+  </g>
+  <text x="1190" y="974" font-size="11.5" class="soft mono">twin-engine.js → 3 routes</text>
+  <text x="1190" y="996" font-size="11.5" class="soft mono">recommender.js ⇢ suggestion only</text>
+  <text x="1834" y="974" text-anchor="end" font-size="11.5" class="soft">93.6% is held-out synthetic validation, not plant performance.</text>
+  <text x="1834" y="997" text-anchor="end" font-size="11.5" class="soft">Pilot rule: retrain locally on the site's real incident history.</text>
+</svg>

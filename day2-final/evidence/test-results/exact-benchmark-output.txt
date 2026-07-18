@@ -1,0 +1,10 @@
+
+> cabletwin@0.1.0 benchmark:exact
+> node scripts/run-exact-benchmark.mjs
+
+CableTwin exact benchmark - synthetic canonical scenario
+17856 assignment/sequence candidates; 10440 feasible schedules; 7 orders replanned.
+service   verified=true  unique=true  delay=140 min onTime=8/10 moves=3 cost=1971.15 DT
+cost      verified=true  unique=true  delay=170 min onTime=8/10 moves=2 cost=1931.45 DT
+stability verified=true  unique=true  delay=620 min onTime=7/10 moves=0 cost=3862.20 DT
+best-on-time alternative: 9/10, 230 min total delay, 690 priority-weighted delay.

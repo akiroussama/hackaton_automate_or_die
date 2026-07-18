@@ -1,100 +1,149 @@
-# CableTwin — le Waze de l’usine de câbles
+# CableTwin — the Waze of the cable factory
 
-Prototype préparé par **l’équipe SUPCOM (1 participant)** pour le track **Industry** d’AUTOMATE OR DIE 2026.
+**CableTwin helps a production manager see the consequences of a line stoppage
+before changing the real workshop.** It turns one incident into three
+constraint-feasible recovery plans, renders their consequences in an interactive
+isometric workshop twin, and keeps the final decision with the human manager.
 
-CableTwin est un jumeau numérique opérationnel léger : lorsqu’une ligne s’arrête, il montre les commandes, délais et coûts exposés, compare trois chemins de reprise, puis laisse le responsable production choisir et tracer sa décision.
+- **Live application:** <https://hackaton-automate-or-die.vercel.app/>
+- **Factory-twin view:** <https://hackaton-automate-or-die.vercel.app/#twin>
+- **Team:** SUPCOM · Oussama Akir · solo participant
+- **Track:** Industry · Production Planning & Supply Chain Optimization
 
-> Voir demain avant de décider aujourd’hui.
+The demonstration represents a fictional Tunisian cable factory. Every line,
+order, customer, cost coefficient, incident, sensor value and result is
+synthetic. CableTwin is not affiliated with a real manufacturer.
 
-## Lancer la démonstration
+## What is working
 
-Prérequis : Node.js 22 ou version récente.
+The current build connects one complete decision journey:
 
-```powershell
+```text
+3 lines · 10 orders · nominal schedule
+  -> Line 2 stops from 10:00 to 14:00
+  -> exposed orders and projected consequences
+  -> Service · Cost · Stability recovery plans
+  -> local ML route suggestion
+  -> Gantt and isometric-twin preview
+  -> explicit human approval and audit event
+  -> deterministic reset
+```
+
+The `Vue décision / Jumeau atelier` toggle presents the same executable state in
+two ways. The decision view emphasizes KPI and the revised Gantt. The factory
+twin shows the three lines, moving orders, simulated operators, state-reactive
+synthetic telemetry and seven simulated ambient signals. It is a decision
+visualization, not a CAD, physics or plant-connected replica.
+
+## Run locally
+
+Prerequisite: Node.js 22 or a recent compatible version.
+
+```bash
 npm run dev
 ```
 
-Ouvrir ensuite <http://127.0.0.1:4173/>.
+Open <http://127.0.0.1:4173/> or go directly to
+<http://127.0.0.1:4173/#twin>. The application has no application dependency,
+external AI call or required cloud service and can run from the standalone
+archive without internet access.
 
-Pour vérifier le moteur :
+## Verify the evidence
 
-```powershell
-npm test
-npm run check
-npm run benchmark:exact
+Run the planner/workflow checks, exact bounded benchmark and learned-assist
+checks separately:
+
+```bash
+npm run check                 # planner and workflow: 9/9
+npm run benchmark:exact       # 17,856 candidates; 10,440 feasible schedules
+npm run check:recommender     # local learned recommender: 5/5
 ```
 
-## Livrables officiels
+To reproduce model training in a clean or disposable checkout:
 
-L'organisation a annoncé trois phases éliminatoires. Un livrable manquant à l'échéance entraîne l'élimination.
-
-- **Phase 1 - 17 juillet :** [document d'idée éditable](docs/submissions/phase-1-idea.md) et [PDF prêt à soumettre](output/pdf/CableTwin_Phase1_Idea_SUPCOM.pdf).
-- **Phase 2 - 18 juillet :** [audit et checklist des six livrables](docs/submissions/phase-2-delivery-checklist.md).
-- **Phase 3 - 19 juillet :** 7 minutes de pitch, 4 minutes de questions-réponses et démonstration live pour les équipes sélectionnées.
-
-La [grille officielle et la stratégie de preuve](docs/cabletwin/05-evaluation-98.md) suivent les pondérations `25 / 20 / 20 / 20 / 15`. L'heure exacte et le lien de chaque soumission doivent être repris du prochain e-mail reçu par le team leader SUPCOM.
-
-Pour reconstruire le PDF Phase 1 :
-
-```powershell
-npm run build:phase1
+```bash
+npm run train:recommender
 ```
 
-La commande détecte automatiquement le Python fourni par Codex. Hors de cet
-environnement, installer au besoin la dépendance avec
-`python -m pip install -r requirements-pdf.txt`.
+This last command regenerates `engine/recommender-model.js`, including its
+training timestamp.
 
-## Parcours de 90 secondes
+## Where the intelligence sits
 
-1. Le planning nominal affiche **3 lignes et 10 commandes à l’heure**.
-2. Cliquer sur **Simuler l’arrêt de la ligne 2**.
-3. CableTwin révèle le statu quo : **3 commandes menacées**, **620 minutes de retard cumulé**.
-4. Comparer les stratégies **Service**, **Coût maîtrisé** et **Stabilité**.
-5. Prévisualiser une option : le Gantt et les KPI sont recalculés.
-6. Valider le plan : la décision humaine apparaît dans le journal d’audit.
-7. Cliquer sur **Recommencer** pour restaurer exactement le scénario initial.
+CableTwin deliberately separates three technical responsibilities:
 
-## La démarche, du problème à l’implémentation
+1. **Deterministic constraint planner.** `engine/twin-engine.js` builds the
+   Service, Cost and Stability schedules under eligibility, duration, downtime,
+   non-overlap and horizon constraints. It does not learn.
+2. **Separate local route recommender.** A softmax-regression model evaluates
+   the three already-built plans through 16 explainable features. It was trained
+   on **687 simulated incidents generated by the twin itself**. It never creates
+   or modifies a schedule.
+3. **Separate exhaustive bounded verifier.** `engine/exact-benchmark.js`
+   enumerates assignment-and-sequence candidates without reusing the live
+   planner's construction logic. For the encoded demonstration it evaluates
+   **17,856 candidates**, finds **10,440 feasible complete schedules**, and
+   confirms the three unique policy optima.
 
-| Étape | Document |
+The recommender reaches **95.7% training accuracy** and **93.6% accuracy on a
+held-out subset of the synthetic incident grid**. On the canonical incident it
+suggests **Cost** with **79% displayed model confidence**. These are synthetic
+model-validation results, not factory performance or a new operational KPI.
+The manager can inspect another route and remains the final authority.
+
+## Canonical demonstration results
+
+| Route | On time | Total delay | Overtime | Line moves |
+| --- | ---: | ---: | ---: | ---: |
+| Service | 8/10 | 140 min | 30 min | 3 |
+| Cost | 8/10 | 170 min | 60 min | 2 |
+| Stability | 7/10 | 620 min | 180 min | 0 |
+
+Service produces 216 km by 18:00 versus 188 km for Stability, a **14.9%
+synthetic shift-end output difference**. DT values are illustrative comparison
+outputs, not quotations, factory savings or commercial ROI.
+
+## Human authority and deployment boundary
+
+- The planner proposes three plans; the learned model only suggests one of
+  those existing plans.
+- The manager previews, chooses and approves. The approval event is stored in
+  memory for the demonstration.
+- No machine, PLC, ERP, MES or APS is controlled or modified.
+- The current factory telemetry and ambient sensors are simulated and clearly
+  labelled as such.
+- A first industrial pilot remains read-only.
+- In a pilot, the recommender would be retrained on the site's real incident
+  history and hosted on-site so data never leaves the plant. It would require
+  a separate representative holdout, plant-specific validation and a rollback
+  to the deterministic three-route planner.
+
+## Documentation
+
+| Topic | Document |
 | --- | --- |
-| Problème, persona et processus actuel | [`00-probleme.md`](docs/cabletwin/00-probleme.md) |
-| Hypothèses, validations terrain et portes de preuve | [`01-hypotheses-et-validation.md`](docs/cabletwin/01-hypotheses-et-validation.md) |
-| Proposition de valeur, périmètre et critères d’acceptation | [`02-product-spec.md`](docs/cabletwin/02-product-spec.md) |
-| Démo, pitch et réponses au jury | [`03-demo-et-pitch.md`](docs/cabletwin/03-demo-et-pitch.md) |
-| Architecture, limites et trajectoire pilote | [`04-architecture.md`](docs/cabletwin/04-architecture.md) |
-| Grille interne de preuve cible 98/100 | [`05-evaluation-98.md`](docs/cabletwin/05-evaluation-98.md) |
-| Décisions, pivots et idées volontairement écartées | [`06-journal-decisions.md`](docs/cabletwin/06-journal-decisions.md) |
-| Tests, parcours contrôlé et preuves restantes | [`07-validation-technique.md`](docs/cabletwin/07-validation-technique.md) |
+| Technical data room | [`docs/data-room/INDEX.md`](docs/data-room/INDEX.md) |
+| Product specification | [`docs/cabletwin/02-product-spec.md`](docs/cabletwin/02-product-spec.md) |
+| Demo and pitch guidance | [`docs/cabletwin/03-demo-et-pitch.md`](docs/cabletwin/03-demo-et-pitch.md) |
+| Architecture and pilot path | [`docs/cabletwin/04-architecture.md`](docs/cabletwin/04-architecture.md) |
+| Technical validation | [`docs/cabletwin/07-validation-technique.md`](docs/cabletwin/07-validation-technique.md) |
+| Submission readiness | [`docs/submissions/phase-2-delivery-checklist.md`](docs/submissions/phase-2-delivery-checklist.md) |
 
-Le [contexte de l’événement](docs/01-contexte-evenement.md), le [plan des trois jours](docs/03-plan-execution-et-checklists.md), les [questions aux organisateurs](docs/04-messages-et-questions.md) et le [benchmark 2026](docs/05-benchmark-hackathons-ia-industry-2026.md) restent disponibles. Les concepts abandonnés sont conservés uniquement comme traces d’exploration.
-
-## Où se trouve l’intelligence
-
-Le cœur du MVP est un **planificateur symbolique multiobjectif explicable**, une forme établie d’IA fondée sur la recherche et la planification sous contraintes :
-
-- il encode les lignes éligibles, durées, échéances, priorités, coûts et indisponibilités ;
-- il recherche des créneaux réalisables après l’incident ;
-- il applique trois politiques de décision et calcule leurs conséquences sur les mêmes données ;
-- il expose le compromis au lieu de masquer la décision derrière une boîte noire.
-
-Un vérificateur indépendant énumère exactement le scénario canonique : **17 856 candidats**, **10 440 plannings faisables**, et confirme que les trois plans affichés sont les optima uniques de leurs politiques respectives. Cette preuve est volontairement bornée à la démonstration ; elle ne prétend pas résoudre à l’exactitude une usine entière.
-
-Ce MVP ne prétend pas avoir appris sur les données d’une usine. Dans un pilote réel, une couche prédictive pourrait estimer la durée d’un incident et ses incertitudes ; le planificateur resterait soumis aux contraintes validées par le responsable.
-
-## Ce qui est vrai, ce qui est simulé
-
-- Le moteur, les contraintes, les calculs de KPI, la sélection et le journal d’approbation fonctionnent réellement.
-- Les lignes, commandes, clients, coûts et l’incident sont **entièrement synthétiques**.
-- Le prototype ne se connecte à aucune machine et n’envoie aucun ordre à un ERP ou MES.
-- Chakira Cables et COFICAB/Elloumi sont uniquement des inspirations sectorielles publiques ; aucune donnée ni difficulté interne ne leur est attribuée.
-
-## Structure
+## Repository structure
 
 ```text
-app/       interface narrative et interactions
-engine/    scénario synthétique, planificateur et vérificateur exact
-tests/     tests déterministes du moteur
-docs/      contexte du hackathon et démarche CableTwin
-scripts/   serveur local sans dépendance
+app/        decision interface and isometric factory-twin view
+engine/     synthetic scenario, deterministic planner, verifier and recommender
+tests/      9/9 deterministic planner/workflow checks
+scripts/    local server, exact benchmark, training and 5/5 recommender checks
+docs/       technical data room, product documentation and submission material
 ```
+
+## Résumé français
+
+CableTwin transforme un arrêt de ligne en trois plans de reprise réalisables,
+affiche leurs conséquences dans un jumeau d'atelier isométrique et laisse le
+responsable production décider. Le planificateur reste déterministe. Le modèle
+ML local est un conseiller séparé, entraîné uniquement sur 687 incidents
+simulés générés par le jumeau lui-même. Aucune donnée d'usine réelle ni commande
+machine n'est utilisée dans la démonstration.

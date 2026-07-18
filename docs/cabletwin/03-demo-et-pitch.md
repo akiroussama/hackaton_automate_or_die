@@ -17,13 +17,19 @@ La formulation à retenir :
 
 Une usine doit terminer plusieurs commandes aujourd'hui. Son planning est réalisable et les voyants sont au vert. Soudain, la ligne 2 devient indisponible pendant quatre heures.
 
-Sans action, certaines commandes sont menacées. CableTwin reproduit l'incident dans l'usine virtuelle, teste plusieurs réponses et présente trois choix : protéger les clients prioritaires, limiter l'effort supplémentaire ou modifier le moins possible l'atelier. Le responsable compare les conséquences, choisit et approuve. La vraie production n'est jamais commandée par le prototype.
+Sans action, certaines commandes sont menacées. CableTwin reproduit l'incident
+dans le jumeau d'atelier, calcule trois réponses réalisables et les affiche dans
+la vue isométrique. Un conseiller ML local suggère l'une de ces options ; le
+responsable compare les conséquences, peut choisir une autre route et approuve.
+La vraie production n'est jamais commandée par le prototype.
 
-## Storyboard de la démo — 90 secondes
+## Storyboard de la démo live — 90 secondes
 
 ### 0–15 s — Le monde normal
 
-Afficher l'usine simplifiée : trois lignes, les commandes du jour et les KPI au vert.
+Ouvrir directement `/#twin` : trois lignes, les commandes du jour, les
+opérateurs et les KPI au vert. Pointer une seule fois l'étiquette
+« Télémétrie simulée · données 100 % synthétiques ».
 
 Dire :
 
@@ -41,21 +47,24 @@ L'écran met en évidence **3 commandes menacées**, **620 minutes de retard cum
 
 ### 30–55 s — Le jumeau teste les décisions
 
-Faire défiler jusqu'aux trois options calculées automatiquement par la simulation.
+Déclencher le recalcul dans le jumeau, laisser apparaître les compteurs
+**17 856 → 10 440**, puis les trois options calculées par le planificateur.
 
 Dire :
 
-> « CableTwin injecte l'incident dans la copie numérique de l'usine et recherche des plans qui respectent les compatibilités, durées et capacités connues. »
+> « CableTwin injecte l'incident dans la copie numérique de l'usine. Son planificateur déterministe construit trois plans qui respectent les compatibilités, durées et capacités connues. Un modèle local, entraîné sur 687 incidents simulés générés par le jumeau lui-même, suggère ensuite l'une de ces routes sans jamais la modifier. »
 
-Afficher les trois cartes de stratégie avec les mêmes KPI.
+Afficher la suggestion **Coût maîtrisé · 79 %**, les trois onglets avec les
+mêmes KPI et la mention **93,6 % sur test synthétique**.
 
 ### 55–75 s — Le compromis devient visible
 
-Comparer deux options.
+Comparer Coût et Service, puis sélectionner Service pour montrer que l'humain
+peut ignorer la suggestion.
 
 Dire :
 
-> « L'option service réduit le retard à 140 minutes avec trois changements. L'option coût le réduit à 170 minutes avec seulement deux changements et un coût inférieur. Le responsable voit le compromis avant de toucher au planning réel. »
+> « Le modèle suggère Coût selon une politique d'arbitrage explicite. Mais le responsable peut préférer Service : 140 minutes de retard avec trois changements, contre 170 minutes et deux changements pour Coût. Le compromis reste visible avant de toucher au planning réel. »
 
 ### 75–90 s — La décision reste humaine
 
@@ -63,7 +72,7 @@ Approuver une option et afficher le planning révisé avec son journal.
 
 Dire :
 
-> « Le responsable décide. CableTwin explique, trace et prépare le nouveau plan. Aujourd'hui, nous simulons avec des données synthétiques ; demain, un pilote peut lire un export de l'ERP sans commander aucune machine. »
+> « Le responsable décide. CableTwin explique, trace et prépare le nouveau plan. Aujourd'hui, toutes les données et la télémétrie sont synthétiques. Demain, un pilote lit l'ERP en lecture seule et, si l'historique est suffisant, réentraîne le conseiller sur site : les données ne quittent jamais l'usine et aucune machine n'est commandée. »
 
 ## Pitch de 90 secondes
 
@@ -71,7 +80,7 @@ Dire :
 >
 > Aujourd'hui, cette décision dépend souvent d'informations dispersées et de l'expérience de quelques personnes. On peut réorganiser l'atelier, mais il est difficile de voir toutes les conséquences avant d'agir.
 >
-> CableTwin est un simulateur de décisions pour l'usine. Il maintient une copie numérique simplifiée des lignes, commandes et capacités. Lorsqu'un incident survient, il montre d'abord ce qui arrivera sans action. Puis son moteur de recherche et planification teste plusieurs plans réalisables : protéger les clients prioritaires, maîtriser le coût ou préserver la stabilité de l'atelier.
+> CableTwin est un simulateur de décisions pour l'usine. Il maintient une copie numérique simplifiée des lignes, commandes et capacités. Lorsqu'un incident survient, il montre d'abord ce qui arrivera sans action. Puis son moteur déterministe de recherche et planification construit trois plans réalisables : protéger les clients prioritaires, maîtriser le coût ou préserver la stabilité de l'atelier. Un conseiller ML local, séparé, suggère l'une de ces routes et explique ses facteurs ; le responsable garde la décision.
 >
 > Le responsable compare les résultats, comprend les compromis et garde la décision finale. Chaque choix est traçable.
 >
@@ -156,11 +165,11 @@ Dire :
 
 ### « Où est l'IA ? »
 
-> « Dans la recherche de plans réalisables sous plusieurs contraintes et objectifs. Le système explore et classe des combinaisons que l'utilisateur ne peut pas comparer manuellement dans l'urgence. Les calculs ne reposent pas sur un texte généré. »
+> « Il y a deux briques distinctes. Le planificateur symbolique et déterministe construit trois plans réalisables sous contraintes. Puis une régression softmax locale suggère l'une de ces routes à partir de 16 facteurs explicables. Elle a été entraînée sur 687 incidents simulés générés par le jumeau lui-même et atteint 93,6 % sur un sous-ensemble tenu à l'écart de cette grille synthétique. Elle ne modifie aucun plan : le responsable décide. »
 
 ### « Vos données viennent-elles d'une entreprise ? »
 
-> « Non. Elles sont entièrement synthétiques et visibles comme telles. Nous avons choisi le secteur du câble comme ancrage industriel tunisien ; la première étape d'un pilote serait de valider le modèle de données et les contraintes avec un partenaire. »
+> « Non. Elles sont entièrement synthétiques et visibles comme telles, y compris les 687 incidents d'entraînement et toute la télémétrie. Nous avons choisi le secteur du câble comme ancrage industriel tunisien. Dans un pilote, le réentraînement n'aurait lieu qu'avec un historique représentatif suffisant, hébergé sur site : ses données ne sortent jamais. »
 
 ### « Quel est le ROI ? »
 
@@ -178,6 +187,9 @@ Dire :
 
 - scénario chargé localement ;
 - étiquette « données synthétiques » visible ;
+- vue `/#twin` chargée et télémétrie simulée visible ;
+- `npm run check` vérifié à 9/9 et `npm run check:recommender` séparément à 5/5 ;
+- suggestion Coût à 79 %, puis sélection manuelle de Service répétée ;
 - bouton de réinitialisation testé ;
 - un incident et trois options pré-calculables si le moteur échoue ;
 - mêmes définitions de KPI et même incident pour les trois cartes ;

@@ -22,3 +22,12 @@ output/*.zip
 
 # local browser-automation session artifacts
 .playwright-mcp/
+
+# local Python bytecode caches
+scripts/__pycache__/
+
+# local copy-ready organizer submission folder
+share_drive/
+
+# generated presentation inspection dumps
+*.inspect.ndjson

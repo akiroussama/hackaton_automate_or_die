@@ -1,0 +1,44 @@
+
+> cabletwin@0.1.0 check:recommender
+> node --test scripts/recommender.test.mjs
+
+TAP version 13
+# Subtest: le modèle embarqué est cohérent et documenté
+ok 1 - le modèle embarqué est cohérent et documenté
+  ---
+  duration_ms: 14.203
+  type: 'test'
+  ...
+# Subtest: les features du scénario canonique sont finies et complètes
+ok 2 - les features du scénario canonique sont finies et complètes
+  ---
+  duration_ms: 72.4579
+  type: 'test'
+  ...
+# Subtest: le canonique est recommandé « cost », aligné avec le ruban produit
+ok 3 - le canonique est recommandé « cost », aligné avec le ruban produit
+  ---
+  duration_ms: 6.0775
+  type: 'test'
+  ...
+# Subtest: l'inférence est déterministe
+ok 4 - l'inférence est déterministe
+  ---
+  duration_ms: 3.8619
+  type: 'test'
+  ...
+# Subtest: la recommandation varie selon le contexte de l'incident
+ok 5 - la recommandation varie selon le contexte de l'incident
+  ---
+  duration_ms: 10.7583
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 500.2723

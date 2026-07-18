@@ -53,3 +53,28 @@ CableTwin n'est pas une animation 3D. Il doit obligatoirement contenir :
 **Formulation retenue :**
 
 > CableTwin est le Waze de l'usine de câbles : lorsque la route de production change, il montre les conséquences et propose des chemins alternatifs avant que le responsable décide.
+
+## D-008 — ajouter une vue isométrique sans transformer le produit en spectacle
+
+**Observation :** la vue décision prouve le calcul, mais un jury comprend plus
+vite l'incident lorsqu'il voit la ligne arrêtée, les ordres exposés et les
+réaffectations dans l'atelier.
+
+**Décision :** ajouter un jumeau d'atelier isométrique piloté par le même état
+exécutable. La vue montre lignes, ordres, opérateurs et télémétrie simulée, mais
+elle ne prétend pas être une réplique CAO, physique ou connectée. La règle D-007
+reste valable : l'animation sert la décision, elle ne la remplace pas.
+
+## D-009 — séparer le conseiller appris du planificateur
+
+**Observation :** le planificateur déterministe produit déjà trois routes
+réalisables et vérifiables. Lui attribuer un apprentissage brouillerait la
+preuve et le rôle de l'humain.
+
+**Décision :** conserver le planificateur non apprenant et ajouter un conseiller
+local séparé. Il est entraîné sur **687 incidents simulés générés par le jumeau
+lui-même**, suggère l'une des trois routes existantes et ne modifie aucun plan.
+Les contrôles restent séparés : 9/9 pour le planificateur/workflow, 5/5 pour le
+conseiller. Dans un pilote, le réentraînement se fait sur site afin que les
+données réelles ne quittent jamais l'usine, uniquement si un historique
+représentatif suffisant existe, et l'approbation demeure humaine.

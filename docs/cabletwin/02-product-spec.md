@@ -26,6 +26,9 @@ Le MVP doit être utilisable par une personne non technique en moins de deux min
 - simuler l'effet d'un incident sur les commandes ;
 - produire plusieurs plans réalisables ;
 - expliquer clairement les compromis ;
+- représenter les mêmes conséquences dans une vue décision et un jumeau
+  d'atelier isométrique ;
+- suggérer localement l'une des trois options sans modifier les plans ;
 - laisser la décision finale au responsable ;
 - conserver les entrées, résultats et choix dans un journal.
 
@@ -36,7 +39,7 @@ Le MVP doit être utilisable par une personne non technique en moins de deux min
 - remplacer l'ERP, le MES ou le planificateur ;
 - prétendre disposer de données d'une entreprise réelle ;
 - promettre un gain financier non mesuré ;
-- construire une usine 3D détaillée ;
+- construire une réplique CAO, physique ou connectée d'une usine réelle ;
 - prédire la durée réelle d'une panne.
 
 ## Cas d'usage principal
@@ -55,9 +58,14 @@ Le MVP doit être utilisable par une personne non technique en moins de deux min
 2. **Perturber** — il déclenche le scénario d'arrêt de quatre heures sur la ligne 2.
 3. **Comprendre** — CableTwin met en évidence les commandes menacées si aucune action n'est prise.
 4. **Explorer** — le système calcule trois options selon des priorités différentes.
-5. **Comparer** — l'utilisateur voit les mêmes KPI pour chaque option et une explication en langage simple.
-6. **Décider** — il sélectionne une option, renseigne éventuellement une note et approuve.
-7. **Transmettre** — le prototype affiche la nouvelle séquence et génère un journal exportable.
+5. **Conseiller** — un modèle ML local suggère une option existante et affiche
+   sa confiance et ses facteurs principaux.
+6. **Comparer** — l'utilisateur voit les mêmes KPI pour chaque option dans le
+   Gantt ou le jumeau d'atelier et peut ignorer la suggestion.
+7. **Décider** — il sélectionne une option, renseigne éventuellement une note
+   et approuve.
+8. **Tracer** — le prototype affiche la nouvelle séquence et ajoute un événement
+   d'approbation en mémoire.
 
 ## Stratégies proposées
 
@@ -82,6 +90,11 @@ Les noms parlent d'un résultat métier. Les termes algorithmiques restent dans 
 - expliquer en une phrase le principal avantage et le principal compromis ;
 - permettre l'approbation explicite d'une option ;
 - afficher successivement le plan initial, le plan simulé et un journal de décision ;
+- basculer entre la vue décision et le jumeau d'atelier isométrique ;
+- afficher uniquement de la télémétrie et des capteurs d'ambiance explicitement
+  simulés ;
+- utiliser un modèle local séparé pour suggérer l'une des trois options déjà
+  calculées, sans la modifier ;
 - réinitialiser la démo en un clic.
 
 ### P1 — utile si le P0 est stable
@@ -108,9 +121,20 @@ Le cœur n'est pas un chatbot. Il associe :
 1. **un modèle d'état** : ressources, commandes, opérations, calendriers et contraintes ;
 2. **un simulateur** : calcule les conséquences d'un incident et d'un plan ;
 3. **un planificateur heuristique sous contraintes** : recherche des créneaux réalisables pour différents objectifs ;
-4. **une couche d'explication** : transforme les écarts de KPI en phrases simples.
+4. **un conseiller ML local séparé** : suggère une option déjà générée à partir
+   de 16 caractéristiques explicables ;
+5. **une couche d'explication** : transforme les écarts de KPI et les facteurs
+   du modèle en messages lisibles.
 
-La recherche et planification sous contraintes constitue le travail d'IA d'aide à la décision : comparer systématiquement des candidats selon des règles explicites. Le MVP est déterministe et ne garantit pas l'optimum global. Un LLM peut reformuler une explication, mais il n'est jamais responsable des calculs et le produit doit fonctionner sans lui.
+La recherche et planification sous contraintes constitue le socle d'IA d'aide à
+la décision : comparer systématiquement des candidats selon des règles
+explicites. Le planificateur reste déterministe et non apprenant. Le conseiller
+est une régression softmax entraînée sur **687 incidents simulés générés par le
+jumeau lui-même** ; il atteint 93,6 % sur un sous-ensemble de test de cette
+grille synthétique. Ce résultat ne mesure pas une performance industrielle.
+Le conseiller ne génère ni ne modifie aucun planning. Un LLM peut reformuler
+une explication, mais il n'est jamais responsable des calculs et le produit
+fonctionne sans lui.
 
 ## Contraintes minimales du modèle
 
@@ -172,8 +196,11 @@ Le MVP est terminé si :
 - les KPI affichés peuvent être recalculés à partir du planning ;
 - au moins deux options présentent un compromis réellement différent ;
 - aucune recommandation n'est appliquée sans approbation ;
+- les tests du planificateur restent annoncés séparément à **9/9** et ceux du
+  conseiller à **5/5** ;
+- l'utilisateur peut choisir une autre option que celle suggérée par le modèle ;
 - l'origine synthétique des données est visible ;
-- une démo complète tient en 90 secondes ;
+- le parcours principal peut être démontré en moins de deux minutes ;
 - l'absence de réseau ne bloque pas le parcours principal.
 
 ## Architecture logique
@@ -185,9 +212,11 @@ Données synthétiques / futur export ERP
                 ↓
     Simulateur + contraintes métier
                 ↓
-      Générateur de scénarios
-                ↓
- Comparaison KPI + explications simples
+     Trois plans déterministes
+          ↙             ↘
+Vérificateur borné   Conseiller ML local
+          ↘             ↙
+  Vue décision ↔ jumeau d'atelier
                 ↓
  Approbation humaine + journal de décision
 ```
@@ -201,6 +230,7 @@ Données synthétiques / futur export ERP
 | Les options ne sont pas réalistes | Valider compatibilités et contraintes avec un mentor |
 | Les gains paraissent inventés | Afficher uniquement les résultats calculés sur le scénario synthétique |
 | L'optimisation paraît opaque | Montrer objectifs, contraintes, déplacements et compromis |
+| Le score ML paraît être une vérité | Afficher sa provenance synthétique, ses facteurs et permettre un choix humain différent |
 | La démo devient trop vaste pour une équipe solo | Geler P0 : trois lignes, dix commandes, un incident |
 | Une option est techniquement irréalisable | Vérification automatique des contraintes avant affichage |
 | Le jury attend de l'IA générative | Expliquer que l'IA utile ici est la recherche de décisions sous contraintes ; LLM optionnel |
@@ -209,11 +239,17 @@ Données synthétiques / futur export ERP
 
 ### Hackathon
 
-Données synthétiques, simulation locale, approbation simulée.
+Données synthétiques, démonstration publique et hors ligne, télémétrie simulée,
+conseiller local entraîné sur des incidents générés par le jumeau, approbation
+simulée.
 
 ### Pilote 30 jours
 
-Import en lecture seule d'un export ERP/MES, règles validées par le planificateur, comparaison des recommandations avec les décisions réelles, aucune commande machine.
+Import en lecture seule d'un export ERP/MES, règles validées par le
+planificateur, comparaison des recommandations avec les décisions réelles et
+aucune commande machine. Si l'historique est suffisamment représentatif, le
+conseiller est réentraîné et validé **sur site** : les données ne quittent
+jamais l'usine et le moteur déterministe reste le repli sûr.
 
 ### Déploiement
 

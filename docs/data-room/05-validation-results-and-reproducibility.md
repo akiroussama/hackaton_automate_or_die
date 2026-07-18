@@ -2,17 +2,19 @@
 
 ## Evidence strategy
 
-CableTwin validates the same fixed scenario at three independent levels:
+CableTwin validates the same fixed scenario through complementary layers:
 
 1. **engine tests** verify data integrity, constraints, KPI, policy behaviour
    and approval;
-2. an **exhaustive bounded oracle** independently certifies the displayed
-   policy optima;
-3. a **real Chromium replay** verifies that the user can complete the journey
-   and that the rendered values match the engine.
+2. a **separate exhaustive bounded verifier** certifies the displayed policy
+   optima without reusing the live planner's construction logic;
+3. **dedicated recommender tests** verify the generated model, deterministic
+   local inference and context sensitivity;
+4. a **real Chromium replay** verifies the decision view and factory-twin
+   journey without console errors, exceptions or external application requests.
 
-All results below are synthetic demonstration results. They prove calculation
-and execution, not industrial ROI.
+All results below are synthetic demonstration results. They prove software
+calculation and browser execution, not industrial ROI.
 
 ## 9/9 automated checks
 
@@ -22,7 +24,7 @@ Run:
 npm run check
 ```
 
-The frozen build passes **9 tests out of 9** with no syntax error. The suite is
+The current build passes **9 tests out of 9** with no syntax error. The suite is
 defined in
 [`tests/twin-engine.test.mjs`](../../tests/twin-engine.test.mjs).
 
@@ -32,7 +34,7 @@ defined in
 | 2 | Incident identifies OF-106 and OF-107 as directly affected and OF-108 downstream |
 | 3 | Service, Cost and Stability are deterministic and hard-constraint feasible |
 | 4 | The three policies produce distinct, understandable business trade-offs |
-| 5 | The exact oracle certifies all three displayed schedules on the canonical scenario |
+| 5 | The separate exact bounded verifier certifies all three displayed schedules on the canonical scenario |
 | 6 | Delay, overtime, cost, line moves, on-time rate and shift-end output are calculated |
 | 7 | Human approval adds an audit event without mutating the proposed plan |
 | 8 | Scenario minutes render as readable clock times |
@@ -41,7 +43,34 @@ defined in
 The ninth test is a regression check for the distinction between a valid
 pre-incident baseline and a valid post-incident recovery schedule.
 
-## Independent exact benchmark
+## 5/5 separate recommender checks
+
+Run:
+
+```powershell
+npm run check:recommender
+```
+
+The dedicated suite in
+[`scripts/recommender.test.mjs`](../../scripts/recommender.test.mjs) passes
+**5 checks out of 5**. The five passing subtests cover:
+
+1. generated-model structure, quality gate and synthetic provenance;
+2. finite and complete features for the canonical scenario;
+3. the canonical incident suggests Cost with confidence above 0.5, normalized
+   probabilities and three explanatory factors;
+4. repeated inference is deterministic;
+5. a later Line 3 incident changes the suggestion to Stability.
+
+These checks are deliberately separate from `npm run check`. They must never be
+collapsed into one aggregate score.
+
+The generated model records 95.7% training accuracy and **93.6% accuracy on a
+held-out subset of the 687-incident synthetic grid**. The number measures
+agreement with the encoded arbitration policy; it is not plant accuracy or an
+operational KPI.
+
+## Separate exact benchmark
 
 Run:
 
@@ -130,7 +159,7 @@ Every route is evaluated with the same formulas and data.
 
 ## A useful counter-example
 
-The oracle finds a separate plan with **9/10 orders on time**, but it creates
+The bounded verifier finds a separate plan with **9/10 orders on time**, but it creates
 **230 minutes of total delay** and **690 priority-weighted delay minutes**. The
 Service result has 8/10 on time, **140 total** and **360 priority-weighted**
 delay minutes.
@@ -140,7 +169,8 @@ priority of lateness rather than optimizing a single headline count.
 
 ## Browser and end-to-end verification
 
-The full interaction was replayed in a 1920×1080 Chromium session:
+The accepted decision-view interaction was replayed in a 1920×1080 Chromium
+session:
 
 ```text
 nominal 10/10
@@ -158,6 +188,12 @@ values are stored in
 [`ui-metrics.json`](evidence/screenshots/ui-metrics.json), and the final
 screenshots are in [`evidence/screenshots/`](evidence/screenshots/).
 
+The additive `/#twin` journey was also replayed after integration. It covered
+the nominal twin, incident state, cinematic recomputation, ML log line, Cost
+auto-preview, Service and Cost inspection, approval, decision-view return,
+reset-from-twin and click-to-skip. The run reported zero console errors,
+exceptions or external application requests.
+
 ## Reproduce in under three minutes
 
 Prerequisite: Node.js 22 or a recent compatible version.
@@ -165,18 +201,28 @@ Prerequisite: Node.js 22 or a recent compatible version.
 ```powershell
 npm run check
 npm run benchmark:exact
+npm run check:recommender
 npm run dev
 ```
 
-Open http://127.0.0.1:4173/ and follow:
+Open http://127.0.0.1:4173/#twin and follow:
 
 1. verify the nominal 10/10 state;
 2. click the Line 2 incident trigger;
-3. compare Service, Cost and Stability;
-4. preview Service;
-5. approve the plan;
-6. verify the audit entry;
-7. reset and confirm 10/10.
+3. let the recomputation overlay complete or use its skip control;
+4. verify that the local model suggests Cost and discloses 687 simulated
+   twin-generated incidents and 93.6% synthetic test accuracy;
+5. compare Service, Cost and Stability;
+6. switch to Service to prove human override, then preview and approve;
+7. verify the audit entry and the 10:07 approved state;
+8. reset and confirm 10/10.
+
+To reproduce training, use a clean or disposable checkout because the command
+regenerates `engine/recommender-model.js` and its `trainedAt` value:
+
+```powershell
+npm run train:recommender
+```
 
 To reproduce the evidence capture while the server is running:
 
@@ -195,11 +241,19 @@ node scripts/capture-screens.mjs
 | Offline browser operation | ERP/MES data integration |
 | Human approval and audit event | Production governance, roles and access control |
 | Synthetic before/after comparisons | Industrial savings, ROI or commercial demand |
+| Recommender integrity, determinism and context sensitivity (5/5) | Real-history generalization, calibration and operational usefulness |
+| 93.6% held-out synthetic-grid classification | Accuracy on representative plant incidents |
 
 ## Known limitations
 
 - One fixed incident is evidence of mechanism, not statistical performance.
 - All input values and costs are synthetic.
+- All 687 recommender-training incidents are synthetic and generated by the
+  twin itself.
+- The seeded random split can place nearby grid scenarios in both train and
+  test subsets; 93.6% must not be presented as factory accuracy.
+- The displayed 79% canonical confidence has not been calibrated on real data.
+- The current model does not learn online.
 - Each order is modelled as one continuous operation.
 - Incident duration is known rather than probabilistic.
 - The live planner is constructive; the exact certificate is bounded to this

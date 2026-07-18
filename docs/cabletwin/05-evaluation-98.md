@@ -4,6 +4,11 @@ Les organisateurs ont communiqué la pondération globale suivante. La cible **9
 
 **Score actuel : non évalué.** Aucun point ne doit être annoncé comme obtenu avant l'évaluation officielle.
 
+> **Mise à jour Iteration 3 — 18 juillet 2026.** Le planificateur
+> déterministe, le vérificateur borné, le jumeau d'atelier et le conseiller ML
+> local sont désormais implémentés. Les limites terrain et commerciales
+> ci-dessous restent ouvertes.
+
 | Critère officiel | Poids | Ce que CableTwin doit démontrer |
 | --- | ---: | --- |
 | Pertinence du processus métier et impact mesuré | 25 % | Le problème industriel est réel, important et confirmé ; les effets d'une décision sont calculés avant/après avec des hypothèses traçables. |
@@ -50,42 +55,66 @@ Le jury doit pouvoir relier sans saut logique un problème confirmé à une déc
 - Les stratégies optimisent des priorités différentes : service, coût et stabilité de l'atelier.
 - Chaque proposition est accompagnée de KPI comparables et reste soumise à l'approbation humaine.
 - Le calcul est déterministe et testable, ce qui facilite l'explication et l'audit.
+- Un vérificateur séparé évalue 17 856 candidats d'affectation et de
+  séquencement, trouve 10 440 plannings faisables et confirme les trois optima
+  uniques du scénario borné.
+- Un conseiller local par régression softmax suggère l'une des trois options
+  déjà construites à partir de 16 facteurs explicables.
+- Il est entraîné sur **687 incidents simulés générés par le jumeau lui-même**
+  et atteint **93,6 % sur un test de la grille synthétique**.
+- Les contrôles restent volontairement séparés : 9/9 pour le
+  planificateur/workflow et 5/5 pour le conseiller.
 
 ### Lacunes à fermer
 
-- Le moteur actuel est un planificateur heuristique déterministe ; cela ne suffit pas, à lui seul, à prouver au jury une intégration forte de l'IA.
-- Il manque une formulation explicite du problème d'optimisation : variables, contraintes, fonction objectif et compromis.
-- Il manque une évaluation sur plusieurs incidents et une comparaison avec une règle simple ou une décision manuelle.
-- Le rôle respectif de l'optimisation, d'un éventuel modèle génératif et de l'humain n'est pas encore documenté dans une fiche technique concise.
+- La précision 93,6 % mesure l'accord avec une politique d'étiquetage
+  synthétique, pas une performance sur incidents réels.
+- La calibration, la généralisation au site et la préférence réelle des
+  responsables restent à mesurer.
+- Il manque encore une comparaison terrain avec la décision manuelle et une
+  évaluation sur des incidents réels représentatifs.
 
 ### Actions prioritaires
 
-1. Formaliser le cœur intelligent comme un problème de planification sous contraintes multiobjectif, avec entrées, contraintes, objectifs et sorties.
-2. Évaluer le planificateur sur un petit jeu de scénarios reproductibles : arrêts de durées différentes, commandes urgentes, compatibilités limitées et saturation des lignes.
-3. Ajouter une baseline simple, par exemple « attendre la remise en service » ou « déplacer la première commande compatible », puis mesurer les écarts.
-4. Documenter les métriques de qualité : faisabilité des plans, taux de service, retard total, coût estimé, stabilité et temps de calcul.
-5. Si un LLM est ajouté, le limiter à l'explication ou à l'interaction en langage naturel ; la planification chiffrée doit rester contrainte, vérifiable et non hallucinée.
+1. Montrer clairement les trois briques distinctes : planificateur déterministe,
+   conseiller appris et vérificateur exact borné.
+2. Conserver la provenance « 687 incidents simulés générés par le jumeau
+   lui-même » sur chaque preuve ML.
+3. Ajouter une baseline terrain et mesurer la décision manuelle sur des
+   incidents historiques représentatifs.
+4. Réentraîner et valider le conseiller sur site uniquement lorsqu'un historique
+   suffisant existe ; les données ne quittent jamais l'usine.
+5. Si un LLM est ajouté, le limiter à l'explication ; il n'est jamais
+   responsable des plannings ou KPI.
 
 ### Condition pour viser le maximum
 
-Le jury doit constater que le composant intelligent est indispensable à la recommandation, qu'il respecte les contraintes industrielles, qu'il surpasse une baseline définie et que ses résultats sont explicables. Il ne faut pas appeler « IA » une simple interface ou sur-vendre l'heuristique actuelle.
+Le jury doit voir que le planificateur produit les alternatives, que le modèle
+appris ne fait que suggérer une option existante, que les facteurs sont
+inspectables et que l'humain peut choisir autrement. Les résultats synthétiques
+ne doivent jamais être présentés comme une preuve d'usine.
 
 ## 3. Prototype fonctionnel — 20 %
 
 ### Preuves CableTwin déjà disponibles
 
-- Un prototype local relie l'interface au moteur de planification.
+- Un prototype public et hors ligne relie l'interface au moteur de planification.
 - Le scénario couvre trois lignes, dix ordres de fabrication et un arrêt simulé de quatre heures.
 - L'utilisateur peut déclencher l'incident, comparer trois options, prévisualiser un planning, approuver une décision et réinitialiser la démonstration.
+- La vue décision et le jumeau d'atelier isométrique partagent le même état,
+  avec télémétrie et capteurs d'ambiance explicitement simulés.
+- La suggestion ML locale, les trois onglets et l'override humain fonctionnent
+  de bout en bout.
 - L'approbation produit une trace visible.
 - Le moteur possède des tests automatisés et ne dépend pas d'un service externe pour la démonstration principale.
 
 ### Lacunes à fermer
 
-- La robustesse doit être vérifiée sur la machine et le réseau du hackathon.
-- La vidéo de secours de deux minutes, les captures et le mode opératoire doivent encore refléter exactement la version finale.
-- Le dépôt doit être vérifié comme s'il était cloné par un juré : installation, lancement, tests, licence, architecture et données d'exemple.
-- Les erreurs et cas limites de saisie doivent être gérés sans casser le parcours de démonstration.
+- Le parcours live doit encore être répété sur le réseau et la machine du pitch.
+- La vidéo de 1:57.9 reste la preuve figée antérieure à l'Iteration 3 ; elle ne
+  doit pas être décrite comme montrant le jumeau isométrique ou le conseiller.
+- Les nouveaux documents et captures doivent être vérifiés contre le build live
+  sans modifier les artefacts ou tags immuables.
 
 ### Actions prioritaires
 
@@ -202,7 +231,8 @@ Pour l'équipe solo SUPCOM :
 La cible interne 98/100 signifie « aucune faiblesse majeure et au plus deux points de marge sur l'ensemble », pas « déclarer 98 avant le jury ». Elle reste hors d'atteinte tant que :
 
 - le problème et au moins une contrainte ne sont pas confirmés par le terrain ;
-- le cœur IA n'est pas formalisé, comparé à une baseline et évalué ;
+- le cœur IA n'est pas expliqué avec ses trois briques distinctes, puis comparé
+  à une baseline terrain et évalué sur des données représentatives ;
 - le prototype, la vidéo et le dépôt ne sont pas vérifiés de bout en bout ;
 - le pilote, le ROI et la différenciation ne sont pas crédibles ;
 - le pitch de sept minutes n'est pas répété en conditions réelles ;

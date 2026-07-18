@@ -1,0 +1,29 @@
+{
+  "capturedAt": "2026-07-18T15:47:23.051Z",
+  "appUrl": "http://127.0.0.1:4174/#twin",
+  "evidence": {
+    "url": "http://127.0.0.1:4174/#twin",
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "state": {
+      "view": "factory",
+      "simulation": "resolved",
+      "factoryPhase": "resolved"
+    },
+    "summary": {
+      "onTime": "8 / 10",
+      "exposed": "2",
+      "delay": "2 h 20 min",
+      "moves": "3",
+      "cost": "+ 838 DT",
+      "recommendation": "Modèle entraîné sur 687 incidents simulés générés par le jumeau (précision test 93,6 %) : recommande « Coût maîtrisé » à 79 %. Facteurs dominants : écart de coût Coût vs Stabilité (DT) · retard récupérable (h).En pilote : ré-entraînement sur l'historique réel de vos incidents — hébergé sur site, vos données ne sortent jamais. La décision reste humaine.",
+      "inspector": "Priorité serviceProtéger les livraisons clients, quoi qu'il en coûte.À l'heure8/10Retard2 h 20 minOvertime30 minRéaffect.3Surcoût+ 838 DTExposées2Retard réduit à 2 h 20 min (contre 10 h 20 min sans réaction)8/10 commandes livrées à l'heureLes clients prioritaires passent en premier3 réaffectations à orchestrer dans l'atelierSurcoût + 838 DT30 min d'heures supplémentaires"
+    },
+    "disclosure": "Télémétrie simulée · données 100 % synthétiques",
+    "footerBoundary": "Chaque valeur vient du moteur de planification. Aucune commande n'est envoyée à une machine."
+  },
+  "externalNetworkRequests": [],
+  "consoleErrors": []
+}
