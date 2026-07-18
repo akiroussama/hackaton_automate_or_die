@@ -13,9 +13,9 @@ const ISO_SIN = 0.5;
 const VB = { x: -560, y: -150, w: 1520, h: 900 };
 
 const LINE_LAYOUT = [
-  { id: "L1", y: 0, sub: "Câble automobile", flowDur: "1.45s", spinDur: "4.6s" },
-  { id: "L2", y: 190, sub: "Ligne flexible", flowDur: "1.65s", spinDur: "5.4s" },
-  { id: "L3", y: 380, sub: "Câbles export", flowDur: "1.3s", spinDur: "4.1s" },
+  { id: "L1", y: 0, sub: "Câble automobile", flowDur: "1.45s", spinDur: "4.6s", walkDelay: "0s" },
+  { id: "L2", y: 190, sub: "Ligne flexible", flowDur: "1.65s", spinDur: "5.4s", walkDelay: "-3.1s" },
+  { id: "L3", y: 380, sub: "Câbles export", flowDur: "1.3s", spinDur: "4.1s", walkDelay: "-6.3s" },
 ];
 
 const MACHINE_DEPTH = 86;
@@ -170,7 +170,7 @@ function buildLine(parent, layout) {
     class: "ft-line",
     "data-line-id": layout.id,
     "data-line-state": "running",
-    style: `--flow-dur:${layout.flowDur}; --spin-dur:${layout.spinDur}`,
+    style: `--flow-dur:${layout.flowDur}; --spin-dur:${layout.spinDur}; --walk-delay:${layout.walkDelay}`,
   }, parent);
   const y = layout.y;
   const yc = y + MACHINE_DEPTH / 2;
@@ -198,10 +198,12 @@ function buildLine(parent, layout) {
   reel(group, 845, yc, 58, 50);
   stationLabel(group, 845, y, 46, "ENROULEUR");
 
-  // Operators: one at the extruder outlet, one before the take-up, and two
-  // reinforcement silhouettes shown only when this line receives moved orders.
+  // Operators: a fixed one at the extruder outlet, a shuttling one before the
+  // take-up, a patrolling walker along the line, and two reinforcement
+  // silhouettes shown only when this line receives moved orders.
   worker(group, 472, y + MACHINE_DEPTH + 12, "ft-worker-a");
-  worker(group, 748, y + MACHINE_DEPTH + 12, "ft-worker-b");
+  worker(group, 748, y + MACHINE_DEPTH + 12, "ft-worker-b ft-worker-shuttle");
+  worker(group, 205, y + MACHINE_DEPTH + 16, "ft-worker-walk");
   worker(group, 560, y + MACHINE_DEPTH + 20, "ft-worker-helper");
   worker(group, 604, y + MACHINE_DEPTH + 20, "ft-worker-helper");
 
@@ -349,6 +351,67 @@ export function initFactoryView(ctx) {
     badge.style.left = `${pos.left.toFixed(2)}%`;
     badge.style.top = `${pos.top.toFixed(2)}%`;
     crewBadges.set(layout.id, badge);
+  }
+
+  /* ---------- ambient plant sensors (simulated, deterministic) ---------- */
+
+  const AMBIENT_DEFS = [
+    { id: "power", label: "Consommation", unit: "kW", base: 1240, amp: 14, digits: 0,
+      target: (running, adapted) => 1240 * (running / 3) * (adapted ? 1.06 : 1) },
+    { id: "pressure", label: "Air comprimé", unit: "bar", base: 6.8, amp: 0.06, digits: 2,
+      target: () => 6.8 },
+    { id: "vibration", label: "Vibration moy.", unit: "mm/s", base: 2.8, amp: 0.1, digits: 2,
+      target: (running, adapted) => 2.8 * (running / 3) * (adapted ? 1.12 : 1) },
+    { id: "noise", label: "Bruit atelier", unit: "dB(A)", base: 78, amp: 0.5, digits: 1,
+      target: (running) => 78 - (3 - running) * 2.4 },
+    { id: "roomtemp", label: "Temp. de salle", unit: "°C", base: 26.5, amp: 0.15, digits: 1,
+      target: (running, adapted) => 26.5 + (adapted ? 0.3 : 0) },
+    { id: "humidity", label: "Humidité", unit: "%", base: 45, amp: 0.8, digits: 0,
+      target: () => 45 },
+    { id: "co2", label: "CO₂ ambiant", unit: "ppm", base: 640, amp: 9, digits: 0,
+      target: (running) => 640 - (3 - running) * 25 },
+  ];
+
+  const ambient = html("aside", "ft-ambient", stage);
+  const ambientHead = html("div", "ft-ambient-head", ambient);
+  html("strong", "", ambientHead, "Ambiance atelier");
+  html("span", "", ambientHead, "capteurs simulés · temps réel");
+  const ambientState = new Map();
+  for (const def of AMBIENT_DEFS) {
+    const tile = html("div", "ft-ambient-tile", ambient);
+    const top = html("div", "ft-ambient-top", tile);
+    html("span", "ft-ambient-label", top, def.label);
+    const value = html("strong", "ft-ambient-value", top, "—");
+    const sparkBox = html("div", "ft-ambient-spark", tile);
+    const spark = el("svg", { viewBox: "0 0 90 24", preserveAspectRatio: "none", "aria-hidden": "true" }, sparkBox);
+    const sparkLine = el("polyline", { class: "ft-ambient-line", points: "" }, spark);
+    ambientState.set(def.id, {
+      def, value, sparkLine, tile,
+      current: def.base,
+      history: [],
+      rng: mulberry32(0xfab00 ^ def.id.length ^ def.base),
+    });
+  }
+
+  function tickAmbient() {
+    const running = LINE_LAYOUT.filter((l) => lineStates.get(l.id) !== "stopped").length;
+    const adapted = LINE_LAYOUT.some((l) => lineStates.get(l.id) === "adapted");
+    for (const entry of ambientState.values()) {
+      const { def } = entry;
+      const target = entry.def.target(running, adapted);
+      entry.current += (target - entry.current) * 0.18 + (entry.rng() - 0.5) * 2 * def.amp;
+      entry.history.push(entry.current);
+      if (entry.history.length > 36) entry.history.shift();
+      entry.value.textContent =
+        `${entry.current.toLocaleString("fr-FR", { minimumFractionDigits: def.digits, maximumFractionDigits: def.digits })} ${def.unit}`;
+      const lo = Math.min(...entry.history);
+      const hi = Math.max(...entry.history);
+      const span = hi - lo || 1;
+      entry.sparkLine.setAttribute("points", entry.history
+        .map((v, i) => `${((i / 35) * 90).toFixed(1)},${(22 - ((v - lo) / span) * 20).toFixed(1)}`)
+        .join(" "));
+      entry.tile.classList.toggle("is-shift", Math.abs(target - def.base) > def.amp * 3);
+    }
   }
 
   /* ---------- recompute overlay (the "war room" sequence) ---------- */
@@ -788,6 +851,7 @@ export function initFactoryView(ctx) {
         entry.chip.classList.toggle("is-alarm", alarm);
       }
     }
+    tickAmbient();
     renderClock();
   }
 
