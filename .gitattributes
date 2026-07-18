@@ -1,0 +1,9 @@
+# Keep binary deliverables byte-exact on every clone/checkout
+# (core.autocrlf must never rewrite line endings inside these formats).
+*.pdf binary
+*.png binary
+*.ico binary
+*.jpg binary
+*.zip binary
+*.mp4 binary
+*.pptx binary
