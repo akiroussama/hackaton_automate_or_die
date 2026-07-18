@@ -53,7 +53,7 @@ await new Promise((r, j) => { ws.onopen = r; ws.onerror = j; });
 
 let id = 0;
 const pending = new Map();
-const state = { consoleExceptions: [], pageErrors: [], failedRequests: [], requests: [] };
+const state = { consoleExceptions: [], pageErrors: [], failedRequests: [], requests: [], requestIdToUrl: new Map() };
 ws.onmessage = (e) => {
   const m = JSON.parse(e.data);
   if (m.id && pending.has(m.id)) {
@@ -69,9 +69,14 @@ ws.onmessage = (e) => {
   }
   if (m.method === "Network.requestWillBeSent") {
     state.requests.push(m.params.request.url);
+    state.requestIdToUrl.set(m.params.requestId, m.params.request.url);
+  }
+  if (m.method === "Runtime.consoleAPICalled" && m.params.type === "error") {
+    state.consoleExceptions.push(
+      `console.error: ${m.params.args.map((a) => a.value ?? a.description ?? "").join(" ")}`);
   }
   if (m.method === "Network.loadingFailed" && !m.params.canceled) {
-    state.failedRequests.push(`${m.params.errorText}`);
+    state.failedRequests.push(`${m.params.errorText} ${state.requestIdToUrl.get(m.params.requestId) ?? ""}`);
   }
   if (m.method === "Network.responseReceived" && m.params.response.status >= 400) {
     state.failedRequests.push(`HTTP ${m.params.response.status} ${m.params.response.url}`);
@@ -99,6 +104,7 @@ async function runViewport(sessionId, width, height, label) {
   const result = { label, width, height, gates: {}, controls: {}, metrics: {} };
   state.consoleExceptions.length = 0; state.pageErrors.length = 0;
   state.failedRequests.length = 0; state.requests.length = 0;
+  state.requestIdToUrl.clear();
 
   await send("Emulation.setDeviceMetricsOverride",
     { width, height, deviceScaleFactor: 1, mobile: width < 800 }, sessionId);
@@ -129,19 +135,25 @@ async function runViewport(sessionId, width, height, label) {
     Object.values(result.controls).every((b) => b && b.w >= 40 && b.h >= 40);
 
   // journey with canonical assertions
+  const overflowNow = async () => ev(`document.body.scrollWidth <= window.innerWidth + 1`);
+  result.overflowByCheckpoint = {};
   result.metrics.nominalOnTime = await ev(`document.querySelector('[data-kpi="on-time-orders"] [data-kpi-value]').textContent.trim()`);
+  result.overflowByCheckpoint.baseline = await overflowNow();
   await ev(`document.querySelector("[data-simulate-trigger]").click()`);
   await waitFor(`document.body.dataset.simulationState === "incident"`, "incident");
   result.metrics.incidentOnTime = await ev(`document.querySelector('[data-kpi="on-time-orders"] [data-kpi-value]').textContent.trim()`);
   result.metrics.incidentDelay = await ev(`document.querySelector('[data-kpi="estimated-delay"] [data-kpi-value]').textContent.replace(/\\s+/g, " ").trim()`);
+  result.overflowByCheckpoint.incident = await overflowNow();
   result.metrics.serviceCard = await ev(`(() => { const c = document.querySelector('[data-strategy-card="service"]');
     return { onTime: c.querySelector('[data-metric="on-time"]').textContent.trim(),
              cost: c.querySelector('[data-metric="cost"]').textContent.replace(/\\s+/g, " ").trim() }; })()`);
   await ev(`document.querySelector('button[data-strategy="service"]').click()`);
   await waitFor(`document.querySelector("#approve-button").disabled === false`, "service-selected");
+  result.overflowByCheckpoint.servicePreview = await overflowNow();
   await ev(`document.querySelector("#approve-button").click()`);
   await waitFor(`document.body.dataset.simulationState === "resolved"`, "approved");
   result.metrics.auditEvents = await ev(`document.querySelectorAll("#audit-log li:not(.is-pending)").length`);
+  result.overflowByCheckpoint.resolved = await overflowNow();
   await ev(`document.querySelector("#reset-button").click()`);
   await waitFor(`document.body.dataset.simulationState === "baseline"`, "reset");
   result.metrics.afterReset = await ev(`document.querySelector('[data-kpi="on-time-orders"] [data-kpi-value]').textContent.trim()`);
@@ -155,14 +167,18 @@ async function runViewport(sessionId, width, height, label) {
     result.metrics.auditEvents === 3 &&
     result.metrics.afterReset === "10 / 10";
 
+  result.overflowByCheckpoint.postReset = await overflowNow();
   result.gates.noHorizontalOverflow =
-    await ev(`document.body.scrollWidth <= window.innerWidth + 1`);
+    Object.values(result.overflowByCheckpoint).every((v) => v === true);
 
   await sleep(400);
   const shot = await send("Page.captureScreenshot", { format: "png" }, sessionId);
   await writeFile(resolve(outDir, `${label}.png`), Buffer.from(shot.data, "base64"));
 
-  const foreign = state.requests.filter((u) => !u.startsWith(origin) && !u.startsWith("data:"));
+  const foreign = state.requests.filter((u) => {
+    if (u.startsWith("data:") || u.startsWith("blob:")) return false;
+    try { return new URL(u).origin !== origin; } catch { return true; }
+  });
   result.gates.sameOriginOnly = foreign.length === 0;
   result.foreignRequests = foreign;
   result.gates.noConsoleExceptions = state.consoleExceptions.length === 0;
