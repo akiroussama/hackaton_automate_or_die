@@ -10,6 +10,9 @@ import {
   formatClockMinute,
   generateRecoveryPlans,
 } from "../engine/twin-engine.js";
+import { initFactoryView } from "./factory-view.js";
+
+let factorySync = () => {};
 
 const scenario = createFactoryScenario();
 const initialMetrics = calculateMetrics(scenario, scenario.initialSchedule, {
@@ -508,6 +511,7 @@ function render() {
   updateAudit();
   updateJourney();
   updateStory(view.metrics, state.phase);
+  factorySync(view, state.phase);
 }
 
 function scrollToSection(selector) {
@@ -589,5 +593,16 @@ elements.resetButton.addEventListener("click", resetDemo);
 
 document.querySelector(".assumptions-content p").textContent =
   `${SYNTHETIC_DATA_NOTICE.text} CableTwin ne pilote aucune machine dans cette version.`;
+
+factorySync = initFactoryView({
+  scenario,
+  initialMetrics,
+  incidentImpact,
+  getState: () => state,
+  costDelta,
+  formatDt,
+  formatDuration,
+  actions: { simulateIncident, selectStrategy, approveSelection, resetDemo },
+});
 
 render();

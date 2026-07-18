@@ -10,6 +10,7 @@
     <meta name="theme-color" content="#0b2926" />
     <title>CableTwin — Voyez demain avant de décider aujourd'hui</title>
     <link rel="stylesheet" href="/app/styles.css" />
+    <link rel="stylesheet" href="/app/factory-view.css" />
     <script type="module" src="/app/app.js"></script>
   </head>
   <body data-simulation-state="baseline">
@@ -27,6 +28,15 @@
       </a>
 
       <div class="topbar-actions">
+        <div class="view-switch" role="tablist" aria-label="Choix de la vue">
+          <button class="view-tab is-active" type="button" role="tab" aria-selected="true" data-view-tab="decision">
+            Vue décision
+          </button>
+          <button class="view-tab" type="button" role="tab" aria-selected="false" data-view-tab="factory">
+            Jumeau atelier
+            <span class="view-tab-dot" aria-hidden="true"></span>
+          </button>
+        </div>
         <span class="demo-badge">
           <span class="demo-dot" aria-hidden="true"></span>
           Démo · données synthétiques
@@ -103,6 +113,9 @@
           <span><strong>Décider</strong><small>En confiance</small></span>
         </a>
       </nav>
+
+      <section class="factory-twin" id="factory-twin" data-phase="baseline"
+        aria-label="Jumeau d'atelier en direct — télémétrie simulée sur données synthétiques"></section>
 
       <section class="section-block" id="situation" aria-labelledby="situation-title">
         <div class="section-heading">
