@@ -72,17 +72,17 @@ resolved before the document is reused.
 
 ## 4. First lock
 
-**Current owner:** Codex
-**Status:** EXPERT-JURY SAFETY-TWIN SCENARIO RESEARCH ACTIVE. Oussama explicitly
-opened one new bounded improvement: specify a separate, higher-complexity
-human-machine safety demonstration inspired by a documented real incident.
-No implementation is authorized until Codex completes primary-source research,
-ethical/claim boundaries and an exact handoff to Claude Code.
-**Task:** Select one officially documented incident; write a respectful
-counterfactual training scenario using historical-pattern ML, virtual what-if
-trials, hard safety constraints and human final authority; then transfer the
-implementation brief to Claude Code. The existing cable-production twin must
-remain intact and directly accessible.
+**Current owner:** Claude Code
+**Status:** EXPERT-JURY SAFETY-TWIN IMPLEMENTATION AUTHORIZED. Codex completed
+primary-source research, adversarial incident selection, ethical/claim
+boundaries and an exact implementation contract. Claude may implement this one
+bounded, separate demonstrator only; no other improvement is open.
+**Task:** Implement `CableTwin Critical Restart Lab — Texas City 2005:
+Counterfactual Safety Replay` exactly within
+`Day3/scenarios/critical-restart-lab-spec.md`. The accepted cable-production
+twin must remain byte-identical and directly accessible. Transfer the completed
+implementation to Codex for independent adversarial review before any
+deployment or jury use.
 **Freeze:** `packaging/`, `phase2-final` and `phase2-submission-final` remain
 unchanged. The Day 2 video selected and accepted by Oussama is frozen and was
 not re-reviewed by Codex after that acceptance.
@@ -4174,3 +4174,118 @@ Next permitted action:
   write the bounded implementation brief, issue an adversarial verdict, and
   transfer ownership to Claude Code. Do not implement the UI or engine in this
   block.
+
+### 2026-07-18 23:27 Europe/Paris - Codex -> Claude Code
+
+Task:
+
+- Complete primary-source and adversarial research for the one authorized
+  expert-jury safety-twin improvement.
+- Select the most defensible real incident and translate it into an exact,
+  bounded implementation contract.
+- Preserve the accepted cable-production twin and all frozen deliverables.
+
+Verdict:
+
+- **REVISE, then implement.**
+- Accept the advanced human-machine / ML / digital-twin objective.
+- Replace the illustrative Liverpool story and the claim “we saved them” with
+  a source-grounded educational counterfactual based on **Texas City,
+  23 March 2005**.
+- The demonstrator must show how available historical patterns, a bounded
+  material-balance twin, hard constraints and dual human approval can create a
+  decision window. It must never claim historical prevention or lives saved.
+
+Why Texas City was selected:
+
+- The U.S. CSB documents the incident, 15 deaths and 180 injuries, the flooded
+  and overpressurized raffinate splitter, failed/misleading instrumentation and
+  the release path.
+- At 1:04 p.m., the control display showed 78 percent of the transmitter span
+  (7.9 feet) while the CSB's post-incident material-balance estimate was 158
+  feet in a 170-foot tower.
+- The CSB analyzed 19 startups: only one kept both level within the transmitter
+  range and pressure within alarm limits; aggregate history includes 74 level
+  alarm activations and 65 high-level set-point exceedances.
+- These facts create a stronger, less speculative ML historian and digital-twin
+  reconciliation story than the other researched incidents.
+
+Primary sources checked:
+
+- `https://www.csb.gov/bp-america-texas-city-refinery-explosion/`
+- `https://www.csb.gov/assets/1/20/csbfinalreportbp.pdf`
+- `https://www.csb.gov/u-s-chemical-safety-board-concludes-organizational-and-safety-deficiencies-at-all-levels-of-the-bp-corporation-caused-march-2005-texas-city-disaster-that-killed-15-injured-180/`
+- `https://www.nist.gov/publications/conceptual-architecture-digital-twins-human-loop-based-smart-manufacturing`
+
+Files changed:
+
+- `Day3/scenarios/critical-restart-lab-spec.md`
+- `docs/collaboration/phase2-codex-claude-handoff.md`
+
+Files generated:
+
+- none beyond the specification
+
+Commit:
+
+- pending at the instant of transfer; the exact pushed commit is recorded in
+  the immediate synchronization entry that follows this handoff
+
+Commands/checks run:
+
+- read the mandatory collaboration protocol before repository action
+- inspected existing static-server and route behavior
+- independent searches and report review against official CSB and NIST sources
+- adversarial comparison of Texas City and Didion Milling
+- `git diff --check`
+- working-tree and frozen-scope inspection
+
+Verification result:
+
+- every incident number used in the implementation contract was matched to the
+  official CSB report or investigation page
+- documented facts, source-grounded reconstruction and synthetic DT outputs
+  are explicitly separated
+- the specification prohibits casualty prediction, lives-saved claims,
+  industrial-control claims, certification claims and false raw-data claims
+- the new app is isolated at `/critical-restart/`; existing app/runtime files
+  are outside Claude's permitted scope
+- `packaging/`, `phase2-final`, `phase2-submission-final` and accepted Day 2/Day
+  3 artifacts were not modified
+
+Known limitations:
+
+- no raw BP telemetry dataset is bundled; individual ML feature rows must be a
+  deterministic synthetic cohort constrained by published aggregate history
+- the bounded simulator is not a refinery thermodynamic, vapor-cloud, ignition,
+  blast or casualty model
+- the counterfactual cannot prove what would historically have happened
+- this advanced demo is not yet implemented, browser-tested, deployed or
+  accepted for jury use
+
+Open risks Claude must control:
+
+- do not let an impressive visual imply that 78 percent meant 78 percent of
+  tower height; it was 78 percent of a limited transmitter span
+- label 158 feet exactly as a CSB post-incident material-balance estimate, not
+  a real-time measurement available to operators
+- prevent repeated unsafe history from being presented as ML approval; hard
+  constraints remain separate and authoritative
+- keep the casualty figures sober and visible only once in the running UI
+- no photos, logos, flames, explosion animation or gamification
+
+Next owner:
+
+- Claude Code
+
+Next permitted action:
+
+- Implement exactly one separate static demonstrator using only the files and
+  acceptance gates listed in
+  `Day3/scenarios/critical-restart-lab-spec.md`.
+- Do not edit the existing production twin, existing engine modules, accepted
+  artifacts or frozen directories.
+- Run every implementation, regression, claims, browser, network and visual QA
+  gate; commit and push the bounded result; then transfer to Codex for an
+  independent read-only adversarial review.
+- Do not deploy and do not begin another improvement.
