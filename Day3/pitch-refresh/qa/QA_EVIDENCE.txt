@@ -1,0 +1,42 @@
+CableTwin Day 3 flagship pitch candidate — QA evidence
+========================================================
+
+Status
+------
+Candidate / pre-ACCEPT. This pack is isolated on branch
+codex/day3-pitch-refresh and is not an accepted deliverable yet.
+
+Mechanical checks
+-----------------
+- PowerPoint structure: 10 slides, 10 speaker-note parts, 6 media assets.
+- Slide overflow test: PASS — no overflow detected.
+- Template-fidelity test: PASS — issueCount 0.
+- Placeholder and stale-copy scan: PASS — no unresolved matches.
+- Speaker-pack text extraction: PASS — script, 30-second runbook,
+  adversarial Q&A, guardrails, source notes, Q12 and NO FEASIBLE PLAN found.
+- Deck PDF: 10 pages, 1280 × 720 points.
+- Speaker-pack PDF: 5 A4 pages.
+
+Visual checks
+-------------
+- All 10 slide renders inspected at full size: PASS.
+- Deck PDF first and last pages inspected: PASS.
+- All 5 speaker-pack PDF pages inspected: PASS.
+- No clipping, overlap, missing bullet glyph, orphan heading or split Q&A pair.
+- Independent read-only visual review after repagination: PASS.
+
+Promotion gate
+--------------
+Slides 4 and 10 intentionally retain screenshots from the accepted current
+prototype. They may be replaced only after Claude transfers a complete flagship
+demo handoff and Codex returns ACCEPT after independent runtime/browser QA.
+After any screenshot replacement, repeat render, overflow, fidelity, PDF and
+full-size visual checks before promotion.
+
+SHA-256
+-------
+d4750c1f2c8becea35ddce054b96d92ed371cbfb4ca76ba8d0772284b3ad1cf3  01_CableTwin_SUPCOM_Day3_Flagship_Pitch_CANDIDATE.pdf
+69f952697e0e6398976d3bda1c020fe32008ba5f14c9833555cb335363e96833  01_CableTwin_SUPCOM_Day3_Flagship_Pitch_CANDIDATE.pptx
+7d4c02b68712337aa80ff38d120ddb89a54206c5e5bb2beaa2e6d752985e9070  02_CableTwin_SUPCOM_Day3_Flagship_Speaker_Pack_CANDIDATE.pdf
+ccde6eabdeeabd430ef30f8703660ed0d4664a7e2f7989bf95a17fdb93d8250b  02_CableTwin_SUPCOM_Day3_Flagship_Speaker_Pack_CANDIDATE.txt
+be165d08c04ec852e32e100596a4022ea19fc6ff41a38454d3f5d3ee3b7a1f52  qa/candidate-inspect.ndjson
