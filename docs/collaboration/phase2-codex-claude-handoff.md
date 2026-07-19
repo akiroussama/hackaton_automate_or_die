@@ -72,18 +72,16 @@ resolved before the document is reused.
 
 ## 4. First lock
 
-**Current owner:** Codex
-**Status:** CRITICAL RESTART LAB IMPLEMENTED — awaiting independent
-adversarial review. Claude delivered the complete implementation on
-`codex/day3-pitch` (`3127adf` app/engine/tests/QA + `20bbac6` handoff): see
-the 2026-07-19 00:35 entry for files, declared deviations (tests in
-`scripts/` to preserve the frozen 9/9 claim; one `package.json` script),
-test outputs (9/9 · 5/5 · 12/12), browser QA (routes 200, zero external
-requests, zero console errors, accelerated replay 26.3 s ≤ 30 s with a
-pixel-identical final frame to expert mode), evidence hashes and known
-limitations.
-**Task:** Read-only adversarial review of this improvement only (spec §15).
-No deployment or jury use before the verdict; no other improvement opens.
+**Current owner:** Claude Code
+**Status:** CRITICAL RESTART LAB — Codex verdict `REVISE`. The independent
+review reproduced all regression/isolation passes and accepted the visual
+direction, but found bounded failures in CR-05 approval semantics, exact Reset,
+source-grounded cohort/alarm wording, required neighbor evidence links,
+source-map coverage and keyboard focus. See the 2026-07-19 Codex review block
+at the end of this file.
+**Task:** Correct only the enumerated Critical Restart Lab findings, rerun every
+documented gate, then hand the same improvement back to Codex. No deployment or
+jury use before a subsequent `ACCEPT`; no other improvement opens.
 **Freeze:** `packaging/`, `phase2-final` and `phase2-submission-final` remain
 unchanged. The Day 2 video selected and accepted by Oussama is frozen and was
 not re-reviewed by Codex after that acceptance.
@@ -4373,3 +4371,174 @@ Next permitted action:
 - This synchronization entry changes coordination metadata only.
 - Ownership remains with Claude Code under the immediately preceding bounded
   implementation contract.
+
+### 2026-07-19 02:21 Europe/Paris - Codex -> Claude Code: Critical Restart Lab adversarial review
+
+Task:
+
+- Independently review Claude's implementation at `f9e946f` against
+  `Day3/scenarios/critical-restart-lab-spec.md`, the official CSB record and
+  the frozen-product boundaries.
+- Do not deploy, merge to `main`, or begin another improvement before the
+  verdict.
+
+Verdict:
+
+- **REVISE.**
+- The separate demonstrator is visually strong, deterministic, isolated from
+  the accepted cable twin and ethically restrained. It is worth correcting,
+  not replacing.
+- Deployment and jury use remain blocked because several explicit acceptance
+  gates fail under independent reproduction.
+
+Blocking findings and exact required corrections:
+
+1. **CR-05 / Branch C approval semantics (acceptance gate 10).**
+   - `engine/critical-restart-simulator.js` currently returns Branch C with
+     `approvable: true` before either human signature, and the unit test asserts
+     that value.
+   - Keep a separate `eligibleForHumanReview` concept if useful, but
+     `approvable` must remain false until both Operations and Process Safety
+     approvals exist. The final recommendation must remain impossible before
+     both roles. Add deterministic tests for zero, one and two approvals and
+     ensure the audit snapshot records the correct state.
+
+2. **Exact Reset (acceptance gate 12).**
+   - Browser reproduction after an Operations signature showed that Reset
+     restored the visual briefing and hash but replaced the two initial audit
+     entries with one `reset` event. This is not the exact initial state
+     required by Section 7, and accelerated mode inherits that divergent audit.
+   - Reset must restore the same briefing state, two initial provenance/model
+     audit entries, unsigned roles, disabled approval controls and identical
+     scenario hash as a fresh load. Add a real state/DOM regression test.
+
+3. **CSB aggregate truth boundary.**
+   - The current cohort turns overlapping CSB marginals into a mutually
+     exclusive `14 recurrent abnormal + 1 in-envelope + 4 transient upset,
+     recovered` partition. The report does not classify the residual four as
+     recovered.
+   - Represent the published marginals as overlapping synthetic attributes
+     (14 significant-swing startups, 15 beyond transmitter range, eight beyond
+     range for more than one hour, one within both cited boundaries), or label
+     every family assignment explicitly as a teaching assumption. Remove
+     `TRANSIENT UPSET, RECOVERED` and any claim that a 14/1/4 family split is a
+     documented aggregate proportion.
+
+4. **Historical alarm wording.**
+   - The CSB report distinguishes the transmitter-associated 72% high-level
+     alarm, which was active and acknowledged throughout startup, from the
+     separate redundant hardwired high-level alarm, which did not sound.
+   - Replace the historical `independent high-level alarm unavailable` label
+     with exact source-grounded wording such as `REDUNDANT HARDWIRED HIGH-LEVEL
+     ALARM — DID NOT SOUND`, and disclose the active/acknowledged 72% alarm.
+     Any broader `independent protection unavailable` language belongs only to
+     the reconstruction/synthetic constraint layer.
+
+5. **ML evidence links and historical source-map gate.**
+   - Each displayed neighbor lacks the Section 10 link to the aggregate CSB
+     evidence used to constrain generation.
+   - Add a descriptive official-report link per neighbor. Render historical
+     fact copy from `CSB_FACTS` or use exact structured DOM mappings, then make
+     the test reject drift and unexpected historical numbers; the present token
+     existence test does not prove gate 13.
+
+6. **Keyboard/dialog closure and permanent disclosure.**
+   - `Escape` closes the source dialog but loses focus instead of returning it
+     to `sources & limitations`; the known keyboard gate was not automated.
+   - Restore focus to the opener on Escape, keep focus inside the modal while
+     open, and add an automated keyboard pass covering every enabled action,
+     visible focus and reduced motion.
+   - Put `Independent educational reconstruction · not affiliated with BP or
+     the U.S. CSB` permanently in the header or footer as required by the
+     layout, not only inside the drawer.
+
+Required bounded audit cleanup:
+
+- Use human-readable source link labels instead of raw URLs so the casualty
+  numbers are not repeated through the CSB announcement slug.
+- Change `All interactive values are synthetic` to the precise boundary:
+  model-generated outputs are synthetic; historical displayed values are
+  CSB-sourced.
+- Ensure the final audit snapshot includes the CSB report version/date, branch
+  actions, violated constraints and the two role rationales.
+- Make `scenarioHash` bind the complete scenario definition it purports to
+  identify (inputs, simulator/branch parameters, constraint catalogue and
+  relevant model/source versions), or rename it honestly to
+  `simulationOutputHash`.
+
+Primary-source evidence independently checked:
+
+- CSB investigation page:
+  `https://www.csb.gov/bp-america-texas-city-refinery-explosion/`.
+- CSB final report pp. 55-57 and 72-75: 78% / 7.9 ft, 158 ft in a 170-ft
+  tower; 19 startups; overlapping 1 / 14 / 15 / 8 figures; 74 alarm
+  activations and 65 set-point exceedances.
+- CSB final report pp. 34, 49 and 81: the 72% transmitter alarm and the
+  separate redundant hardwired alarm are distinct; the former was active and
+  acknowledged, the latter did not sound.
+- NIST human-in-the-loop source remains appropriate for the architecture
+  framing.
+
+Independent checks and results:
+
+- `git diff --check` — pass.
+- `npm run check` — 9/9 pass.
+- `npm run check:recommender` — 5/5 pass.
+- `npm run check:critical` — 12/12 pass, but gates 10, 12 and 13 are
+  under-tested as described above.
+- `npm run benchmark:exact` — unchanged: 17,856 candidates, 10,440 feasible;
+  Service 140, Cost 170, Stability 620.
+- Browser expert journey — complete and deterministic; dual-signature final
+  button behavior passes; Reset mismatch reproduced; Branch C pre-approval
+  result reproduced.
+- Browser source dialog — Escape closure reproduced with lost focus.
+- Existing QA evidence verified: all three routes 200; 13 requests, zero
+  external; zero console errors; accelerated replay 26.291 s; expert/accelerated
+  final-frame hash identical.
+- Full-size 1920x1080 and 1366x768 evidence inspected: visual hierarchy,
+  disclaimer, labels and controls pass; no blocking overlap was found.
+- Existing cable-twin/runtime files and `packaging/`, `phase2-final`,
+  `phase2-submission-final` remain unchanged.
+
+Permitted correction files:
+
+- `critical-restart/index.html`
+- `critical-restart/styles.css`
+- `critical-restart/app.js`
+- `engine/critical-restart-data.js`
+- `engine/critical-restart-ml.js`
+- `engine/critical-restart-simulator.js`
+- `scripts/critical-restart.test.mjs`
+- `scripts/capture-critical-restart.mjs`
+- `Day3/scenarios/critical-restart-lab-spec.md` only for the exact factual /
+  bounded-script wording above
+- this coordination file
+
+Do not modify:
+
+- the existing `/`, `#twin`, decision view or production engine;
+- accepted Day 2/Day 3 deliverables;
+- `packaging/`, `phase2-final`, `phase2-submission-final`;
+- dependencies or server behavior.
+
+Required return evidence:
+
+- every corrected file and commit hash;
+- old 9/9, recommender 5/5, exact benchmark and revised critical tests;
+- automated zero/one/two-approval and exact-Reset assertions;
+- official-source mapping assertions including alarm distinction and
+  overlapping startup marginals;
+- keyboard/focus/reduced-motion result;
+- network/console log, expert and accelerated captures, both target viewport
+  renders and new hashes;
+- confirmation that no old twin/runtime/frozen artifact changed.
+
+Next owner:
+
+- Claude Code.
+
+Next permitted action:
+
+- Correct only this bounded REVISE block, commit and push it on
+  `codex/day3-pitch`, then transfer the same improvement to Codex for a new
+  independent verdict. No deployment and no Iteration 3/new improvement.
