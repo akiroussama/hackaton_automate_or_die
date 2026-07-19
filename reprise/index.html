@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="CableTwin — Reprise : reprendre une ligne câble après 58 minutes sans réseau sans perdre la preuve qualité ni confondre vitesse, conformité et autorité. Prototype d'aide à la décision, données synthétiques."
+    />
+    <meta name="theme-color" content="#071f1c" />
+    <title>CableTwin — Reprise · 58 minutes sans réseau, 24 km d'engagement client</title>
+    <link rel="stylesheet" href="/reprise/styles.css" />
+    <script type="module" src="/reprise/app.js"></script>
+  </head>
+  <body data-mode="x1" data-phase="ready" data-feasible="true">
+    <a class="rp-skip" href="#rp-main">Aller à l'écran de décision</a>
+
+    <!-- Four permanent evidence labels (contract §3.2) -->
+    <div class="rp-evidence" id="evidence-legend" role="note" aria-label="Classes de preuve visibles en permanence">
+      <span class="rp-evi rp-evi-external">FAIT EXTERNE VÉRIFIÉ</span>
+      <span class="rp-evi rp-evi-input">ENTRÉE SCÉNARIO — SYNTHÉTIQUE</span>
+      <span class="rp-evi rp-evi-output">SORTIE MODÈLE — SYNTHÉTIQUE / À CALIBRER</span>
+      <span class="rp-evi rp-evi-human">ENTRÉE HUMAINE OU LABORATOIRE</span>
+    </div>
+
+    <header class="rp-topbar">
+      <div class="rp-brand">
+        <span class="rp-brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="rp-brand-copy"><strong>CableTwin</strong><small>Reprise · équipe SUPCOM</small></span>
+      </div>
+
+      <div class="rp-clockbox">
+        <strong id="reprise-clock">—</strong>
+        <span>Temps usine simulé</span>
+      </div>
+
+      <div class="rp-modes" role="tablist" aria-label="Vitesse de narration">
+        <button id="mode-x1" class="rp-mode is-active" type="button" role="tab" aria-selected="true">EXPERT ×1</button>
+        <button id="mode-x5" class="rp-mode" type="button" role="tab" aria-selected="false">REPLAY ×5</button>
+        <button id="mode-x7" class="rp-mode" type="button" role="tab" aria-selected="false">REPLAY ×7</button>
+        <button id="mode-jury30" class="rp-mode rp-mode-jury" type="button" role="tab" aria-selected="false">
+          JURY 30 S<span class="rp-jury-factor" data-jury-factor></span>
+        </button>
+      </div>
+
+      <div class="rp-transport">
+        <span class="rp-timer" id="jury-timer" aria-live="off" hidden>—</span>
+        <button id="btn-play" class="rp-btn rp-btn-primary" type="button">▶ Lancer le replay</button>
+        <button id="btn-pause" class="rp-btn" type="button" hidden>⏸ Pause</button>
+        <button id="btn-reset" class="rp-btn rp-btn-ghost" type="button">↺ Reset</button>
+      </div>
+    </header>
+
+    <main id="rp-main" class="rp-main">
+      <!-- Energy constraint + live stress controls -->
+      <section class="rp-power" aria-label="Contrainte énergie et essai de puissance">
+        <div class="rp-power-read">
+          <span class="rp-mini-label">Puissance disponible</span>
+          <strong id="power-available" data-power-available>—</strong>
+          <span class="rp-badge-synth">SYNTHÉTIQUE / À CALIBRER</span>
+        </div>
+        <div class="rp-power-read">
+          <span class="rp-mini-label">Enveloppe interne de reprise</span>
+          <strong id="power-envelope" data-power-envelope>—</strong>
+        </div>
+        <div class="rp-power-actions">
+          <button id="btn-stress" class="rp-btn rp-btn-warn" type="button">STRESS TEST −35 %</button>
+          <button id="btn-restore" class="rp-btn" type="button">RESTAURER</button>
+        </div>
+      </section>
+
+      <div class="rp-grid">
+        <!-- Top band — the 24 km client commitment -->
+        <section class="rp-panel rp-ribbon-panel" aria-labelledby="ribbon-title">
+          <div class="rp-panel-head">
+            <div>
+              <p class="rp-kicker">Bande supérieure</p>
+              <h2 id="ribbon-title">Engagement client — <span data-order-km>—</span></h2>
+            </div>
+            <span class="rp-mini-label" data-incident-line>—</span>
+          </div>
+          <div class="rp-ribbon" id="drum-ribbon" role="img" aria-label="Ruban longitudinal de 24 km divisé en huit tourets">
+            <div class="rp-drum" id="drum-T1" data-drum="T1"></div>
+            <div class="rp-drum" id="drum-T2" data-drum="T2"></div>
+            <div class="rp-drum" id="drum-T3" data-drum="T3"></div>
+            <div class="rp-drum" id="drum-T4" data-drum="T4"></div>
+            <div class="rp-drum" id="drum-T5" data-drum="T5"></div>
+            <div class="rp-drum" id="drum-T6" data-drum="T6"></div>
+            <div class="rp-drum rp-drum-hold" id="drum-T7" data-drum="T7">
+              <div class="rp-envelope" id="t7-envelope">INTERVALLE À INVESTIGUER — SORTIE SYNTHÉTIQUE</div>
+            </div>
+            <div class="rp-drum rp-drum-idle" id="drum-T8" data-drum="T8"></div>
+          </div>
+        </section>
+
+        <!-- Center — Energy × Quality decision surface -->
+        <section class="rp-panel rp-gantt-panel" aria-labelledby="gantt-title">
+          <div class="rp-panel-head">
+            <div>
+              <p class="rp-kicker">Centre</p>
+              <h2 id="gantt-title">Energy × Quality</h2>
+            </div>
+            <span class="rp-mini-label">Reprise post-retour — comparaison de branches sous contraintes</span>
+          </div>
+
+          <div class="rp-branches" id="rp-branches" role="group" aria-label="Options de reprise comparées"></div>
+
+          <div class="rp-gantt" role="table" aria-label="Timeline synchronisée Energy × Quality">
+            <div class="rp-gantt-row" id="gantt-energy" data-domain="energy">
+              <span class="rp-gantt-label">Énergie</span><div class="rp-gantt-track"></div>
+            </div>
+            <div class="rp-gantt-row" id="gantt-machine" data-domain="machine">
+              <span class="rp-gantt-label">Machine</span><div class="rp-gantt-track"></div>
+            </div>
+            <div class="rp-gantt-row" id="gantt-human" data-domain="human">
+              <span class="rp-gantt-label">Humain</span><div class="rp-gantt-track"></div>
+            </div>
+            <div class="rp-gantt-row" id="gantt-material" data-domain="material">
+              <span class="rp-gantt-label">Matière</span><div class="rp-gantt-track"></div>
+            </div>
+            <div class="rp-gantt-row" id="gantt-quality" data-domain="quality">
+              <span class="rp-gantt-label">Qualité</span><div class="rp-gantt-track"></div>
+            </div>
+            <div class="rp-gantt-row" id="gantt-logistics" data-domain="logistics">
+              <span class="rp-gantt-label">Logistique</span><div class="rp-gantt-track"></div>
+            </div>
+          </div>
+
+          <div class="rp-nofeasible" id="no-feasible-plan" role="alert" hidden></div>
+        </section>
+
+        <!-- Side — ML case memory -->
+        <aside class="rp-panel rp-ml-panel" aria-labelledby="ml-title">
+          <div class="rp-panel-head">
+            <div>
+              <p class="rp-kicker">Panneau latéral</p>
+              <h2 id="ml-title">Mémoire ML</h2>
+            </div>
+            <span class="rp-mini-label" data-ml-note>—</span>
+          </div>
+          <div class="rp-ml" id="ml-neighbors" aria-live="polite"></div>
+          <p class="rp-ml-ood" data-ml-ood hidden></p>
+        </aside>
+
+        <!-- Authorities — the model never signs -->
+        <section class="rp-panel rp-auth-panel" aria-labelledby="auth-title">
+          <div class="rp-panel-head">
+            <div>
+              <p class="rp-kicker">Gouvernance</p>
+              <h2 id="auth-title">Autorités — le modèle ne signe pas à leur place</h2>
+            </div>
+          </div>
+          <div class="rp-authorities" id="authorities"></div>
+          <div class="rp-labgate" id="lab-gate" data-open="false">
+            <span class="rp-labgate-icon" aria-hidden="true"></span>
+            <span class="rp-labgate-copy">
+              <strong data-lab-title>—</strong>
+              <small data-lab-missing>—</small>
+            </span>
+          </div>
+        </section>
+      </div>
+
+      <!-- Narration + live decision digest -->
+      <section class="rp-strip">
+        <p class="rp-narration" id="rp-narration" aria-live="polite">—</p>
+        <div class="rp-digest">
+          <span class="rp-mini-label">Digest décision · recalcul live (non-dérive, pas une preuve crypto)</span>
+          <code id="decision-digest">—</code>
+        </div>
+      </section>
+
+      <details class="rp-assumptions" id="assumptions-drawer">
+        <summary>Hypothèses, sources et limites</summary>
+        <div class="rp-assumptions-body" data-assumptions></div>
+      </details>
+    </main>
+
+    <footer class="rp-perma" id="perma-footer">
+      Prototype d'aide à la décision. Données usine et résultats modèles synthétiques, à calibrer.
+      CableTwin n'est ni un système de sécurité, ni un système de contrôle, ni une autorité de
+      libération produit.
+    </footer>
+  </body>
+</html>
