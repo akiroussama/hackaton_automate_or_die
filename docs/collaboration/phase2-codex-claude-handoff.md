@@ -72,16 +72,17 @@ resolved before the document is reused.
 
 ## 4. First lock
 
-**Current owner:** Claude Code
-**Status:** CRITICAL RESTART LAB — Codex verdict `REVISE`. The independent
-review reproduced all regression/isolation passes and accepted the visual
-direction, but found bounded failures in CR-05 approval semantics, exact Reset,
-source-grounded cohort/alarm wording, required neighbor evidence links,
-source-map coverage and keyboard focus. See the 2026-07-19 Codex review block
-at the end of this file.
-**Task:** Correct only the enumerated Critical Restart Lab findings, rerun every
-documented gate, then hand the same improvement back to Codex. No deployment or
-jury use before a subsequent `ACCEPT`; no other improvement opens.
+**Current owner:** Codex
+**Status:** CRITICAL RESTART LAB — Claude has corrected all six blocking
+findings from Codex's `REVISE` verdict (commit `ec447c8` on
+`codex/day3-pitch`) and rerun every documented gate, including four new
+automated gates the REVISE explicitly required (exact-reset, keyboard/focus,
+source-map DOM, CR-05 dual-approval). See the full "Critical Restart Lab
+REVISE corrections complete" entry at the end of this file for the
+finding-by-finding fix, test/output evidence, screenshot hashes and known
+limitations.
+**Task:** Independent adversarial re-review of this correction only. No
+deployment or jury use before a new verdict; no other improvement opens.
 **Freeze:** `packaging/`, `phase2-final` and `phase2-submission-final` remain
 unchanged. The Day 2 video selected and accepted by Oussama is frozen and was
 not re-reviewed by Codex after that acceptance.
@@ -4542,3 +4543,183 @@ Next permitted action:
 - Correct only this bounded REVISE block, commit and push it on
   `codex/day3-pitch`, then transfer the same improvement to Codex for a new
   independent verdict. No deployment and no Iteration 3/new improvement.
+
+### 2026-07-19 (local) - Claude Code -> Codex: Critical Restart Lab REVISE corrections complete
+
+Task:
+
+- Correct all six blocking findings from the 2026-07-19 02:21 Europe/Paris
+  adversarial review, rerun every documented gate, transfer back for a new
+  independent verdict.
+
+Commit and branch:
+
+- `ec447c8` on `codex/day3-pitch` (parent `c95ac3c`), pushed to origin.
+- Exactly the eight files Codex's REVISE permitted: `critical-restart/index.html`,
+  `critical-restart/styles.css`, `critical-restart/app.js`,
+  `engine/critical-restart-data.js`, `engine/critical-restart-simulator.js`,
+  `scripts/critical-restart.test.mjs`, `scripts/capture-critical-restart.mjs`,
+  `Day3/scenarios/critical-restart-lab-spec.md` (Beat 2 alarm bullet only).
+  `engine/critical-restart-ml.js` was NOT touched — its retrieval mechanism
+  needed no change, only the cohort it reads from. `git status` confirms no
+  other file changed: the accepted production twin (`app/`, `engine/twin-engine.js`,
+  `engine/recommender*.js`, `engine/exact-benchmark.js`), `tests/`,
+  `packaging/`, `phase2-final` and `phase2-submission-final` are byte-identical
+  to before this block.
+
+Corrections, one per finding:
+
+1. CR-05 / Branch C approval semantics. `simulateBranch` now returns
+   `eligibleForHumanReview` (constraint/readiness only, independent of any
+   approval) separately from `approvable` (true only when
+   `options.approvals.operations && options.approvals.safety` are BOTH
+   explicitly true — default `{}` means both false). Neither branch A nor B
+   can become approvable even when both approvals are forced true in a test.
+   `app.js` re-derives all three branches through `refreshBranches()` with
+   the live signature state after every `sign()` call, so the rendered
+   branch card reflects real approval state, not a pre-computed guess.
+2. Exact Reset. `boot()` and `reset()` now both call one shared
+   `primeReplay()` (clears audit, re-runs ML + branches with approvals reset
+   to false/false, writes the SAME two provenance/model audit lines,
+   refreshes the hash line) — a fresh load and a Reset are byte-identical
+   by construction, not two hand-maintained code paths. Verified live: audit
+   `innerHTML` and hash-line text captured on first load are asserted equal
+   to the same after signing Operations and clicking Reset.
+3. CSB aggregate truth boundary. Removed the invented mutually-exclusive
+   14/1/4/"TRANSIENT UPSET, RECOVERED" partition entirely (`PATTERN_FAMILIES`
+   now has exactly two members). `buildSyntheticCohort` assigns the four
+   published marginals (14 significant-swing, 15 exceeded-range, 8 of those
+   over one hour, 1 within-boundaries) as independent overlapping tags via
+   two deterministic sliding windows over a seeded permutation of the 18
+   non-boundary rows — mathematically forced to overlap by at least 11 rows
+   since 14+15 exceeds 18, which is exactly the honest overlap the old
+   partition hid. The specific joint assignment is documented in code and
+   in the UI (`hist-note`) as a synthetic teaching construction; only the
+   four marginal counts are CSB-documented.
+4. Historical alarm wording. `CSB_FACTS.evidenceFrame` now carries
+   `transmitterAlarmPercentOfSpan: 72`, `transmitterAlarmStatus: "active and
+   acknowledged"`, `redundantHardwiredAlarmStatus: "did not sound"` (CSB
+   final report pp. 34, 49, 81), replacing the old single
+   `independentHighLevelAlarm: "unavailable"` field that conflated the two
+   devices. The tower badge, the `historical_frame` audit line, and the
+   spec's Beat 2 bullet were all corrected to this precise wording. Left
+   unchanged (per the review's own carve-out): the twin-reconciliation
+   panel's "independent protection unavailable" language, which is the
+   reconstruction/synthetic layer (CR-02), not a historical claim — reworded
+   slightly to "unavailable in this reconstruction ... (CR-02)" for extra
+   clarity without over-scoping the edit.
+5. ML evidence links + real source-map gate. Every neighbor now renders a
+   link to the CSB final report's startup-history pages (Section 10). Far
+   more importantly: every historical number in the UI (deaths/injured,
+   tower height, 78%/7.9 ft/158 ft, the seven historical-memory counts, the
+   four alarm-badge lines) is now rendered from `CSB_FACTS` by one
+   `renderFacts()` call at boot into structured DOM ids — the literals no
+   longer exist a second time as static HTML, so drift is structurally
+   impossible rather than merely tested for afterward. A Node-level test
+   asserts the old literals are gone from `index.html`; a browser-level
+   gate re-reads 14 live DOM values after a real boot and asserts they
+   equal `CSB_FACTS`.
+6. Keyboard/dialog focus + permanent disclosure. `Escape` now calls the
+   same `closeDrawer()` used by the close button, which returns focus to
+   `#open-sources`. A real Tab-focus trap (`trapDrawerFocus`) keeps focus
+   cycling within the drawer's focusable set while open. The "Independent
+   educational reconstruction - not affiliated with BP or the U.S. Chemical
+   Safety Board" line is now permanently visible in the header (`.lab-sub2`),
+   not only inside the drawer.
+
+Bounded audit cleanup, all done:
+
+- Source links use human-readable labels (`SOURCE_LABELS`) as visible text;
+  the CSB-announcement URL (which repeats "15-injured-180" in its slug) is
+  never rendered as prose, only as an `href`.
+- Footer now states the precise boundary: "model-generated outputs are
+  synthetic; historical displayed values are CSB-sourced" (the old blanket
+  "all interactive values are synthetic" is gone).
+- `scenarioHash` renamed honestly to `simulationOutputHash`; its payload
+  explicitly excludes approval state (adds `constraints` ids instead) so it
+  is provably identical whether zero or two approvals are granted — this is
+  what makes the exact-Reset fix hold, verified by a dedicated determinism
+  test comparing the hash with and without approvals.
+- Final audit snapshot now includes `CSB_FACTS.reportVersion` ("approved
+  20 March 2007"), each branch's `actions`, and both role rationales
+  (`operationsLead.rationale`, `processSafetyLead.rationale`), not just a
+  generic `true` flag.
+
+Required test/output evidence:
+
+- `npm run check` -> 9/9 (unchanged).
+- `npm run check:recommender` -> 5/5 (unchanged).
+- `npm run benchmark:exact` -> unchanged: 17,856 candidates, 10,440 feasible;
+  Service 140 / Cost 170 / Stability 620 min, all `verified=true unique=true`.
+- `npm run check:critical` -> 18/18 (was 12/12): new/revised tests cover the
+  overlapping-tag cohort (with an explicit >=11-row overlap assertion), hash
+  stability across approvals, CR-05 zero/one/two-approval combinations for
+  Branch C, CR-08-still-blocks-with-both-approvals, the structured source-map
+  DOM ids plus absence of the old duplicated literals, the corrected alarm
+  facts, the permanent header disclosure, the precise footer boundary
+  wording, reduced-motion and focus-visible static CSS checks, and the
+  forbidden-wording scan (unchanged, still passes).
+- `git diff --check` -> clean (only expected CRLF-normalization notices).
+- Browser QA (`node scripts/capture-critical-restart.mjs`), fully rewritten
+  with four new automated gates beyond the original screenshots:
+  - Exact-reset gate: PASS. Fresh-load audit `innerHTML` and hash-line text
+    captured, then Operations-only signed, then Reset clicked — both values
+    proven byte-identical to the fresh-load baseline, and the approval
+    controls proven back to unsigned/disabled.
+  - Keyboard/focus gate: PASS. Tab from body reaches `#open-sources` first;
+    opening the drawer moves focus to `#close-sources`; Tab from the last
+    focusable element wraps back to `#close-sources` (real trap, not
+    assumed); Escape closes the drawer AND returns focus to `#open-sources`;
+    the post-Escape focused element has a non-`none` computed outline style.
+    Note: synthetic CDP Enter-triggers-click on the opener button proved
+    flaky in this headless environment under isolated reproduction testing
+    — a CDP/headless timing quirk, not app logic — so that specific native
+    browser default-action is exercised via a real click instead; the
+    custom app-owned logic the review actually flagged, the focus trap and
+    Escape-return, is exercised for real via the keyboard and is what the
+    PASS above certifies.
+  - Source-map DOM gate: PASS. 14 live DOM elements (hist-grid x7, tower
+    height/span/estimate, alarm lines x4, casualties) read after a real
+    boot and asserted equal to `CSB_FACTS`-derived expected strings.
+  - CR-05 dual-approval gate: PASS. No branch shows the approved CSS state
+    before any signature or after only one; Branch C shows it only after
+    both; the `simulationOutputHash` is identical immediately before and
+    after finalization (proving approvals never touch the hash).
+  - Unchanged gates still pass: three routes 200; 25 requests, zero
+    external; zero console errors/exceptions; accelerated replay
+    26.3 s <= 30 s on the same state machine; `expert-4-finalized.png` and
+    `auto-finalized.png` remain pixel-identical (SHA-256 `281eae4d39a86...`)
+    — still no separate outcome path; 1366x768 inspected with no clipped
+    controls (the taller alarm badge and repositioned "RELIEF PATH" label
+    were re-verified not to collide with the amber estimate text or the
+    tower title at both viewports).
+  - New/updated screenshot hashes: `expert-1-briefing.png` `502d7f657235...`,
+    `expert-2-branch_comparison.png` `7ac7a3a4cd75...`, `expert-3-signed.png`
+    `748039724a49...`, `expert-4-finalized.png` / `auto-finalized.png`
+    (identical) `281eae4d39a8...`, `hd-1-briefing.png` `7c56767cbb39...`,
+    `hd-2-branches.png` `aacd0bfbf1f6...`, `qa-report.json` `35a38d5aafe2...`.
+
+Known limitations / remaining risks (unchanged from the prior handoff plus
+one new item):
+
+- Gate 22 (grayscale/color-independence) remains a design-level property
+  (icons/glyphs -- checkmark/warning/cross -- always accompany color, per
+  the original build) rather than a new automated pixel/contrast check; not
+  re-verified by a fresh automated pass in this correction cycle.
+- The synthetic Enter-key browser default-action limitation noted above:
+  native button keyboard-activation is standard, guaranteed HTML/browser
+  behavior (not something this app implements), so it was not re-proven by
+  a flaky synthetic event in this environment; the app-owned focus-trap and
+  Escape-return logic — the part the review identified as actually broken —
+  is proven for real.
+- No deployment: `/critical-restart/` exists on `codex/day3-pitch` only.
+
+Next owner:
+
+- Codex.
+
+Next permitted action:
+
+- Independent adversarial re-review of this correction only (spec section 15
+  / the REVISE block's required return evidence above). No deployment, no
+  Iteration 3, no new improvement before a verdict.
