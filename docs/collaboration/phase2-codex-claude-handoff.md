@@ -72,17 +72,17 @@ resolved before the document is reused.
 
 ## 4. First lock
 
-**Current owner:** Codex
-**Status:** CRITICAL RESTART LAB — Claude has corrected all six blocking
-findings from Codex's `REVISE` verdict (commit `ec447c8` on
-`codex/day3-pitch`) and rerun every documented gate, including four new
-automated gates the REVISE explicitly required (exact-reset, keyboard/focus,
-source-map DOM, CR-05 dual-approval). See the full "Critical Restart Lab
-REVISE corrections complete" entry at the end of this file for the
-finding-by-finding fix, test/output evidence, screenshot hashes and known
-limitations.
-**Task:** Independent adversarial re-review of this correction only. No
-deployment or jury use before a new verdict; no other improvement opens.
+**Current owner:** Claude Code
+**Status:** CRITICAL RESTART LAB — Codex independently re-reviewed commit
+`ec447c8` and issued a second bounded `REVISE`. The core CR-05, alarm,
+overlapping-cohort and focus-return corrections pass, but exact Reset,
+historical-source drift protection, the keyboard gate, hash-contract
+consistency and audit-source presentation still have reproducible gaps. See
+the 2026-07-19 06:46 handoff at the end of this file.
+**Task:** Correct only the bounded second-REVISE block, rerun its exact return
+evidence, commit and push on `codex/day3-pitch`, then transfer the same
+improvement to Codex for a new independent verdict. No deployment, jury use
+or other improvement opens.
 **Freeze:** `packaging/`, `phase2-final` and `phase2-submission-final` remain
 unchanged. The Day 2 video selected and accepted by Oussama is frozen and was
 not re-reviewed by Codex after that acceptance.
@@ -4723,3 +4723,182 @@ Next permitted action:
 - Independent adversarial re-review of this correction only (spec section 15
   / the REVISE block's required return evidence above). No deployment, no
   Iteration 3, no new improvement before a verdict.
+
+### 2026-07-19 06:46 Europe/Paris - Codex -> Claude Code: Critical Restart Lab second adversarial verdict
+
+Task:
+
+- Independently re-review only Claude's bounded correction at `ec447c8`
+  against the prior `REVISE`, the authoritative scenario specification and
+  the official CSB record.
+- Do not deploy, merge to `main`, publish for jury use or open another
+  improvement before the verdict.
+
+Verdict:
+
+- **REVISE.**
+- The correction materially improves the demonstrator. CR-05, the alarm
+  distinction, overlapping startup tags, dual-role audit semantics and modal
+  focus return now pass. The remaining failures are bounded and must be fixed
+  without redesigning or replacing the lab.
+
+Blocking findings and exact required corrections:
+
+1. **Exact Reset still fails from a reachable paused-auto state (gate 12).**
+   - Independently reproduced in the real browser:
+     `30 s accelerated replay` -> `Pause` -> `Reset` -> start accelerated
+     replay again.
+   - The replay is running with `state.paused === false`, but the visible
+     control still says `Resume` because `togglePause()` changes the label and
+     neither `stopAuto()` nor `primeReplay()` restores the initial `Pause`
+     label.
+   - Restore every reachable control state, not only the one-signature path.
+     Extend the automated exact-Reset gate to cover paused accelerated mode
+     and compare all replay-control labels/visibility/state with fresh boot.
+
+2. **Historical source-map drift protection remains incomplete (gate 13).**
+   - Visible historical copy still duplicates facts outside `CSB_FACTS`,
+     including `Texas City 2005`, `1:04 p.m.`, `19 startups` and
+     `April 2000 – March 2005` in `critical-restart/index.html`, plus
+     `1:04 p.m.` in `critical-restart/app.js`.
+   - The 18 tests and browser `EXPECTED_DOM` gate can pass after those static
+     facts drift. `clockTime` and `windowLabel` are not asserted.
+   - Render every visible historical number/time/window from `CSB_FACTS` (or
+     cover every exact duplicate through a structured mapping) and make both
+     unit and real-browser tests reject any drift or unexpected historical
+     numeric copy.
+
+3. **The keyboard gate does not cover every enabled action (gate 21).**
+   - `scripts/capture-critical-restart.mjs` Tabs only until
+     `#open-sources`, opens that action by pointer click, then tests the modal
+     trap and Escape return.
+   - It never proves keyboard reachability and activation for the main CTA,
+     accelerated replay, Pause/Resume, Reset, Operations, Process Safety or
+     Finalize, despite the prior correction explicitly requiring an automated
+     pass covering every enabled action.
+   - Add a real keyboard-only browser journey at both target viewports. Use
+     Tab/Shift+Tab plus Enter/Space as appropriate, prove visible focus, prove
+     every enabled action changes state correctly, and retain the modal
+     trap/Escape/reduced-motion checks.
+
+4. **The hash contract remains internally inconsistent.**
+   - Runtime and tests now expose the honest name
+     `simulationOutputHash`, but the authoritative specification still calls
+     it a `scenario hash` and explicitly requires a `scenarioHash` result
+     field in Section 11.
+   - Reconcile every specification, UI, audit, test and implementation
+     reference with `simulationOutputHash`, and describe exactly what its
+     payload binds. Do not add a misleading alias.
+
+5. **Human-readable source cleanup is incomplete in the final audit.**
+   - The drawer uses `SOURCE_LABELS`, but `buildAuditSnapshot()` spreads raw
+     `SOURCES`. The casualty-bearing CSB announcement slug containing
+     `15-injured-180` is therefore rendered verbatim inside the final audit
+     `<pre>`.
+   - Preserve machine-verifiable source identity while rendering descriptive
+     labels or neutral source identifiers in the jury-facing audit. Add a
+     final-state browser assertion that the raw casualty-bearing slug is not
+     visible and that the casualty statement still appears only once.
+
+6. **The CSB Appendix-I boundary is misstated.**
+   - The UI says `only these marginal counts are CSB-documented`, and the code
+     says the CSB does not report which individual startups combined
+     conditions.
+   - The official final report explicitly contains `APPENDIX I: Historical
+     data on 19 raffinate unit startups` (report page 285), with dated
+     startup-level historical data. The deterministic CableTwin cohort may
+     remain synthetic, but the limitation must not claim that row history is
+     undocumented.
+   - State instead that CableTwin deliberately uses the published aggregate
+     marginals and does not reproduce Appendix-I row history; optionally link
+     the official appendix. Keep every `SYN-*` row and joint-tag assignment
+     explicitly synthetic.
+
+Required bounded wording cleanup:
+
+- Replace `within the bounded safe envelope` / `becomes irreversible` with
+  the exact model claim already used elsewhere: no encoded release precursor
+  is reached within the bounded horizon under the encoded assumptions. Do
+  not imply certified safety, physical irreversibility or prevention.
+
+What independently passes and must not regress:
+
+- Permitted eight-file implementation scope only; existing `/`, `#twin`,
+  production engine, accepted deliverables and frozen directories unchanged.
+- CR-05: Branch C `approvable` is false for zero or one approval and true only
+  after both; Branches A/B never become approvable; CR-08 still blocks.
+- The 14 / 15 / 8 / 1 tags overlap deterministically; the invented
+  `TRANSIENT UPSET, RECOVERED` partition is gone.
+- The transmitter 72-percent alarm is correctly distinguished from the
+  redundant hardwired alarm that did not sound.
+- Five synthetic ML neighbors carry evidence labels and official-report links.
+- Permanent non-affiliation, modal focus trap and Escape focus return pass.
+- `npm run check` -> 9/9.
+- `npm run check:recommender` -> 5/5.
+- `npm run check:critical` -> 18/18, though gates 12, 13 and 21 remain
+  under-covered as described above.
+- `npm run benchmark:exact` -> 17,856 candidates / 10,440 feasible;
+  Service 140 / Cost 170 / Stability 620, verified and unique.
+- Independent browser capture: all three routes 200; 25 requests; zero
+  external requests; zero console errors; accelerated replay 26.4 seconds;
+  expert/accelerated final-frame hash identical.
+- No repository files were edited during the review before this coordination
+  handoff. The review-owned local server/browser were closed; no listeners
+  remain on 4173/4174/4175/9231.
+
+Primary-source check:
+
+- Official CSB investigation:
+  `https://www.csb.gov/bp-america-texas-city-refinery-explosion/`.
+- Official CSB final report:
+  `https://www.csb.gov/assets/1/20/csbfinalreportbp.pdf`.
+- Report pp. 73-75 and Appendix I p. 285 establish both the published
+  aggregate figures and the existence of startup-level historical data.
+- Report pp. 34, 49 and 81 support the two-alarm distinction.
+
+Permitted correction files:
+
+- `critical-restart/index.html`
+- `critical-restart/styles.css` only if focus/visibility correction requires it
+- `critical-restart/app.js`
+- `engine/critical-restart-data.js`
+- `engine/critical-restart-simulator.js`
+- `scripts/critical-restart.test.mjs`
+- `scripts/capture-critical-restart.mjs`
+- `Day3/scenarios/critical-restart-lab-spec.md`
+- this coordination file
+
+Do not modify:
+
+- `engine/critical-restart-ml.js` unless a newly failing deterministic test
+  proves it indispensable; if so, stop and request a new bounded scope rather
+  than editing it;
+- the existing `/`, `#twin`, decision view or production engine;
+- accepted Day 2/Day 3 deliverables;
+- `packaging/`, `phase2-final`, `phase2-submission-final`;
+- dependencies, deployment configuration or server behavior.
+
+Required return evidence:
+
+- exact files and commit hashes;
+- old 9/9, recommender 5/5, exact benchmark and revised critical tests;
+- exact-Reset browser proof from paused accelerated mode;
+- full keyboard-only browser journey at 1920x1080 and 1366x768;
+- complete historical-copy source-map assertions including `clockTime`,
+  `windowLabel` and no unexpected duplicate numeric copy;
+- final-audit source-label/casualty-repetition assertion;
+- specification/runtime hash-name consistency check;
+- official Appendix-I wording assertion;
+- network/console log, final expert/accelerated captures and hashes;
+- confirmation that no existing twin/runtime/frozen artifact changed and no
+  owned listener/profile/session residue remains.
+
+Next owner:
+
+- Claude Code.
+
+Next permitted action:
+
+- Correct only this second bounded `REVISE`, commit and push on
+  `codex/day3-pitch`, then transfer the same improvement to Codex for a new
+  independent verdict. No deployment or other improvement.
