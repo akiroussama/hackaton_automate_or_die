@@ -1,0 +1,315 @@
+CABLETWIN — DAY 3 INDUSTRY PITCH
+FORMAT: 4:00 pitch · 4:00 Q&A · maximum 0:30 demo
+ROOM: Industry · Room 206
+STATUS: FINAL — frozen for the 14:00 session.
+Live-demo wording on slide 4 still requires runtime ACCEPT (decision 13:30);
+the pre-accept fallback below is the default.
+
+======================================================================
+ONE COMMUNICATION JOB
+======================================================================
+
+The jury should select CableTwin and connect one Tunisian cable-plant
+design partner because it demonstrates a bounded, human-governed decision
+layer that compares recovery options before production changes.
+
+Core promise:
+Decision clarity before production changes.
+
+Closing line:
+The ML retrieves the past. The twin compares futures. Hard rules block
+the impossible. Humans and the laboratory authorize.
+
+======================================================================
+EXACT FOUR-MINUTE SCRIPT
+======================================================================
+
+SLIDE 1 — 0:00–0:20 — HOOK
+
+Good afternoon. In our synthetic Tunisian cable-factory scenario, grid
+power disappears for 58 minutes while a medium-voltage cable order is in
+production. Electricity returns; certainty does not. CableTwin compares
+recovery options before the plant commits equipment, quality resources,
+people and the customer schedule.
+
+SLIDE 2 — 0:20–0:50 — PROBLEM
+
+Why is this difficult? The line sees the stop. Energy sees a restart
+envelope. Quality sees incomplete process history. Logistics sees a truck
+at 06:30. One 24-kilometre order now has three truths: drums one to six
+remain outside the incident, drum seven is entirely on hold, and drum
+eight is not started and must be replanned. Restarting the line is not
+the same as recovering the operation.
+
+SLIDE 3 — 0:50–1:20 — VALUE + TECHNICAL LOGIC
+
+CableTwin is a local, read-only decision layer. Explainable ML retrieves
+comparable synthetic cases and shows distance, differences and
+out-of-distribution warning. The deterministic twin tests recovery
+futures across energy, process, material, people, quality and delivery.
+Hard rules reject impossible sequences. CableTwin never commands a PLC
+and never releases cable: Quality, the laboratory and accountable humans
+keep authority.
+
+SLIDE 4 — 1:20–1:50 — DEMO
+
+LIVE WORDING — USE ONLY AFTER RUNTIME ACCEPT:
+
+Here is the same scenario in Jury mode. I inject the 58-minute outage:
+drum seven stays on hold and the system retrieves comparable cases. It
+rejects restart-all and emergency production on hard rules. I reduce
+available restart power: no plan is feasible. I restore the
+operator-entered limit: staged Plan C returns under visible assumptions.
+The laboratory gate remains closed. Same engine, same rules, faster
+replay—not a scripted shortcut.
+
+PRE-ACCEPT FALLBACK (DEFAULT):
+
+This is the thirty-second acceptance contract now under review: incident,
+hold state, comparable cases, two branches rejected on hard rules, a
+live no-feasible-plan stress test, then a staged recovery that still
+leaves the laboratory gate closed. Until the same-engine and browser
+gates pass, we present it as a specification, not as a live capability.
+
+SLIDE 5 — 1:50–2:15 — BUSINESS MODEL
+
+We enter commercially in four disciplined steps: a paid data-and-decision
+diagnostic, a read-only shadow pilot, a license per line or site with
+configuration and support, then replication only after measured pilot
+evidence. Pricing and ROI are pilot questions. We sell decision speed,
+constraint visibility and traceability—not guaranteed savings.
+
+SLIDE 6 — 2:15–2:40 — GO-TO-MARKET
+
+The first pilot is one cable line for four to six weeks. We map the data
+contract and hard rules, replay historical incidents plus synthetic
+stress cases, compare CableTwin options with actual plant decisions, then
+go, revise or stop. Success measures are evaluation time, violations
+caught before action, stability, usability and traceability.
+
+SLIDE 7 — 2:40–3:05 — COMPETITION
+
+We complement existing systems; we replace none. SCADA and PLC control.
+MES executes and records. APS plans capacity. QMS and laboratories test
+and release product. CableTwin is the cross-domain, read-only decision
+layer that makes incident alternatives, hard constraints, provenance and
+human gates visible before the plant acts.
+
+SLIDE 8 — 3:05–3:25 — TEAM + PROGRESS
+
+I am Oussama Akir, a solo SUP'COM participant. During this hackathon I
+built the public CableTwin demonstrator, its bounded planner, local ML
+guidance, digital-twin views, verification and evidence package. I also
+kept the product's limits visible. The next team extension is not a
+fictional org chart; it is one real cable plant and its Quality authority.
+
+SLIDE 9 — 3:25–3:40 — COMMERCIAL TRUTH
+
+Today the honest numbers are zero signed pilots, zero revenue and zero
+ROI claims. What is proven is a public working product, nine planner
+checks, five ML checks, an exhaustive bounded verifier, and a local,
+offline, read-only posture. Synthetic evidence is not customer evidence.
+
+SLIDE 10 — 3:40–4:00 — ASK + CLOSE
+
+Our ask is precise: select CableTwin and connect one Tunisian cable-plant
+design partner for a read-only shadow pilot. A power interruption lasts
+58 minutes; industrial uncertainty can last for hours. CableTwin
+retrieves the past, compares futures, blocks the impossible—and leaves
+authorization to humans and the laboratory.
+
+======================================================================
+THIRTY-SECOND DEMO RUNBOOK
+======================================================================
+
+Operator setup before the pitch:
+- Open the accepted flagship route locally.
+- Select JURY 30 S.
+- Reset once.
+- Confirm synthetic/non-affiliation banner is visible.
+- Do not improvise labels, figures or routes.
+
+0–05 s — Incident
+Action: trigger the 58-minute local outage.
+Say: "Grid returns; decision uncertainty does not."
+Must show: T1–T6 outside incident, T7 entirely HOLD, T8 not started.
+
+05–11 s — Memory
+Action: advance to case retrieval.
+Say: "ML retrieves comparable cases; it does not predict conformity."
+Must show: distance, differences and OOD/provenance cues.
+
+11–18 s — Futures
+Action: compare branches.
+Say: "The twin rejects restart-all and emergency-production paths."
+Must show: explicit hard-rule reasons.
+
+18–24 s — Live adversarial stress
+Action: lower the operator-entered power limit.
+Say: "Under this limit, no plan is feasible."
+Must show: NO FEASIBLE PLAN; no silent fallback.
+
+24–30 s — Restore + authority
+Action: restore the original limit and select staged Plan C.
+Say: "Recovery becomes feasible; the laboratory gate stays closed."
+Must show: T7 HOLD, T8 replanned, human/Quality gate.
+
+Abort rule:
+If the accepted route, reset, stress control or final state differs from
+the rehearsed evidence, stop the live interaction and use the static
+slide. Never explain a broken demo as a feature.
+
+======================================================================
+FOUR-MINUTE ADVERSARIAL Q&A
+======================================================================
+
+Q1 — Is the solution genuinely functional or only a scenario?
+A — The current public demonstrator is functional, deterministic and
+read-only. The factory data and incident are synthetic. It is not an
+industrial qualification, a certified safety system or machine control.
+
+Q2 — Where is the AI if the cases are synthetic?
+A — The ML demonstrates a transparent retrieval-and-ranking mechanism:
+neighbors, distance, differences and OOD warning. A pilot must recalibrate
+and benchmark it on the plant's real historical incidents. It never
+predicts conformity.
+
+Q3 — How does CableTwin know which cable length is affected?
+A — It reconstructs an investigation envelope from position, time and
+encoded process assumptions. It does not locate a certain defect. The
+entire seventh drum remains HOLD until tests and Quality release.
+
+Q4 — Why say 24 km if only T7 and T8 are affected?
+A — Twenty-four kilometres is the full synthetic customer order. T1–T6
+are outside the incident; T7 carries quality uncertainty; T8 carries the
+planning impact. We never claim to have saved 24 km.
+
+Q5 — Who is accountable if CableTwin recommends the wrong plan?
+A — CableTwin is consultative and read-only. Maintenance validates
+restart readiness, Energy confirms the power envelope, Quality holds or
+releases product, the laboratory provides evidence, Logistics accepts
+the partial shipment and the accountable plant manager signs the
+decision. CableTwin makes visible who must sign; it signs nothing.
+
+Q6 — Why can a 58-minute outage create hours of impact?
+A — The synthetic delay includes safe stop, inspection, ordered restart
+of auxiliaries, warm-up, stabilization, purge and controls. Every
+duration must be calibrated on the pilot line; 58 minutes implies no
+universal recovery duration.
+
+Q7 — Why do MES, APS, QMS, SCADA or Excel not solve this?
+A — They remain essential. CableTwin adds a bounded cross-domain what-if
+layer for one incident decision: energy, process, quality, people,
+material and delivery, with explicit provenance and human gates. It
+steps aside where an incumbent already solves the need.
+
+Q8 — What plant data does the pilot need?
+A — Line timestamps and states, energy meters, MES orders, quality
+events, material availability and operator decisions. The first pilot is
+read-only shadow mode with a planner-validated data contract.
+
+Q9 — How do you control cybersecurity risk?
+A — Local or edge deployment, network segmentation, least-privilege
+read-only inputs and an audit journal. No PLC command and no cloud
+dependency are required for the initial use case.
+
+Q10 — What is the business model and promised ROI?
+A — Paid diagnostic, bounded shadow pilot, then a per-line or per-site
+license with calibration and support. We promise no ROI before a measured
+baseline and pilot evidence.
+
+Q11 — How does it scale from a fictional line to many plants?
+A — The branch engine can be reusable, but constraints, data mappings,
+quality procedures and retrieval behavior are configured and validated
+per site. We do not claim a universal once-trained model.
+
+Q12 — Is the product useful only during Tunisian power cuts?
+A — No. The current Tunisian context makes the problem concrete. The
+same decision layer applies to site power limits, generator constraints,
+machine stops, material shortages and other industrial disruptions.
+
+Q13 — Yesterday's submission told a different demo story. Why the change?
+A — Yesterday proved the architecture on a scheduling incident: an
+exhaustive bounded verifier enumerated 17,856 candidates, 10,440 feasible
+schedules, and a traced human decision. Today I present the incident
+class the product exists for: one that crosses six domains. Same
+architecture, same limits, harder incident.
+
+Q14 — Why not run production on the backup generator?
+A — Sizing. The CCV process heaters and extruder drives dwarf a safety
+genset. In our scenario the generator keeps safety, control and cooling
+alive; production restart waits for the grid envelope.
+
+Q15 — What if the laboratory refuses to release drum seven?
+A — No surprise: Plan C never bet on T7. The 06:30 truck leaves with
+drums one to six, plus drum eight if the staged sequence holds. If the
+laboratory releases T7 it follows; if it refuses, a replacement drum is
+produced and the twin replans that order like any incident.
+
+Q16 — Why eight drums of three kilometres?
+A — The drum is the real decision unit: Quality holds a drum, the truck
+loads drums. The synthetic 8-by-3 structure gives the granularity that
+makes the decision visible: six outside, one held, one replanned.
+
+Q17 — Have you spoken to a cable plant?
+A — Not yet — and that is precisely my ask. I bring a public product,
+written limits and a ready read-only pilot protocol. I ask for access
+rather than pretending to have it.
+
+Q18 — Is the retrieval running in the public product today?
+A — The retrieval mechanism is implemented and unit-tested; its flagship
+integration is in acceptance review. The public product ships the
+ranking advisor today: it scores the three planner-built routes and
+never creates or edits a schedule.
+
+======================================================================
+CLAIM GUARDRAILS
+======================================================================
+
+SAFE
+- "Synthetic factory scenario."
+- "Operator-entered outage window."
+- "ML retrieves and ranks comparable cases."
+- "The twin compares bounded futures."
+- "Hard rules reject impossible plans."
+- "Quality, the laboratory and humans retain authority."
+- "Local, offline, read-only prototype."
+- "Pilot targets to agree."
+- "The exact verifier proves the encoded public demo
+  (17,856 -> 10,440) — never the flagship scenario."
+
+DO NOT SAY
+- "CableTwin predicts the outage."
+- "CableTwin predicts or certifies cable conformity."
+- "CableTwin saved 24 km."
+- "CableTwin located the defect."
+- "The generator powers production" — the canonical scenario allows
+  safety, control and cooling only.
+- "Live STEG, PLC, SCADA, MES or plant integration."
+- "Real factory data, customer pilot, revenue, ROI or savings."
+- "Certified safety system."
+- Never imply the exact verifier checked the flagship scenario.
+
+======================================================================
+SOURCE NOTES
+======================================================================
+
+Tunisian power-interruption context:
+https://www.tap.info.tn/fr/Portail-Titres-de-l-actualit%C3%A9/20404822-canicule-coupures
+https://www.lapresse.tn/2026/07/17/alerte-steg-des-coupures-delectricite-possibles-ce-soir-de-17h-a-21h-dans-plusieurs-regions/
+
+Human-in-loop digital-twin framing:
+https://www.nist.gov/publications/conceptual-architecture-digital-twins-human-loop-based-smart-manufacturing
+
+Industrial cable measurement context:
+https://sikora.net/en/products/xray8000nxt/
+
+Medium-voltage cable standard scope:
+https://webstore.iec.ch/en/publication/16382
+
+Incumbent APS comparison:
+https://www.siemens.com/en-gb/products/opcenter/advanced-planning-scheduling-aps/
+https://www.3ds.com/products/delmia/ortems
+
+These sources support context and category framing. They do not validate
+the synthetic factory outcomes or any CableTwin plant-performance claim.

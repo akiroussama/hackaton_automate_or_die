@@ -40,3 +40,33 @@ d4750c1f2c8becea35ddce054b96d92ed371cbfb4ca76ba8d0772284b3ad1cf3  01_CableTwin_S
 7d4c02b68712337aa80ff38d120ddb89a54206c5e5bb2beaa2e6d752985e9070  02_CableTwin_SUPCOM_Day3_Flagship_Speaker_Pack_CANDIDATE.pdf
 ccde6eabdeeabd430ef30f8703660ed0d4664a7e2f7989bf95a17fdb93d8250b  02_CableTwin_SUPCOM_Day3_Flagship_Speaker_Pack_CANDIDATE.txt
 be165d08c04ec852e32e100596a4022ea19fc6ff41a38454d3f5d3ee3b7a1f52  qa/candidate-inspect.ndjson
+
+Freeze addendum — 19 July 2026 13:35 (Claude Code, team-leader GO)
+==================================================================
+Scope: FINAL files generated from the candidate baseline. CANDIDATE
+files untouched (hashes above still valid).
+
+Edits (3, surgical, python-pptx on a copy):
+- S3: sixth constraint chip 06/material cloned from chip 05; separator
+  moved; banner retexted "LOCAL · OFFLINE · READ-ONLY" +
+  "hard constraints · human authority".
+- S4: fifth storyboard beat added; beats repositioned 1-5; beat 3 =
+  "Reject restart-all & emergency"; "5 beats" chip now accurate.
+- S9: PROVED NOW gains "Exact verifier · 17,856 -> 10,440".
+
+Verification:
+- PowerPoint COM opened the FINAL deck read-only, exported all 10
+  slides to PNG and SaveCopyAs PDF (10 pages, 627,682 bytes).
+- Slides 3, 4, 9 renders visually inspected at full size: six chips
+  aligned, five beats clear of the 30s/5-beats chips, S9 four-line
+  proof list clears the discipline banner. No overflow, no collision.
+- PDF text probes PASS: "06"+"material" on p3; "Reject restart-all"
+  and "Restore Plan C" on p4; "Exact verifier"+"17,856" on p9.
+- Speaker pack FINAL PDF: 5 A4 pages (reportlab Courier, glyphs
+  normalized); Q&A Q1-Q18 present.
+
+SHA-256 (FINAL)
+a9a61fc1c02ab76d4c634be2615adf4362b811cd218db47ade895e9f52a5c8ac  01_CableTwin_SUPCOM_Day3_Flagship_Pitch_FINAL.pptx
+50c4f94286631ee369bf663b53fe89e6670c449cecccc978af4207b18327e3ec  01_CableTwin_SUPCOM_Day3_Flagship_Pitch_FINAL.pdf
+a031fa7be883dce31bb1e49274a46f1aa31406c2d6e11b4999159982b61f659d  02_CableTwin_SUPCOM_Day3_Flagship_Speaker_Pack_FINAL.txt
+a8a9591cfd96034a4070fb2d60df6b5126c1db784d0774469ca11c6308644c46  02_CableTwin_SUPCOM_Day3_Flagship_Speaker_Pack_FINAL.pdf

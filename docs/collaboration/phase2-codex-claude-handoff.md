@@ -4958,3 +4958,80 @@ Next permitted action:
 
 - Produce and refine the three candidate scenario proposals with Oussama.
   No code, no branch work, no deployment until a design is approved.
+
+### 2026-07-19 13:35 - Claude Code (team leader in session) -> log: Day 3 flagship pitch FINAL frozen
+
+Task:
+
+Team-leader-directed finalization of the Day 3 pitch package. Oussama
+chose the pitch-refresh flagship narrative for TODAY's 14:00 Industry
+session (Room 206), superseding Day3/deliverables/ for room use
+(organizers explicitly allow a pivot between the submitted package and
+the presented pitch). Story validated in session (branches A/B/C,
+CCV physics, six constraints, five authorities) plus six decisions:
+D1 unified ML formula (retrieval+ranking, never predicts), D2 two-zone
+doctrine (scenario slides 1-4 vs proof slides 9-10), D3 slide-4
+fallback wording by default (live only after runtime ACCEPT — none
+happened, so fallback is in force), D4 generator = safety/control/
+cooling only, D5 five-signature authority map, D6 pivot phrase.
+
+Files changed:
+
+- `Day3/pitch-refresh/00_READ_ME_FIRST.txt` (FINAL status, hashes)
+- `Day3/pitch-refresh/qa/QA_EVIDENCE.txt` (freeze addendum)
+- this coordination file
+
+Files generated:
+
+- `Day3/pitch-refresh/01_CableTwin_SUPCOM_Day3_Flagship_Pitch_FINAL.pptx`
+  (3 surgical edits vs CANDIDATE: S3 six constraint chips incl. 06
+  material; S4 five-beat storyboard with beat 3 "Reject restart-all &
+  emergency"; S9 proof line "Exact verifier · 17,856 -> 10,440")
+- `..._Pitch_FINAL.pdf` (10 pages, PowerPoint COM SaveCopyAs)
+- `..._Speaker_Pack_FINAL.txt` (scripts aligned; Q&A 12 -> 18: pivot,
+  generator, lab refusal, drums, plant contact, retrieval-in-prod;
+  two-zone guardrail added)
+- `..._Speaker_Pack_FINAL.pdf` (5 A4 pages)
+- CANDIDATE files byte-identical (Codex baseline preserved).
+
+Commit:
+
+- follows this entry on `codex/day3-pitch-refresh` (explicit file adds,
+  no `git add .`; PowerPoint `~$` lock file excluded)
+
+Commands run:
+
+- python-pptx edits on a copy; PowerPoint COM PNG export of all 10
+  slides + PDF; pypdf text probes; reportlab speaker-pack PDF; sha256sum.
+
+Verification result:
+
+- Renders of S3/S4/S9 visually inspected: no overflow/collision; PDF
+  probes pass; hashes recorded in qa/QA_EVIDENCE.txt.
+
+Canonical metrics checked:
+
+- No product metric touched. The only number added to the deck is the
+  canonical 17,856 -> 10,440 pair, placed in the proof zone (S9) and
+  guarded as public-product evidence, never flagship-scenario evidence.
+
+Known limitations:
+
+- The flagship 5-beat runtime was never implemented; slide-4 live
+  wording remains locked behind a future runtime ACCEPT. The room uses
+  the pre-accept fallback wording.
+
+Open risks:
+
+- none new; the 21 July finale scenario design track remains open as
+  per the 2026-07-19 team-leader directive above.
+
+Next owner:
+
+- Claude Code (room support for Oussama; no repository action pending).
+  Codex: no pending action on this track.
+
+Next permitted action:
+
+- After the 14:00 session: resume the finale-scenario design track (or
+  demo implementation) only on a new team-leader instruction.
