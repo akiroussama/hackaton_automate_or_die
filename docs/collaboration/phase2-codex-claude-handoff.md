@@ -73,16 +73,33 @@ resolved before the document is reused.
 ## 4. First lock
 
 **Current owner:** Claude Code
-**Status:** CRITICAL RESTART LAB — Codex independently re-reviewed commit
-`ec447c8` and issued a second bounded `REVISE`. The core CR-05, alarm,
-overlapping-cohort and focus-return corrections pass, but exact Reset,
-historical-source drift protection, the keyboard gate, hash-contract
-consistency and audit-source presentation still have reproducible gaps. See
-the 2026-07-19 06:46 handoff at the end of this file.
-**Task:** Correct only the bounded second-REVISE block, rerun its exact return
-evidence, commit and push on `codex/day3-pitch`, then transfer the same
-improvement to Codex for a new independent verdict. No deployment, jury use
-or other improvement opens.
+**Status:** CRITICAL RESTART LAB ABANDONED — team-leader directive (Oussama,
+2026-07-19, in session). Verbatim concern: the Texas City / BP scenario pulls
+the story away from CableTwin's own identity by borrowing a real documented
+incident from an unrelated industry (refining, not cable manufacturing). This
+supersedes the 06:46 second-`REVISE` block below — its findings are now moot.
+**Effective immediately:**
+- Codex: STOP all further work on the Critical Restart Lab. No third review,
+  no reply to the pending second-`REVISE` correction request. If an
+  autonomous loop wakes up expecting a Claude handoff on this track, there is
+  none coming — this note is the terminal state.
+- Claude: STOP all further correction of the six second-`REVISE` findings.
+  No more commits to `critical-restart/**` or `engine/critical-restart-*.js`.
+- The `codex/day3-pitch` branch and its `critical-restart/` code are left
+  exactly as last pushed (`ec447c8` app code, `6a3b2b2` mailbox) — kept as
+  history/reference only. Not merged, not deployed, not extended.
+- Unaffected and unchanged: the accepted Day 3 4-minute selection-pitch
+  package (`Day3/deliverables/`), the production CableTwin twin (`app/`,
+  `engine/twin-engine.js`, the ML recommender), `packaging/`, both immutable
+  Phase 2 tags.
+**Task:** Claude now designs a NEW flagship scenario for the 21 July
+expert-jury finale (if CableTwin is selected tomorrow) — CableTwin-native
+(cable factory, not a borrowed incident), roughly 5x the depth of the current
+90-second demo (targeting a 5-8 minute finale slot), spanning workforce,
+energy, raw-material and logistics constraints in addition to the existing
+line-scheduling ones. Design/brainstorming phase first: three candidate
+scenarios in text, converging with Oussama before any code. No implementation
+begins until a design is approved.
 **Freeze:** `packaging/`, `phase2-final` and `phase2-submission-final` remain
 unchanged. The Day 2 video selected and accepted by Oussama is frozen and was
 not re-reviewed by Codex after that acceptance.
@@ -4902,3 +4919,42 @@ Next permitted action:
 - Correct only this second bounded `REVISE`, commit and push on
   `codex/day3-pitch`, then transfer the same improvement to Codex for a new
   independent verdict. No deployment or other improvement.
+
+### 2026-07-19 (local) - Oussama -> Claude Code / Codex: Critical Restart Lab abandoned; new CableTwin-native finale scenario ordered
+
+Team-leader direction (verbatim intent, in session with Claude Code):
+
+- Stepping back: the Texas City / BP Critical Restart Lab pulls the
+  presentation away from CableTwin's own identity — it borrows a real
+  documented incident from an unrelated industry (oil refining) instead of
+  telling the cable-factory story the product is actually about.
+- Decision (both explicitly confirmed): abandon the Critical Restart Lab
+  entirely — no third review round, no further correction. The
+  `codex/day3-pitch` branch keeps the code as-is for history only; it is not
+  merged, deployed or extended further.
+- New objective: design a materially deeper, CableTwin-native flagship
+  scenario for the possible 21 July expert-jury finale (Tunisia Global
+  Forum, if CableTwin is one of the three selected teams) — targeting
+  roughly 5x the depth/duration of the existing 90-second Line-2-stop demo
+  (a 5-8 minute finale slot, distinct from tomorrow's already-delivered
+  4-minute selection pitch), spanning workforce/human, energy, raw-material
+  and logistics constraints in addition to the existing line-scheduling
+  ones, to make the case for the AI-augmented digital twin unmistakable.
+- Process: brainstorm first. Claude proposes three candidate scenarios in
+  text; Oussama and Claude converge before any implementation begins.
+
+Status: Claude Code is running the design/brainstorming phase now (no
+repository code changes). Codex has no pending action on this track — the
+Critical Restart Lab review thread is closed, terminal state above. Codex's
+production-twin and Day 3 selection-pitch deliverables are unaffected and
+remain accepted as-is.
+
+Next owner:
+
+- Claude Code (design phase only; will re-open coordination once a scenario
+  is chosen and implementation is authorized).
+
+Next permitted action:
+
+- Produce and refine the three candidate scenario proposals with Oussama.
+  No code, no branch work, no deployment until a design is approved.
