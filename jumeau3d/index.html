@@ -92,6 +92,62 @@
       .fallback { position:absolute; inset:0; display:none; align-items:center; justify-content:center; text-align:center; padding:40px; }
       .fallback.on { display:flex; }
 
+      /* ---- SmartCable — Minority-Report liquid-glass workflow ---- */
+      .wf-dim { position:absolute; inset:0; background:rgba(4,16,14,.36); opacity:0; pointer-events:none; transition:opacity .4s; z-index:7; }
+      .wf-dim.on { opacity:1; pointer-events:auto; }
+      .wf { position:absolute; left:50%; top:52%; transform:translate(-50%,-50%) scale(.97); width:min(1120px,95vw); max-height:min(690px,84vh); display:flex; flex-direction:column; border-radius:22px; border:1px solid rgba(56,193,177,.38); background:linear-gradient(160deg, rgba(11,41,38,.60), rgba(5,23,21,.52)); backdrop-filter:blur(12px) saturate(1.25); -webkit-backdrop-filter:blur(12px) saturate(1.25); box-shadow:0 30px 90px rgba(0,0,0,.55), inset 0 0 70px rgba(56,193,177,.05); opacity:0; pointer-events:none; transition:opacity .35s ease, transform .35s ease; z-index:8; overflow:hidden; }
+      .wf.on { opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1); }
+      body.wf-open .caption { opacity:0; pointer-events:none; }
+      .wf-head { display:flex; align-items:center; gap:12px; padding:12px 18px; border-bottom:1px solid rgba(56,193,177,.22); }
+      .wf-badge { font-size:.6rem; font-weight:800; letter-spacing:.1em; color:var(--red); border:1px solid rgba(224,90,79,.55); border-radius:999px; padding:3px 10px; background:rgba(224,90,79,.12); animation:wfPulse 1.6s ease-in-out infinite; white-space:nowrap; }
+      @keyframes wfPulse { 0%,100%{opacity:1} 50%{opacity:.55} }
+      .wf-title { font-weight:750; font-size:.95rem; }
+      .wf-clock { margin-left:auto; font-family:var(--mono); font-size:.8rem; color:var(--orange); white-space:nowrap; }
+      .wf-auto.on { background:var(--mint); color:var(--deep); border-color:var(--mint); }
+      .wf-body { flex:1; overflow:auto; padding:20px 24px; }
+      .wf-foot { padding:9px 18px; border-top:1px solid rgba(56,193,177,.18); font-size:.62rem; color:var(--muted); text-align:center; }
+      .wf-foot b { color:var(--mint); }
+      .wf h2 { margin:0 0 6px; font-size:1.5rem; letter-spacing:-.01em; }
+      .wf-alert-grid { display:grid; grid-template-columns:1.2fr .8fr; gap:18px; align-items:start; }
+      .wf-kv { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
+      .wf-kv .row { display:flex; justify-content:space-between; gap:14px; border:1px solid rgba(56,193,177,.18); background:rgba(5,23,21,.45); border-radius:10px; padding:8px 12px; font-size:.8rem; }
+      .wf-kv .row b { font-family:var(--mono); }
+      .wf-min { font-family:var(--mono); font-size:2.6rem; color:var(--orange); text-shadow:0 0 24px rgba(233,118,59,.5); line-height:1; }
+      .wf-cta { margin-top:16px; font-size:.9rem; padding:12px 20px; }
+      .wf-log { font-family:var(--mono); font-size:.72rem; line-height:1.55; background:rgba(3,14,12,.6); border:1px solid rgba(56,193,177,.2); border-radius:12px; padding:12px 14px; height:300px; overflow:auto; }
+      .wf-log div { opacity:0; animation:wfLine .25s forwards; white-space:pre-wrap; }
+      @keyframes wfLine { to{opacity:1} }
+      .lg{color:#7fd6c8} .lr{color:#ff8378} .lo{color:#ffb46e} .lm{color:var(--mint)} .lc{color:var(--cream)}
+      .wf-diag-grid { display:grid; grid-template-columns:1.35fr .65fr; gap:16px; }
+      .wf-spec { border:1px solid rgba(56,193,177,.22); border-radius:12px; background:rgba(5,23,21,.5); padding:8px; text-align:center; }
+      .wf-spec small { display:block; font-size:.56rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:4px; }
+      .wf-spec canvas { width:100%; height:auto; border-radius:8px; }
+      .wf-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:12px; }
+      .wf-card { border:1px solid rgba(56,193,177,.28); border-radius:14px; background:rgba(9,41,37,.55); padding:14px; transition:transform .15s, border-color .15s; cursor:pointer; }
+      .wf-card:hover { transform:translateY(-2px); border-color:rgba(56,193,177,.6); }
+      .wf-card h3 { margin:2px 0 6px; font-size:1rem; }
+      .wf-card .tagid { font-family:var(--mono); font-size:.68rem; color:var(--muted); }
+      .wf-card p { margin:0; font-size:.72rem; color:var(--muted); line-height:1.4; }
+      .wf-card.rej { border-color:rgba(224,90,79,.55); background:rgba(224,90,79,.10); }
+      .wf-card.reco { border-color:var(--mint); box-shadow:0 0 0 1px rgba(201,243,107,.35); background:rgba(201,243,107,.10); }
+      .wf-verdict { display:inline-block; margin-top:8px; font-size:.56rem; font-weight:800; letter-spacing:.08em; padding:3px 8px; border-radius:999px; border:1px solid rgba(56,193,177,.4); color:var(--teal-bright); }
+      .wf-card.rej .wf-verdict, .wf-verdict.vrej { color:var(--red); border-color:rgba(224,90,79,.5); }
+      .wf-card.reco .wf-verdict, .wf-verdict.vreco { background:var(--mint); color:var(--deep); border-color:var(--mint); }
+      .wf-lane { border:1px solid rgba(56,193,177,.2); border-radius:12px; padding:10px 14px; margin-top:10px; background:rgba(5,23,21,.45); }
+      .wf-lane .bar { height:7px; border-radius:99px; background:rgba(56,193,177,.15); overflow:hidden; margin-top:8px; }
+      .wf-lane .fill { height:100%; width:0%; background:linear-gradient(90deg, var(--teal-bright), var(--mint)); transition:width 2.3s cubic-bezier(.3,.8,.4,1); }
+      .wf-lane.rej .fill { background:linear-gradient(90deg,#ff9d7a,var(--red)); }
+      .wf-lane .st { font-family:var(--mono); font-size:.66rem; color:var(--muted); margin-top:6px; min-height:1em; }
+      .wf-lane .res { font-family:var(--mono); font-size:.7rem; margin-top:4px; opacity:0; transition:opacity .3s; }
+      .wf-lane .res.on { opacity:1; }
+      .wf-detail table { width:100%; border-collapse:collapse; font-size:.76rem; margin-top:10px; }
+      .wf-detail td { padding:7px 10px; border-bottom:1px solid rgba(56,193,177,.14); }
+      .wf-detail td:last-child { text-align:right; font-family:var(--mono); }
+      .ok-t{color:var(--teal-bright)} .bad-t{color:var(--red)} .warn-t{color:var(--orange)} .mint-t{color:var(--mint)}
+      .wf-back { margin-top:14px; }
+      @media (max-width:900px){ .wf-alert-grid,.wf-diag-grid{grid-template-columns:1fr} .wf-cards{grid-template-columns:1fr} }
+      @media (prefers-reduced-motion: reduce){ .wf,.wf-dim{transition:none} .wf-badge{animation:none} .wf-lane .fill{transition:width .4s} }
+
       @media (max-width:900px){ .telemetry{display:none} .decision{max-width:90vw} .caption .ct-text{font-size:1.02rem} }
       @media (prefers-reduced-motion: reduce){ .decision,.nofeasible,.tooltip,.caption,.relight{transition:none} }
     </style>
@@ -164,6 +220,20 @@
       <div class="footer">Prototype d'aide à la décision. Données usine et résultats modèles synthétiques, à calibrer. CableTwin n'est ni un système de sécurité, ni un système de contrôle, ni une autorité de libération produit.</div>
 
       <div class="tooltip" id="tooltip"></div>
+
+      <div class="wf-dim" id="wf-dim"></div>
+      <div class="wf" id="wf" role="dialog" aria-modal="true" aria-label="SmartCable — gestion de l'incident">
+        <div class="wf-head">
+          <span class="wf-badge">⚠ INCIDENT EN COURS</span>
+          <span class="wf-title">Coupure réseau — ligne CCV</span>
+          <span class="wf-clock" id="wf-clock">17:42 · +0 min sans production</span>
+          <button class="btn wf-auto" id="wf-auto" title="Défilement automatique (répétition)">AUTO</button>
+          <button class="btn" id="wf-x" aria-label="Fermer le workflow">✕</button>
+        </div>
+        <div class="wf-body" id="wf-body"></div>
+        <div class="wf-foot"><b>SmartCable</b> · IA de recommandation — déployée 100 % en local, conçue pour être entraînée sur les données privées de l'usine. Démo : données synthétiques.</div>
+      </div>
+
       <div class="fallback" id="fallback"><div><h2>WebGL indisponible</h2><p>Ce jumeau 3D nécessite un navigateur avec WebGL activé.</p></div></div>
     </div>
 
@@ -196,7 +266,7 @@
       // asset). Guarded: if it ever fails the scene still renders without reflections.
       try {
         const pmrem = new THREE.PMREMGenerator(renderer);
-        scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.05).texture;
+        scene.environment = pmrem.fromScene(new RoomEnvironment()).texture;
       } catch(e) { /* no env map — materials fall back to lights only */ }
       const ENV_I = 0.35; // per-material env intensity (r160-safe)
 
@@ -521,7 +591,7 @@
         globalTarget = 0.42;                       // hall comes back progressively
         for(const em of emergencyLights){ em.target=em.base*0.5; }
         $('relight').classList.add('on');
-        const step = 1700/speedFactor();
+        const step = 1500/speedFactor();
         RELIGHT.forEach((r,i)=>{
           relightTimers.push(setTimeout(()=>{
             $('relight-step').textContent = r.n;
@@ -541,52 +611,275 @@
       const setClock=(v)=>$('clock').textContent=v;
       function setCountdown(v){ const e=$('countdown'); if(v==null) e.classList.remove('on'); else { e.classList.add('on'); e.textContent=v; } }
 
+      /* ============== SmartCable — liquid-glass incident workflow ============== */
+      let wfTimers=[], wfAuto=false, wfOpenFlag=false;
+      const wfEl=$('wf'), wfDim=$('wf-dim'), wfBody=$('wf-body');
+      function wfT(fn,ms){ wfTimers.push(setTimeout(fn,ms)); }
+      function clearWfTimers(){ wfTimers.forEach(clearTimeout); wfTimers=[]; }
+      // The workflow clock drives BOTH the HUD sim clock and the elapsed badge —
+      // the outage becomes preparation time, counted in minutes.
+      function wfClock(clockStr, elapsedMin){
+        setClock(clockStr);
+        $('wf-clock').textContent = clockStr+' · +'+elapsedMin+' min sans production';
+        const left = 58-elapsedMin;
+        setCountdown(left>0 ? String(left).padStart(2,'0')+':00' : null);
+      }
+      function openWorkflow(){
+        if(wfOpenFlag) return;
+        wfOpenFlag=true; clearWfTimers();
+        playing=false; $('play').textContent='▶ Lire';
+        document.body.classList.add('wf-open');
+        wfDim.classList.add('on'); wfEl.classList.add('on');
+        flyTo('decision', 2200);
+        wfScreenAlert();
+      }
+      function closeWorkflow(){
+        wfOpenFlag=false; clearWfTimers();
+        document.body.classList.remove('wf-open');
+        wfDim.classList.remove('on'); wfEl.classList.remove('on');
+      }
+      $('wf-x').onclick=()=>{ closeWorkflow(); caption('en pause','Workflow fermé — « Rejouer » pour recommencer.','info'); };
+      $('wf-auto').onclick=()=>{ wfAuto=!wfAuto; $('wf-auto').classList.toggle('on', wfAuto); };
+      addEventListener('keydown',(e)=>{ if(e.key==='Escape'&&wfOpenFlag) $('wf-x').click(); });
+
+      /* ---- procedural spec cards (offline: no external image) ---- */
+      function drawCableSpec(cv){
+        const x=cv.getContext('2d'); const cx=150, cy=100;
+        x.fillStyle='#04140f'; x.fillRect(0,0,300,210);
+        const rings=[[84,'#0c1917'],[72,'#b87333'],[64,'#14201d'],[56,'#dff2ec'],[27,'#1a1a14'],[21,'#b87333']];
+        rings.forEach(([r,c])=>{ x.fillStyle=c; x.beginPath(); x.arc(cx,cy,r,0,Math.PI*2); x.fill(); });
+        x.strokeStyle='#38c1b1'; x.fillStyle='#8fd0c7'; x.font='10px ui-monospace,Consolas,monospace'; x.lineWidth=1;
+        [[84,'gaine ext.'],[72,'écran Cu'],[56,'isolation XLPE'],[21,'âme cuivre']].forEach(([r,t],i)=>{
+          const a=-1.15+i*0.55, px=cx+Math.cos(a)*r, py=cy+Math.sin(a)*r;
+          x.beginPath(); x.moveTo(px,py); x.lineTo(px+34,py-16); x.stroke(); x.fillText(t,px+36,py-18);
+        });
+        x.fillStyle='#c9f36b'; x.font='bold 11px ui-monospace,Consolas,monospace';
+        x.fillText('XLPE 12/20 kV — schéma synthétique',12,200);
+      }
+      function drawCCVSpec(cv){
+        const x=cv.getContext('2d');
+        x.fillStyle='#04140f'; x.fillRect(0,0,300,130);
+        const g=x.createLinearGradient(20,0,280,0);
+        g.addColorStop(0,'#e9763b'); g.addColorStop(.5,'#38c1b1'); g.addColorStop(1,'#2a8fd0');
+        x.strokeStyle=g; x.lineWidth=13; x.lineCap='round';
+        x.beginPath(); x.moveTo(20,46); x.lineTo(280,80); x.stroke();
+        x.fillStyle='#8fd0c7'; x.font='10px ui-monospace,Consolas,monospace';
+        ['Z1 chauffe','Z2 réticulation','Z3 refroid.','Z4 sortie'].forEach((t,i)=> x.fillText(t, 22+i*66, 112));
+        x.fillStyle='#e9763b'; x.beginPath(); x.arc(20+0.62*260, 46+0.62*34, 6, 0, Math.PI*2); x.fill();
+        x.fillStyle='#c9f36b'; x.font='bold 11px ui-monospace,Consolas,monospace';
+        x.fillText('Tube CCV — T7 à 62 % du run',12,20);
+      }
+
+      /* ---- S1 · alert ---- */
+      function wfScreenAlert(){
+        wfClock('17:42', 0);
+        wfBody.innerHTML = `
+          <div class="wf-alert-grid">
+            <div>
+              <div style="font-size:2.2rem">⚡</div>
+              <h2>Coupure d'alimentation réseau</h2>
+              <p style="color:var(--muted); font-size:.85rem; margin:0;">La source de secours alimente <b style="color:var(--cream)">sécurité, contrôle et refroidissement</b>. Elle ne permet pas de produire. Le touret <b style="color:var(--orange)">T7 est arrêté dans la ligne CCV</b>.</p>
+              <div class="wf-kv">
+                <div class="row"><span>Début de coupure</span><b>17:42</b></div>
+                <div class="row"><span>Durée annoncée possible <span style="color:var(--teal-bright)">(fenêtre publiée — saisie opérateur)</span></span><b class="warn-t">jusqu'à 60 minutes</b></div>
+                <div class="row"><span>Engagement client</span><b>24 km · 8 tourets · camion 06:30</b></div>
+                <div class="row"><span>Statut T7</span><b class="warn-t">HOLD — historique incomplet</b></div>
+              </div>
+              <button class="btn primary wf-cta" id="wf-go-diag">Lancer le diagnostic SmartCable →</button>
+            </div>
+            <div style="text-align:center; padding-top:26px;">
+              <div class="wf-min" id="wf-min">0 min</div>
+              <small style="display:block; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:8px;">sans production — chaque minute compte</small>
+            </div>
+          </div>`;
+        let m=0;
+        const tick=()=>{ m+=1; const el=document.getElementById('wf-min'); if(el) el.textContent=m+' min'; if(m<4) wfT(tick, 900); };
+        wfT(tick, 900);
+        document.getElementById('wf-go-diag').onclick=wfScreenDiag;
+        if(wfAuto) wfT(()=>document.getElementById('wf-go-diag')?.click(), 3200);
+      }
+
+      /* ---- S2 · FBI-style diagnostic log (real k-NN trace, matrix colors) ---- */
+      const LOG_LINES=[
+        ['lc','17:43:12 · SmartCable démarré — exécution 100 % locale, hors réseau'],
+        ['lg','17:43:13 · Historique ligne CCV chargé — 1 248 points · OK'],
+        ['lo','17:43:14 · Fenêtre d’historique incomplète : 17:42 → … (perte capteurs process)'],
+        ['lc','17:43:15 · Features : durée_arrêt=?, position_run=62 %, dérive_centrage=0,18 mm (surveillance)'],
+        ['lg','17:43:16 · Recherche de cas analogues — k-NN (k=3), pondérations inspectables'],
+        ['lg','17:43:17 ·   CAS-02 · d=0,196 · commun : puissance dispo, stock de reprise'],
+        ['lg','17:43:17 ·   CAS-06 · d=0,241 · diff : durée d’arrêt, disponibilité des rôles'],
+        ['lg','17:43:18 ·   CAS-03 · d=0,282 · diff : dérive dimensionnelle avant arrêt'],
+        ['lg','17:43:19 · Contrôle hors-distribution : d_moy=0,240 < seuil 0,42 → DANS LE DOMAINE'],
+        ['lr','17:43:21 · R-QUALITY · T7 → HOLD entier — intervalle à investiguer : 126 m (sortie synthétique)'],
+        ['lr','17:43:22 · R-BACKUP · production sur groupe électrogène : INTERDIT'],
+        ['lc','17:43:24 · Enveloppe interne de reprise : 1,50 MW · kits qualifiés : 2 · autorité Qualité : 1'],
+        ['lm','17:43:26 · 3 stratégies candidates dérivées des cas analogues — résultats non calculés'],
+        ['lm','17:43:26 · Prêt pour simulation par le jumeau numérique'],
+      ];
+      function wfScreenDiag(){
+        wfClock('17:46', 4);
+        wfBody.innerHTML = `
+          <h2 style="font-size:1.15rem">Diagnostic SmartCable — analyse de l'historique</h2>
+          <div class="wf-diag-grid">
+            <div class="wf-log" id="wf-log" aria-live="polite"></div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div class="wf-spec"><canvas id="spec-cable" width="300" height="210"></canvas><small>Coupe câble MT XLPE 12/20 kV</small></div>
+              <div class="wf-spec"><canvas id="spec-ccv" width="300" height="130"></canvas><small>Ligne CCV — zones thermiques</small></div>
+            </div>
+          </div>
+          <button class="btn primary wf-cta" id="wf-go-cand" disabled style="opacity:.4">Voir les stratégies candidates →</button>`;
+        drawCableSpec(document.getElementById('spec-cable'));
+        drawCCVSpec(document.getElementById('spec-ccv'));
+        const log=document.getElementById('wf-log');
+        LOG_LINES.forEach((l,i)=> wfT(()=>{ const d=document.createElement('div'); d.className=l[0]; d.textContent=l[1]; log.appendChild(d); log.scrollTop=log.scrollHeight; }, 240+i*220));
+        const done=240+LOG_LINES.length*220;
+        const btn=document.getElementById('wf-go-cand');
+        wfT(()=>{ btn.disabled=false; btn.style.opacity='1'; wfClock('17:52',10); }, done+250);
+        btn.onclick=wfScreenCandidates;
+        if(wfAuto) wfT(()=>{ if(!btn.disabled) btn.click(); }, done+1400);
+      }
+
+      /* ---- S3 · three candidate strategies (no results yet) ---- */
+      const CAND=[
+        { id:'A', t:'Tout redémarrer', d:'Relancer simultanément toutes les charges pour minimiser le temps d’arrêt.', src:'observé dans les cas analogues' },
+        { id:'B', t:'Reprise conservatrice', d:'Contrôles, purge et requalification étendus avant redémarrage complet.', src:'dérivé de CAS-06' },
+        { id:'C', t:'Reprise séquencée', d:'Rallumage par étapes dans l’ordre des interlocks, pic de puissance contenu.', src:'dérivé de CAS-02' },
+      ];
+      function wfScreenCandidates(){
+        wfClock('17:58', 16);
+        wfBody.innerHTML=`
+          <h2 style="font-size:1.15rem">3 stratégies candidates — proposées, pas encore évaluées</h2>
+          <p style="color:var(--muted); font-size:.78rem; margin:4px 0 0;">SmartCable propose ; il ne connaît pas encore les conséquences. Le jumeau numérique va simuler chaque stratégie contre les contraintes encodées : énergie, machine, matière, humain, qualité, logistique.</p>
+          <div class="wf-cards">${CAND.map(c=>`
+            <div class="wf-card" data-c="${c.id}">
+              <span class="tagid">Stratégie ${c.id} · ${c.src}</span>
+              <h3>${c.t}</h3><p>${c.d}</p>
+              <span class="wf-verdict">RÉSULTAT : NON CALCULÉ</span>
+            </div>`).join('')}</div>
+          <button class="btn primary wf-cta" id="wf-go-sim">Simuler avec le jumeau numérique →</button>`;
+        document.getElementById('wf-go-sim').onclick=wfScreenSim;
+        if(wfAuto) wfT(()=>document.getElementById('wf-go-sim')?.click(), 2600);
+      }
+
+      /* ---- S4 · the twin simulates the three futures in parallel ---- */
+      const SIM_STEPS=['état initial reconstruit','interlocks machine','pic de puissance','matière de reprise','conflits humains','fenêtre logistique'];
+      function wfScreenSim(){
+        wfClock('18:05', 23);
+        wfBody.innerHTML=`
+          <h2 style="font-size:1.15rem">Jumeau numérique — simulation des 3 futurs en parallèle</h2>
+          ${['A','B','C'].map(id=>`
+            <div class="wf-lane" id="lane-${id}">
+              <b style="font-family:var(--mono); font-size:.8rem;">Stratégie ${id} · ${CAND.find(c=>c.id===id).t}</b>
+              <div class="bar"><div class="fill" id="fill-${id}"></div></div>
+              <div class="st" id="st-${id}">initialisation…</div>
+              <div class="res" id="res-${id}"></div>
+            </div>`).join('')}`;
+        ['A','B','C'].forEach((id,k)=>{
+          wfT(()=>{ const f=document.getElementById('fill-'+id); if(f) f.style.width='100%'; }, 150+k*120);
+          SIM_STEPS.forEach((s,i)=> wfT(()=>{ const e=document.getElementById('st-'+id); if(e) e.textContent=s+'…'; }, 300+k*120+i*330));
+        });
+        wfT(()=>{ const l=document.getElementById('lane-A'); if(!l) return; l.classList.add('rej');
+          const r=document.getElementById('res-A'); r.innerHTML='<span class="bad-t">✕ VIOLATION R-ENERGY — pic 1,74 MW &gt; enveloppe 1,50 MW · simulation arrêtée</span>'; r.classList.add('on');
+          document.getElementById('st-A').textContent='rejet dur à la première règle violée'; }, 1500);
+        wfT(()=>{ const r=document.getElementById('res-B'); if(!r) return; r.innerHTML='<span class="ok-t">✓ FAISABLE — 190 min · 2 kits · autorité Qualité mobilisée sur T7</span>'; r.classList.add('on'); }, 2400);
+        wfT(()=>{ const r=document.getElementById('res-C'); if(!r) return; r.innerHTML='<span class="mint-t">✓ FAISABLE — 150 min · 1 kit · premier camion préservé</span>'; r.classList.add('on'); }, 2700);
+        wfT(()=>{ wfClock('18:22',40); wfScreenResults(); }, 3500);
+      }
+
+      /* ---- S5 · results + detail reports ---- */
+      const REPORT={
+        A:{ cls:'rej', vc:'vrej', v:'REJETÉ · R-ENERGY', rows:[
+            ['Pic de reprise','1,74 MW','bad-t'],['Enveloppe interne','1,50 MW','lc'],
+            ['Interlocks machine','extrusion avant prérequis','bad-t'],['Verdict','rejet dur — première règle violée affichée','bad-t']],
+          note:'Le jumeau n’invente pas de solution : une stratégie qui viole une règle dure est rejetée, pas « optimisée ».' },
+        B:{ cls:'', vc:'', v:'FAISABLE', rows:[
+            ['Pic de reprise','1,43 MW','ok-t'],['Durée','190 min','lc'],['Kits matière','2 / 2','warn-t'],
+            ['Autorité Qualité','mobilisée sur requalif T7','warn-t'],['Dossiers T1–T6 avant 05:45','en risque','warn-t'],['Premier camion 06:30','en risque','warn-t']],
+          note:'Valide, mais consomme la seule autorité Qualité pendant la clôture des dossiers T1–T6.' },
+        C:{ cls:'reco', vc:'vreco', v:'RECOMMANDÉ · SmartCable', rows:[
+            ['Pic de reprise','1,28 MW','mint-t'],['Durée','150 min','lc'],['Kits matière','1 / 2','ok-t'],
+            ['Autorité Qualité','dossiers T1–T6 avant 05:45','ok-t'],['Premier camion 06:30','préservé (sous hypothèses)','mint-t'],
+            ['T7','HOLD — attend le laboratoire','warn-t'],['T8','replanifié','lc']],
+          note:'Critères visibles : pic, matière, conflit de ressources, logistique. La recommandation n’est ni une certification ni un ordre — la décision reste humaine.' },
+      };
+      function wfScreenResults(){
+        wfBody.innerHTML=`
+          <h2 style="font-size:1.15rem">Résultats simulés — cliquez une stratégie pour son rapport</h2>
+          <div class="wf-cards">${['A','B','C'].map(id=>{ const r=REPORT[id], c=CAND.find(x=>x.id===id); return `
+            <div class="wf-card ${r.cls}" data-r="${id}">
+              <span class="tagid">Stratégie ${id}</span><h3>${c.t}</h3>
+              <p>${r.rows.slice(0,2).map(x=>x[0]+' : '+x[1]).join(' · ')}</p>
+              <span class="wf-verdict">${r.v}</span>
+            </div>`; }).join('')}</div>`;
+        wfBody.querySelectorAll('[data-r]').forEach(el=> el.onclick=()=>wfScreenDetail(el.dataset.r));
+        if(wfAuto) wfT(()=>wfScreenDetail('C'), 2200);
+      }
+      function wfScreenDetail(id){
+        const r=REPORT[id], c=CAND.find(x=>x.id===id);
+        wfBody.innerHTML=`
+          <div class="wf-detail">
+            <span style="font-family:var(--mono); font-size:.72rem; color:var(--muted);">Rapport de simulation · Stratégie ${id}</span>
+            <h2 style="font-size:1.3rem">${c.t} <span class="wf-verdict ${r.vc}" style="vertical-align:middle; margin-left:8px;">${r.v}</span></h2>
+            <table>${r.rows.map(x=>`<tr><td>${x[0]}</td><td class="${x[2]}">${x[1]}</td></tr>`).join('')}</table>
+            <p style="font-size:.72rem; color:var(--muted); margin-top:10px;">${r.note}</p>
+            ${id==='C' ? '<button class="btn primary wf-cta" id="wf-run-future">▶ Simuler ce scénario dans l’usine</button>' : ''}
+            <div><button class="btn wf-back" id="wf-back">← Retour aux résultats</button></div>
+          </div>`;
+        document.getElementById('wf-back').onclick=wfScreenResults;
+        const run=document.getElementById('wf-run-future');
+        if(run) run.onclick=playFuture;
+        if(wfAuto && id==='C') wfT(()=>run?.click(), 2600);
+      }
+
+      /* ---- S6 · the glass dissolves, the future plays in the plant ---- */
+      function playFuture(){
+        closeWorkflow();
+        setCountdown(null); setClock('18:40'); flagT7(true);
+        setDecision(false); setNoFeasible(false);
+        caption('18:40','Réseau revenu — le plan est déjà prêt. Exécution de la reprise séquencée.','good');
+        flyTo('travelA', 1600);
+        runRelight();
+        timers.push(setTimeout(()=>flyTo('travelB', 8200/speedFactor()), 1400/speedFactor()));
+        timers.push(setTimeout(()=>{ setClock('18:52');
+          caption('gouvernance','Le futur, vérifié avant d’agir — le laboratoire libère, les humains décident.','good');
+          flyTo('gov', 2600); }, 10200/speedFactor()));
+      }
+
       /* ---------------- timeline ---------------- */
       let speedIdx=0; const SPEEDS=[1,2,4]; const speedFactor=()=>SPEEDS[speedIdx];
-      let playing=true, timers=[], cdTimer=null;
+      let playing=true, timers=[];
 
+      // Auto timeline: nominal -> blackout -> "tout est arrêté" -> the SmartCable
+      // glass workflow takes over (click-driven). The relight/governance ending
+      // is triggered by the workflow's "Simuler ce scénario" (playFuture).
       const BEATS=[
-        { dur:6000, shot:'establish', apply(){ clearRelight(); setRunning(true); setLights('normal'); setDecision(false); setNoFeasible(false); setCountdown(null); flagT7(false); setClock('17:41');
+        { dur:6000, shot:'establish', apply(){ clearRelight(); closeWorkflow(); setRunning(true); setLights('normal'); setDecision(false); setNoFeasible(false); setCountdown(null); flagT7(false); setClock('17:41');
           caption('nominal',"24 km d'engagement client — 8 tourets, le 7ᵉ dans la ligne.",'info'); } },
-        { dur:5600, shot:'blackout', apply(){ setRunning(false); setLights('emergency'); setClock('17:42'); startCountdown();
-          caption('17:42',"Coupure réseau. La production s'arrête 58 minutes.",'alert'); } },
-        { dur:6200, shot:'t7', apply(){ setRunning(false); setLights('emergency'); flagT7(true); setClock('18:40');
-          caption('17:42 → 18:40',"Le jumeau localise ce qu'il faut investiguer — T7 reste HOLD.",'info'); } },
-        { dur:6400, shot:'decision', apply(){ setDecision(true); setClock('18:40');
-          caption('18:40',"Les règles bloquent l'impossible, le jumeau compare les reprises.",'info'); } },
-        { dur:5200, shot:'decision', apply(){ setDecision(false); setNoFeasible(true);
-          caption('essai',"À cette puissance, CableTwin refuse d'inventer une solution.",'alert'); } },
-        { dur:12500, shot:'travelA', apply(){ setNoFeasible(false); setDecision(true); setClock('18:46'); runRelight();
-          caption('18:46',"Reprise séquencée — chaque étape rallumée dans l'ordre autorisé.",'good');
-          timers.push(setTimeout(()=>flyTo('travelB', 8200/speedFactor()), 1200/speedFactor())); } },
-        { dur:5600, shot:'gov', apply(){ setDecision(false); clearRelight();
-          caption('gouvernance',"Le laboratoire libère, les humains décident — le modèle ne signe pas.",'good'); } },
+        { dur:5600, shot:'blackout', apply(){ setRunning(false); setLights('emergency'); setClock('17:42'); setCountdown('58:00');
+          caption('17:42',"Coupure réseau — tout s'arrête. Sécurité et contrôle restent alimentés.",'alert'); } },
+        { dur:4600, shot:'t7', apply(){ flagT7(true);
+          caption('17:42',"T7 est bloqué dans la ligne. SmartCable prend le relais…",'info'); } },
       ];
       let bi=0;
-      function startCountdown(){
-        if(cdTimer) clearInterval(cdTimer);
-        const total=58*60, dur=5600/speedFactor(), t0=performance.now(); setCountdown('58:00');
-        cdTimer=setInterval(()=>{ const k=Math.min(1,(performance.now()-t0)/dur); const left=Math.round(total*(1-k));
-          setCountdown(String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0'));
-          if(k>=1){ clearInterval(cdTimer); cdTimer=null; } },110);
-      }
       function runBeat(i){
         bi=i%BEATS.length; const b=BEATS[bi];
         b.apply(); if(b.shot) flyTo(b.shot, Math.min(3000, b.dur*0.5)/speedFactor());
-        if(playing) timers.push(setTimeout(()=>runBeat(bi+1), b.dur/speedFactor()));
+        if(!playing) return;
+        if(bi===BEATS.length-1) timers.push(setTimeout(openWorkflow, b.dur/speedFactor()));
+        else timers.push(setTimeout(()=>runBeat(bi+1), b.dur/speedFactor()));
       }
-      function clearAll(){ timers.forEach(clearTimeout); timers=[]; if(cdTimer){clearInterval(cdTimer); cdTimer=null;} }
-      function play(){ playing=true; $('play').textContent='⏸ Pause'; clearAll(); runBeat(bi); }
+      function clearAll(){ timers.forEach(clearTimeout); timers=[]; }
+      function play(){ closeWorkflow(); playing=true; $('play').textContent='⏸ Pause'; clearAll(); runBeat(bi); }
       function pause(){ playing=false; $('play').textContent='▶ Lire'; clearAll(); clearRelight(); }
-      function restart(){ clearAll(); clearRelight(); bi=0; playing=true; $('play').textContent='⏸ Pause'; runBeat(0); }
+      function restart(){ clearAll(); clearRelight(); closeWorkflow(); bi=0; playing=true; $('play').textContent='⏸ Pause'; runBeat(0); }
 
       $('play').onclick=()=> playing?pause():play();
       $('restart').onclick=restart;
       $('speed-btn').onclick=()=>{ speedIdx=(speedIdx+1)%SPEEDS.length; $('speed').textContent=SPEEDS[speedIdx]+'×'; if(playing){ clearAll(); runBeat(bi); } };
-      $('blackout').onclick=()=>{ pause(); bi=1; playing=true; $('play').textContent='⏸ Pause'; runBeat(1); };
-      $('stress').onclick=()=>{ pause(); setDecision(false); setNoFeasible(true); setRunning(false); flyTo('decision',1600);
+      $('blackout').onclick=()=>{ pause(); closeWorkflow(); bi=1; playing=true; $('play').textContent='⏸ Pause'; runBeat(1); };
+      $('stress').onclick=()=>{ pause(); closeWorkflow(); setDecision(false); setNoFeasible(true); setRunning(false); flyTo('decision',1600);
         caption('essai','Aucun plan faisable — la contrainte bloquante est nommée.','alert'); };
-      $('restore').onclick=()=>{ pause(); setNoFeasible(false); setDecision(true); setLights('normal'); setRunning(true); flyTo('wide',1800);
+      $('restore').onclick=()=>{ pause(); closeWorkflow(); setNoFeasible(false); setDecision(true); setLights('normal'); setRunning(true); flyTo('wide',1800);
         caption('18:46',"Reprise séquencée — l'engagement client est protégé.",'good'); };
 
       addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
