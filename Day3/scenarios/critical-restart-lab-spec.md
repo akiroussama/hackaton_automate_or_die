@@ -254,7 +254,9 @@ Animate the official 1:04 p.m. evidence frame:
 - instrument: 78 percent of transmitter span / 7.9 feet;
 - `CSB POST-INCIDENT MATERIAL-BALANCE ESTIMATE: 158 FT`;
 - tower height: 170 feet;
-- visible status: independent high-level protection unavailable.
+- visible status: the transmitter-associated 72 percent alarm was active and
+  acknowledged; the separate redundant hardwired high-level alarm did not
+  sound (CSB final report pp. 34, 49, 81 — the two alarms are distinct).
 
 Then rewind the UI to a clearly labelled `SOURCE-GROUNDED RECONSTRUCTION —
 PRE-START DECISION GATE`. This prevents the demo from pretending that the

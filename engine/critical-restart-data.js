@@ -20,6 +20,16 @@ export const SOURCES = {
     "https://www.nist.gov/publications/conceptual-architecture-digital-twins-human-loop-based-smart-manufacturing",
 };
 
+// Human-readable link labels — used instead of raw URLs as visible link text
+// so the CSB-announcement slug (which repeats the casualty numbers) is never
+// rendered as running prose (adversarial-review finding, audit cleanup).
+export const SOURCE_LABELS = {
+  csbPage: "CSB investigation page",
+  csbFinalReport: "CSB final investigation report (PDF)",
+  csbAnnouncement: "CSB announcement",
+  nistHitlTwin: "NIST human-in-the-loop digital-twin architecture",
+};
+
 export const EVIDENCE_CLASSES = {
   FACT: "CSB DOCUMENTED FACT",
   RECONSTRUCTION: "SOURCE-GROUNDED RECONSTRUCTION",
@@ -29,6 +39,7 @@ export const EVIDENCE_CLASSES = {
 // Every historical number the UI displays MUST come from this object
 // (acceptance gate 13: UI numbers -> source map -> unit test).
 export const CSB_FACTS = {
+  reportVersion: "CSB final report, approved 20 March 2007",
   incident: {
     place: "Texas City, Texas",
     date: "23 March 2005",
@@ -45,8 +56,17 @@ export const CSB_FACTS = {
     indicatedFeet: 7.9,
     postIncidentEstimateFeet: 158,
     towerHeightFeet: 170,
-    independentHighLevelAlarm: "unavailable",
-    reportRef: "CSB final report, pp. 55-57 (level indication), pp. 104-106 (instrumentation)",
+    // The CSB report distinguishes two separate alarms (pp. 34, 49, 81):
+    // the transmitter-associated high-level alarm (72% of span) was ACTIVE
+    // and ACKNOWLEDGED throughout the startup; the separate REDUNDANT
+    // HARDWIRED high-level alarm did NOT sound. These are not the same
+    // device — conflating them into one generic "independent alarm
+    // unavailable" claim overstates what the record documents.
+    transmitterAlarmPercentOfSpan: 72,
+    transmitterAlarmStatus: "active and acknowledged",
+    redundantHardwiredAlarmStatus: "did not sound",
+    reportRef:
+      "CSB final report, pp. 55-57 (level indication), pp. 104-106 (instrumentation), pp. 34, 49, 81 (alarm distinction)",
     explanation:
       "78 percent referred only to the transmitter's limited span — not 78 percent of the 170-foot tower.",
   },
@@ -104,73 +124,101 @@ export const COHORT_SEED = 20050323;
 export const PATTERN_FAMILIES = {
   RECURRENT_ABNORMAL: "RECURRENT ABNORMAL STARTUP",
   IN_ENVELOPE: "IN-ENVELOPE STARTUP",
-  TRANSIENT_UPSET: "TRANSIENT UPSET, RECOVERED",
 };
 
-// Builds the deterministic synthetic cohort. The FAMILY PROPORTIONS mirror the
-// documented aggregate history (19 startups: 1 within boundaries, 14 with
-// major level swings, the remaining 4 treated as transient upsets); the
-// per-row feature values are synthetic reconstructions, generated from the
-// fixed seed. Exported for testing (acceptance gate 5).
+function seededShuffle(items, rng) {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(rng() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+const clamp01 = (value) => Math.min(1, Math.max(0, value));
+
+// Synthesizes a 10-feature reconstruction vector from a row's CSB-aligned
+// tags. Severity scales with how many documented marginals the row carries;
+// the "within cited boundaries" row is deliberately calm. All jitter is
+// seeded — reproducible, never real telemetry.
+function featuresForRow(tags, rng) {
+  const j = (base, amp) => clamp01(base + (rng() - 0.5) * 2 * amp);
+  const swingBoost = tags.significantLevelSwing ? 0.18 : 0;
+  const rangeBoost = tags.exceededTransmitterRange ? 0.18 : 0;
+  const hourBoost = tags.outOfRangeOverOneHour ? 0.14 : 0;
+  const base = tags.withinCitedBoundaries ? 0.1 : 0.42 + swingBoost + rangeBoost + hourBoost;
+
+  return [
+    j(base, 0.15), // feed/outflow imbalance
+    j(base + rangeBoost * 0.4, 0.15), // sensor-vs-balance disagreement
+    j(tags.exceededTransmitterRange ? base + 0.15 : base * 0.6, 0.15), // time outside valid transmitter range
+    j(base + swingBoost * 0.3, 0.18), // pressure-alarm excursion
+    j(base + hourBoost * 0.5, 0.12), // independent alarm unhealthy (reconstruction layer)
+    j(tags.withinCitedBoundaries ? 0.2 : 0.6 + swingBoost * 0.3, 0.2), // manual control (vs automatic)
+    j(tags.withinCitedBoundaries ? 0.15 : 0.5, 0.25), // occupied exposure zone
+    j(base * 0.85, 0.2), // qualified startup supervision missing
+    j(base * 0.8, 0.2), // shift handover incomplete
+    j(base * 0.8, 0.2), // pre-startup safety review incomplete
+  ];
+}
+
+// Builds the deterministic synthetic cohort of 19 rows (one per analyzed
+// startup). The CSB report publishes four OVERLAPPING marginal counts over
+// the same 19 startups — not a mutually exclusive partition:
+//   14 had significant level swings; 15 exceeded the transmitter range;
+//   8 of those remained out of range for more than one hour;
+//   1 stayed within the cited level/pressure boundaries.
+// This cohort assigns each of those counts as an independent boolean TAG so
+// rows can (and, by the pigeonhole principle here, must) carry more than one
+// tag — mirroring the fact that the categories overlap. The SPECIFIC rows
+// chosen for each tag, and therefore the exact joint/overlap pattern, is a
+// SYNTHETIC TEACHING CONSTRUCTION: only the four marginal counts above are
+// CSB-documented; CSB does not report which individual startups combined
+// which conditions. Exported for testing (acceptance gate 5).
 export function buildSyntheticCohort(seed = COHORT_SEED) {
   const rng = mulberry32(seed);
-  const rows = [];
-  const jitter = (base, amp) => Math.min(1, Math.max(0, base + (rng() - 0.5) * 2 * amp));
+  const h = CSB_FACTS.startupHistory;
+  const total = h.startupsAnalyzed; // 19
+  const withinCount = h.startupsWithinBoundaries; // 1
+  const swingCount = h.startupsWithMajorLevelSwings; // 14
+  const rangeCount = h.startupsExceedingTransmitterRange; // 15
+  const overHourCount = h.startupsOutOfRangeOverOneHour; // 8
 
-  const push = (family, index, profile) => {
-    rows.push({
-      id: `SYN-${family === PATTERN_FAMILIES.RECURRENT_ABNORMAL ? "RA" : family === PATTERN_FAMILIES.IN_ENVELOPE ? "IE" : "TU"}-${String(index).padStart(2, "0")}`,
+  const allIndices = Array.from({ length: total }, (_, i) => i);
+  const shuffled = seededShuffle(allIndices, rng);
+  const withinIdx = new Set(shuffled.slice(0, withinCount));
+  const remaining = shuffled.slice(withinCount); // 18 non-boundary rows, fixed order
+
+  // swingSet and rangeSet are deterministic sliding windows over the SAME
+  // fixed order, sized exactly to the CSB marginals. Because
+  // swingCount + rangeCount (14 + 15 = 29) exceeds remaining.length (18),
+  // their union necessarily covers all 18 rows and their overlap is exactly
+  // 29 - 18 = 11 rows — an explicit, honest synthetic overlap, not a claim
+  // about which real startups overlapped.
+  const swingSet = new Set(remaining.slice(0, swingCount));
+  const rangeStart = remaining.length - rangeCount;
+  const rangeWindow = remaining.slice(rangeStart);
+  const rangeSet = new Set(rangeWindow);
+  const overHourSet = new Set(rangeWindow.slice(0, overHourCount)); // subset of rangeSet, per CSB wording
+
+  return allIndices.map((idx) => {
+    const tags = {
+      withinCitedBoundaries: withinIdx.has(idx),
+      significantLevelSwing: swingSet.has(idx),
+      exceededTransmitterRange: rangeSet.has(idx),
+      outOfRangeOverOneHour: overHourSet.has(idx),
+    };
+    const family = tags.withinCitedBoundaries
+      ? PATTERN_FAMILIES.IN_ENVELOPE
+      : PATTERN_FAMILIES.RECURRENT_ABNORMAL;
+    return {
+      id: `SYN-${String(idx + 1).padStart(2, "0")}`,
       family,
+      tags,
       evidenceClass: EVIDENCE_CLASSES.SYNTHETIC,
-      features: profile,
-    });
-  };
-
-  // 14 recurrent abnormal startups (major level swings; most exceeded the
-  // transmitter range; alarm activations were frequent).
-  for (let i = 1; i <= 14; i += 1) {
-    push(PATTERN_FAMILIES.RECURRENT_ABNORMAL, i, [
-      jitter(0.72, 0.18),
-      jitter(0.78, 0.16),
-      jitter(0.7, 0.22),
-      jitter(0.62, 0.2),
-      jitter(0.65, 0.25),
-      jitter(0.8, 0.15),
-      jitter(0.55, 0.3),
-      jitter(0.6, 0.25),
-      jitter(0.55, 0.25),
-      jitter(0.6, 0.25),
-    ]);
-  }
-  // 1 startup that stayed within the cited boundaries.
-  push(PATTERN_FAMILIES.IN_ENVELOPE, 1, [
-    jitter(0.12, 0.08),
-    jitter(0.1, 0.06),
-    jitter(0.05, 0.05),
-    jitter(0.08, 0.06),
-    jitter(0.1, 0.08),
-    jitter(0.25, 0.15),
-    jitter(0.15, 0.1),
-    jitter(0.1, 0.08),
-    jitter(0.1, 0.08),
-    jitter(0.1, 0.08),
-  ]);
-  // 4 transient upsets that recovered (the remaining analyzed startups).
-  for (let i = 1; i <= 4; i += 1) {
-    push(PATTERN_FAMILIES.TRANSIENT_UPSET, i, [
-      jitter(0.42, 0.15),
-      jitter(0.38, 0.15),
-      jitter(0.3, 0.15),
-      jitter(0.35, 0.18),
-      jitter(0.3, 0.2),
-      jitter(0.5, 0.2),
-      jitter(0.3, 0.2),
-      jitter(0.3, 0.18),
-      jitter(0.3, 0.18),
-      jitter(0.3, 0.18),
-    ]);
-  }
-  return rows;
+      features: featuresForRow(tags, rng),
+    };
+  });
 }
 
 // The reconstructed pre-start decision-gate vector for the replay. This is a

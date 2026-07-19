@@ -6,6 +6,7 @@
 import {
   CSB_FACTS,
   SOURCES,
+  SOURCE_LABELS,
   CONSTRAINTS,
   EVIDENCE_CLASSES,
   defaultIncidentVector,
@@ -66,6 +67,56 @@ function audit(text, key = false, detail = null) {
   el("audit-list").scrollTop = el("audit-list").scrollHeight;
 }
 
+/* ------------------------------ static facts (rendered once) ------------ */
+
+// Every historical number in the UI is set HERE, from CSB_FACTS — never
+// duplicated as a second hardcoded literal in index.html (adversarial-review
+// finding: single source of truth makes drift structurally impossible,
+// rather than merely tested for after the fact).
+function renderFacts() {
+  const f = CSB_FACTS;
+  el("fact-place-date").textContent = `${f.incident.place} — ${f.incident.date}`;
+  el("fact-casualties").textContent = `${f.incident.deaths} workers killed · ${f.incident.injured} injured`;
+  el("fact-report-version").textContent = `Source: ${f.reportVersion}`;
+
+  el("hist-19").textContent = f.startupHistory.startupsAnalyzed;
+  el("hist-1").textContent = f.startupHistory.startupsWithinBoundaries;
+  el("hist-14").textContent = f.startupHistory.startupsWithMajorLevelSwings;
+  el("hist-74").textContent = f.startupHistory.levelAlarmActivations;
+  el("hist-65").textContent = f.startupHistory.highLevelSetPointExceedances;
+  el("hist-15").textContent = f.startupHistory.startupsExceedingTransmitterRange;
+  el("hist-8").textContent = f.startupHistory.startupsOutOfRangeOverOneHour;
+
+  el("tower-title-ft").textContent = `RAFFINATE SPLITTER · ${f.evidenceFrame.towerHeightFeet} FT`;
+  el("grad-top").textContent = String(f.evidenceFrame.towerHeightFeet);
+  el("span-indicated").textContent =
+    `INDICATED: ${f.evidenceFrame.indicatedPercentOfSpan}% OF SENSOR SPAN = ${f.evidenceFrame.indicatedFeet} FT`;
+  el("estimate-label").textContent = `POST-INCIDENT ESTIMATE: ${f.evidenceFrame.postIncidentEstimateFeet} FT`;
+  el("tower-callout-text").textContent =
+    `${f.evidenceFrame.explanation} The control system indicated ${f.evidenceFrame.indicatedFeet} ft while the ` +
+    `post-incident material-balance estimate was ${f.evidenceFrame.postIncidentEstimateFeet} ft.`;
+
+  // CSB distinguishes the transmitter-associated alarm (active, acknowledged)
+  // from the separate redundant hardwired alarm (did not sound) — never
+  // conflate the two into one generic "unavailable" claim.
+  el("alarm-line-1").textContent = `TRANSMITTER ${f.evidenceFrame.transmitterAlarmPercentOfSpan}% ALARM`;
+  el("alarm-line-2").textContent = `✓ ${f.evidenceFrame.transmitterAlarmStatus.toUpperCase()}`;
+  el("alarm-line-3").textContent = "⚠ REDUNDANT HARDWIRED ALARM";
+  el("alarm-line-4").textContent = f.evidenceFrame.redundantHardwiredAlarmStatus.toUpperCase();
+
+  const links = el("source-links");
+  links.replaceChildren();
+  for (const [key, url] of Object.entries(SOURCES)) {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = url;
+    a.textContent = SOURCE_LABELS[key] ?? key;
+    a.rel = "noopener";
+    li.append(a);
+    links.append(li);
+  }
+}
+
 /* ------------------------------ rendering ------------------------------ */
 
 function renderSteps() {
@@ -94,12 +145,18 @@ function renderMl() {
   list.replaceChildren();
   for (const n of state.ml.neighbors) {
     const li = document.createElement("li");
-    const contrib = n.topContributions
-      .map((c) => c.feature)
-      .join(" · ");
+    const contrib = n.topContributions.map((c) => c.feature).join(" · ");
     li.innerHTML = `<b>${n.id}</b> — ${n.family} · distance ${n.distance.toFixed(3)}` +
       `<span class="contrib">drivers: ${contrib}</span>` +
       `<span class="contrib">${n.evidenceClass} · constrained by the CSB aggregate history</span>`;
+    const linkSpan = document.createElement("span");
+    linkSpan.className = "contrib";
+    const link = document.createElement("a");
+    link.href = SOURCES.csbFinalReport;
+    link.rel = "noopener";
+    link.textContent = `${SOURCE_LABELS.csbFinalReport} — startup-history aggregates (pp. 72-75)`;
+    linkSpan.append(link);
+    li.append(linkSpan);
     list.append(li);
   }
   el("ml-meta").textContent =
@@ -135,6 +192,18 @@ function sparkline(result) {
   return svg;
 }
 
+function branchStatusText(r) {
+  if (r.approvable) return "✓ approved — both signatures recorded";
+  if (r.eligibleForHumanReview) return "◐ eligible for human review — awaiting signatures (CR-05)";
+  return "✗ not approvable";
+}
+
+function branchStatusClass(r) {
+  if (r.approvable) return "is-approved";
+  if (r.eligibleForHumanReview) return "is-eligible";
+  return "is-blocked";
+}
+
 function renderBranches() {
   if (!state.run) return;
   const wrap = el("branches");
@@ -142,11 +211,11 @@ function renderBranches() {
   for (const id of ["A", "B", "C"]) {
     const r = state.run.branches[id];
     const card = document.createElement("article");
-    card.className = `branch ${r.approvable ? "is-eligible" : "is-blocked"}`;
+    card.className = `branch ${branchStatusClass(r)}`;
     const head = document.createElement("div");
     head.className = "branch-head";
     head.innerHTML = `<b>Branch ${r.branchId} — ${r.branchName}</b>` +
-      `<span class="branch-tag">${r.approvable ? "✓ eligible for human review" : "✗ not approvable"}</span>`;
+      `<span class="branch-tag">${branchStatusText(r)}</span>`;
     card.append(head);
     const actions = document.createElement("ul");
     actions.className = "branch-actions";
@@ -229,7 +298,10 @@ function apply() {
 
 const STEP_AUDIT = {
   historical_frame: () => audit(
-    `${EVIDENCE_CLASSES.FACT} — 1:04 p.m.: indicated ${CSB_FACTS.evidenceFrame.indicatedPercentOfSpan}% of span (${CSB_FACTS.evidenceFrame.indicatedFeet} ft); post-incident estimate ${CSB_FACTS.evidenceFrame.postIncidentEstimateFeet} ft of ${CSB_FACTS.evidenceFrame.towerHeightFeet} ft; independent high-level alarm ${CSB_FACTS.evidenceFrame.independentHighLevelAlarm}.`),
+    `${EVIDENCE_CLASSES.FACT} — 1:04 p.m.: indicated ${CSB_FACTS.evidenceFrame.indicatedPercentOfSpan}% of span ` +
+    `(${CSB_FACTS.evidenceFrame.indicatedFeet} ft); post-incident estimate ${CSB_FACTS.evidenceFrame.postIncidentEstimateFeet} ft ` +
+    `of ${CSB_FACTS.evidenceFrame.towerHeightFeet} ft; transmitter ${CSB_FACTS.evidenceFrame.transmitterAlarmPercentOfSpan}% alarm ` +
+    `${CSB_FACTS.evidenceFrame.transmitterAlarmStatus}; redundant hardwired alarm ${CSB_FACTS.evidenceFrame.redundantHardwiredAlarmStatus}.`),
   rewind_to_gate: () => audit(
     `${EVIDENCE_CLASSES.RECONSTRUCTION} — replay rewound to the pre-start decision gate (teaching checkpoint).`),
   ml_memory: () => {
@@ -239,7 +311,7 @@ const STEP_AUDIT = {
   twin_reconciliation: () => audit(
     `${EVIDENCE_CLASSES.SYNTHETIC} — material balance contradicts the sensor: inferred inventory above the valid range; restart has unknown inventory.`),
   branch_comparison: () => {
-    audit(`${EVIDENCE_CLASSES.SYNTHETIC} — three futures rehearsed from one initial state. A: precursor reached (frozen). B: delayed, unknown inventory. C: within the bounded envelope, pending approvals.`, true);
+    audit(`${EVIDENCE_CLASSES.SYNTHETIC} — three futures rehearsed from one initial state. A: precursor reached (frozen). B: delayed, unknown inventory. C: within the bounded envelope, pending both signatures (CR-05).`, true);
     audit(`rejected alternatives recorded: Branch A (violations ${state.run.branches.A.constraintViolations.join(",")}), Branch B (violations ${state.run.branches.B.constraintViolations.join(",")}).`);
   },
   operations_signed: () => audit(
@@ -266,28 +338,52 @@ function advance() {
 function buildAuditSnapshot() {
   const m = state.ml;
   return JSON.stringify({
-    sources: SOURCES,
-    disclosure: "interactive telemetry, reconstructed episodes and branch outcomes are synthetic",
+    csbSource: { ...SOURCES, reportVersion: CSB_FACTS.reportVersion },
+    disclosure: "model-generated outputs are synthetic; historical displayed values are CSB-sourced",
     input: { vector: defaultIncidentVector(), evidenceClass: EVIDENCE_CLASSES.RECONSTRUCTION },
     model: { version: m.modelVersion, k: m.k, weights: m.weights, seed: m.seed },
     simulator: SIMULATOR_MODEL.version,
-    scenarioHash: state.run.scenarioHash,
+    simulationOutputHash: state.run.simulationOutputHash,
     branches: Object.fromEntries(Object.entries(state.run.branches).map(([id, b]) => [id, {
+      actions: b.actions,
+      eligibleForHumanReview: b.eligibleForHumanReview,
       approvable: b.approvable,
       releasePrecursorReached: b.releasePrecursorReached,
       constraintViolations: b.constraintViolations,
     }])),
-    approvals: { operationsLead: true, processSafetyLead: true, note: "roles, not personal names" },
+    approvals: {
+      operationsLead: {
+        signed: state.signatures.ops,
+        rationale: "accepts the operational delay and confirms that no physical command has been sent",
+      },
+      processSafetyLead: {
+        signed: state.signatures.safety,
+        rationale: "confirms barrier verification and exposure-zone clearance",
+      },
+      note: "roles, not personal names",
+    },
     machineCommandSent: false,
   }, null, 1);
 }
 
-function sign(role) {
+// Re-derives all three branches with the CURRENT signature state. `approvable`
+// is only ever true here once both flags are true (engine-side CR-05 gate);
+// the simulationOutputHash payload excludes approvals, so it never changes.
+async function refreshBranches() {
+  state.run = await runAllBranches({
+    approvals: { operations: state.signatures.ops, safety: state.signatures.safety },
+  });
+  el("hash-line").textContent = `simulation output hash: ${state.run.simulationOutputHash.slice(0, 16)}…`;
+}
+
+async function sign(role) {
   if (role === "ops" && !state.signatures.ops && state.index >= STATES.indexOf("branch_comparison")) {
     state.signatures.ops = true;
+    await refreshBranches();
     advance(); // -> operations_signed
   } else if (role === "safety" && state.signatures.ops && !state.signatures.safety) {
     state.signatures.safety = true;
+    await refreshBranches();
     advance(); // -> safety_signed
   }
 }
@@ -299,14 +395,24 @@ function finalize() {
   }
 }
 
-function reset() {
-  stopAuto();
+// Shared by boot() and reset() so a fresh load and a Reset are BYTE-IDENTICAL
+// by construction: same ML call, same branch simulation (approvals cleared),
+// same two audit lines, same hash. This is what makes gate 12 (exact Reset)
+// hold — not a second hand-maintained code path that can drift.
+async function primeReplay() {
   state.index = 0;
   state.signatures = { ops: false, safety: false };
+  state.ml = retrieveSimilar(defaultIncidentVector());
+  await refreshBranches();
   el("audit-list").replaceChildren();
   el("final-status").textContent = "";
-  audit("reset — replay returned to briefing; signatures and audit cleared; scenario hash unchanged (deterministic).");
-  el("hash-line").textContent = `scenario hash: ${state.run ? state.run.scenarioHash.slice(0, 16) : "—"}…`;
+  audit(`${EVIDENCE_CLASSES.FACT} — briefing loaded from the U.S. CSB record (${CSB_FACTS.incident.date}).`);
+  audit(`${ML_MODEL.name} ready · deterministic seed ${ML_MODEL.seed} · no network, no machine interface (CR-06).`);
+}
+
+async function reset() {
+  stopAuto();
+  await primeReplay();
   apply();
 }
 
@@ -325,12 +431,12 @@ function stopAuto() {
   el("auto").hidden = false;
 }
 
-function autoStep() {
+async function autoStep() {
   if (!state.auto || state.paused) return;
   const next = STATES[state.index + 1];
   if (!next) { stopAuto(); return; }
-  if (next === "operations_signed") sign("ops");
-  else if (next === "safety_signed") sign("safety");
+  if (next === "operations_signed") await sign("ops");
+  else if (next === "safety_signed") await sign("safety");
   else if (next === "recommendation_finalized") finalize();
   else advance();
   const delay = AUTO_DELAYS_MS[state.index] ?? 2200;
@@ -341,8 +447,8 @@ function autoStep() {
   }
 }
 
-function startAuto() {
-  reset();
+async function startAuto() {
+  await reset();
   state.auto = true;
   document.body.dataset.mode = "auto";
   el("pause").hidden = false;
@@ -358,23 +464,42 @@ function togglePause() {
   if (!state.paused) state.autoTimer = window.setTimeout(autoStep, 700);
 }
 
+/* ------------------------------ sources dialog: focus management -------- */
+
+function openDrawer() {
+  el("drawer").hidden = false;
+  el("close-sources").focus();
+}
+
+function closeDrawer() {
+  el("drawer").hidden = true;
+  el("open-sources").focus();
+}
+
+function drawerFocusables() {
+  return [...el("drawer").querySelectorAll("a[href], button:not([disabled])")];
+}
+
+function trapDrawerFocus(event) {
+  if (el("drawer").hidden || event.key !== "Tab") return;
+  const list = drawerFocusables();
+  if (!list.length) return;
+  const first = list[0];
+  const last = list[list.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
 /* ------------------------------ boot ------------------------------ */
 
 async function boot() {
-  state.ml = retrieveSimilar(defaultIncidentVector());
-  state.run = await runAllBranches();
-  el("hash-line").textContent = `scenario hash: ${state.run.scenarioHash.slice(0, 16)}…`;
-
-  const links = el("source-links");
-  for (const [key, url] of Object.entries(SOURCES)) {
-    const li = document.createElement("li");
-    const a = document.createElement("a");
-    a.href = url;
-    a.textContent = url;
-    a.rel = "noopener";
-    li.append(`${key}: `, a);
-    links.append(li);
-  }
+  renderFacts();
+  await primeReplay();
 
   el("cta").addEventListener("click", advance);
   el("auto").addEventListener("click", startAuto);
@@ -383,14 +508,16 @@ async function boot() {
   el("sign-ops").addEventListener("click", () => sign("ops"));
   el("sign-safety").addEventListener("click", () => sign("safety"));
   el("finalize").addEventListener("click", finalize);
-  el("open-sources").addEventListener("click", () => { el("drawer").hidden = false; el("close-sources").focus(); });
-  el("close-sources").addEventListener("click", () => { el("drawer").hidden = true; el("open-sources").focus(); });
+  el("open-sources").addEventListener("click", openDrawer);
+  el("close-sources").addEventListener("click", closeDrawer);
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !el("drawer").hidden) el("drawer").hidden = true;
+    if (event.key === "Escape" && !el("drawer").hidden) {
+      closeDrawer();
+      return;
+    }
+    trapDrawerFocus(event);
   });
 
-  audit(`${EVIDENCE_CLASSES.FACT} — briefing loaded from the U.S. CSB record (${CSB_FACTS.incident.date}).`);
-  audit(`${ML_MODEL.name} ready · deterministic seed ${ML_MODEL.seed} · no network, no machine interface (CR-06).`);
   apply();
 }
 

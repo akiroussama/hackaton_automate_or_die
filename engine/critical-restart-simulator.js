@@ -79,20 +79,33 @@ export function simulateBranch(branchId, options = {}) {
     qualifiedSupervision: Boolean(sim.readiness.qualifiedSupervision),
   };
   const readinessComplete = Object.values(readiness).every(Boolean);
-  if (!readinessComplete && constraintViolations.length === 0) {
-    // Branch C only becomes fully eligible once every readiness gate is
-    // recorded (CR-08); until then it is "pending", not violated.
-  }
 
-  const approvable = constraintViolations.length === 0 && !releasePrecursorReached && readinessComplete;
+  // CR-08: the branch only becomes ELIGIBLE for human review once hard
+  // constraints and readiness gates are satisfied. This does NOT authorize
+  // it — CR-05 requires BOTH role approvals separately (see `approvable`
+  // below). `eligibleForHumanReview` never depends on approval state, so it
+  // stays identical across a Reset and across signature events.
+  const eligibleForHumanReview =
+    constraintViolations.length === 0 && !releasePrecursorReached && readinessComplete;
+
+  // CR-05 — dual human authority. `approvable` is false until BOTH
+  // Operations and Process Safety approvals are explicitly passed in; the
+  // caller must set them (the UI does so only after real button signatures).
+  // Never derived from any model output — a learned or simulated result can
+  // never grant approval on its own.
+  const operationsApproved = Boolean(options.approvals?.operations);
+  const safetyApproved = Boolean(options.approvals?.safety);
+  const approvable = eligibleForHumanReview && operationsApproved && safetyApproved;
 
   const humanReadableReason = releasePrecursorReached
     ? "RELEASE PRECURSOR REACHED under the encoded assumptions — this future may be inspected but never approved."
     : constraintViolations.length > 0
       ? `Blocked by hard constraints: ${constraintViolations.join(", ")} — the bounded model delays or hides the problem instead of resolving it.`
-      : readinessComplete
-        ? "No release precursor within the bounded horizon under the encoded assumptions; production is delayed; eligible for dual human review."
-        : "Within the bounded safe envelope, but blocked until every CR-08 readiness gate is recorded.";
+      : !readinessComplete
+        ? "Within the bounded safe envelope, but blocked until every CR-08 readiness gate is recorded."
+        : approvable
+          ? "No release precursor within the bounded horizon under the encoded assumptions; both human approvals recorded — eligible for finalization."
+          : "No release precursor within the bounded horizon under the encoded assumptions; production is delayed; eligible for human review pending both signatures (CR-05).";
 
   return {
     branchId: branch.id,
@@ -110,6 +123,9 @@ export function simulateBranch(branchId, options = {}) {
     readiness,
     readinessComplete,
     constraintViolations,
+    eligibleForHumanReview,
+    operationsApproved,
+    safetyApproved,
     approvable,
     humanReadableReason,
     assumptions: [...SIMULATOR_MODEL.assumptions],
@@ -139,20 +155,26 @@ export async function runAllBranches(options = {}) {
   for (const branch of BRANCHES) {
     branches[branch.id] = simulateBranch(branch.id, options);
   }
+  // The hash identifies the DETERMINISTIC SIMULATION OUTPUT only — it
+  // deliberately excludes `approvable`/approval state, which is a human
+  // audit event, not part of the scenario definition. This is what makes an
+  // exact Reset (and a signature event) leave the hash unchanged; verified
+  // by scripts/critical-restart.test.mjs.
   const payload = JSON.stringify({
     simulator: SIMULATOR_MODEL.version,
     initialState: SIMULATOR_MODEL.initialState,
     horizon: options.horizonSteps ?? SIMULATOR_MODEL.horizonSteps,
+    constraints: CONSTRAINTS.map((c) => c.id),
     branches: Object.keys(branches).sort().map((id) => ({
       id,
       series: branches[id].series,
       violations: branches[id].constraintViolations,
-      approvable: branches[id].approvable,
+      eligibleForHumanReview: branches[id].eligibleForHumanReview,
     })),
   });
-  const scenarioHash = await sha256Hex(payload);
-  for (const id of Object.keys(branches)) branches[id].scenarioHash = scenarioHash;
-  return { branches, scenarioHash, constraints: CONSTRAINTS };
+  const simulationOutputHash = await sha256Hex(payload);
+  for (const id of Object.keys(branches)) branches[id].simulationOutputHash = simulationOutputHash;
+  return { branches, simulationOutputHash, constraints: CONSTRAINTS };
 }
 
 export { FORBIDDEN_RESULT_FIELDS };
